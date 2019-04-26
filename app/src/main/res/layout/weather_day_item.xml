@@ -75,5 +75,5 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="15dp"
-        android:background="@drawable/gradient" />
+        android:background="@drawable/shadow_gradient" />
 </LinearLayout>
