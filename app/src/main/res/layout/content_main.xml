@@ -108,5 +108,15 @@
             android:text="Next 5 Days"
             android:textAppearance="@style/TextAppearance.AppCompat.Title" />
 
+        <View
+            android:layout_width="0dp"
+            android:layout_height="@dimen/spacing_medium" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal" />
+
     </LinearLayout>
 </LinearLayout>
