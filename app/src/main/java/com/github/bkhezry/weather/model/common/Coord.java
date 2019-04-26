@@ -1,4 +1,4 @@
-package com.github.bkhezry.weather.model.currentweather;
+package com.github.bkhezry.weather.model.common;
 
 import com.google.gson.annotations.SerializedName;
 

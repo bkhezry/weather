@@ -1,5 +1,6 @@
 package com.github.bkhezry.weather.model.fivedayweather;
 
+import com.github.bkhezry.weather.model.common.Coord;
 import com.google.gson.annotations.SerializedName;
 
 public class City {

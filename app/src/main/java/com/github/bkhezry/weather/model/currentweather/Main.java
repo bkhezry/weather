@@ -1,6 +1,5 @@
 package com.github.bkhezry.weather.model.currentweather;
 
-
 import com.google.gson.annotations.SerializedName;
 
 public class Main {
