@@ -107,5 +107,6 @@
             android:layout_height="wrap_content"
             android:text="Next 5 Days"
             android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+
     </LinearLayout>
 </LinearLayout>
