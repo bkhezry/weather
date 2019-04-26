@@ -1,4 +1,4 @@
-package com.github.bkhezry.weather.model;
+package com.github.bkhezry.weather.model.fivedayweather;
 
 import com.google.gson.annotations.SerializedName;
 
