@@ -4,106 +4,106 @@ import com.google.gson.annotations.SerializedName;
 
 public class Main {
 
-    @SerializedName("temp")
-    private double temp;
+  @SerializedName("temp")
+  private double temp;
 
-    @SerializedName("temp_min")
-    private double tempMin;
+  @SerializedName("temp_min")
+  private double tempMin;
 
-    @SerializedName("grnd_level")
-    private double grndLevel;
+  @SerializedName("grnd_level")
+  private double grndLevel;
 
-    @SerializedName("temp_kf")
-    private double tempKf;
+  @SerializedName("temp_kf")
+  private double tempKf;
 
-    @SerializedName("humidity")
-    private int humidity;
+  @SerializedName("humidity")
+  private int humidity;
 
-    @SerializedName("pressure")
-    private double pressure;
+  @SerializedName("pressure")
+  private double pressure;
 
-    @SerializedName("sea_level")
-    private double seaLevel;
+  @SerializedName("sea_level")
+  private double seaLevel;
 
-    @SerializedName("temp_max")
-    private double tempMax;
+  @SerializedName("temp_max")
+  private double tempMax;
 
-    public double getTemp() {
-        return temp;
-    }
+  public double getTemp() {
+    return temp;
+  }
 
-    public void setTemp(double temp) {
-        this.temp = temp;
-    }
+  public void setTemp(double temp) {
+    this.temp = temp;
+  }
 
-    public double getTempMin() {
-        return tempMin;
-    }
+  public double getTempMin() {
+    return tempMin;
+  }
 
-    public void setTempMin(double tempMin) {
-        this.tempMin = tempMin;
-    }
+  public void setTempMin(double tempMin) {
+    this.tempMin = tempMin;
+  }
 
-    public double getGrndLevel() {
-        return grndLevel;
-    }
+  public double getGrndLevel() {
+    return grndLevel;
+  }
 
-    public void setGrndLevel(double grndLevel) {
-        this.grndLevel = grndLevel;
-    }
+  public void setGrndLevel(double grndLevel) {
+    this.grndLevel = grndLevel;
+  }
 
-    public double getTempKf() {
-        return tempKf;
-    }
+  public double getTempKf() {
+    return tempKf;
+  }
 
-    public void setTempKf(double tempKf) {
-        this.tempKf = tempKf;
-    }
+  public void setTempKf(double tempKf) {
+    this.tempKf = tempKf;
+  }
 
-    public int getHumidity() {
-        return humidity;
-    }
+  public int getHumidity() {
+    return humidity;
+  }
 
-    public void setHumidity(int humidity) {
-        this.humidity = humidity;
-    }
+  public void setHumidity(int humidity) {
+    this.humidity = humidity;
+  }
 
-    public double getPressure() {
-        return pressure;
-    }
+  public double getPressure() {
+    return pressure;
+  }
 
-    public void setPressure(double pressure) {
-        this.pressure = pressure;
-    }
+  public void setPressure(double pressure) {
+    this.pressure = pressure;
+  }
 
-    public double getSeaLevel() {
-        return seaLevel;
-    }
+  public double getSeaLevel() {
+    return seaLevel;
+  }
 
-    public void setSeaLevel(double seaLevel) {
-        this.seaLevel = seaLevel;
-    }
+  public void setSeaLevel(double seaLevel) {
+    this.seaLevel = seaLevel;
+  }
 
-    public double getTempMax() {
-        return tempMax;
-    }
+  public double getTempMax() {
+    return tempMax;
+  }
 
-    public void setTempMax(double tempMax) {
-        this.tempMax = tempMax;
-    }
+  public void setTempMax(double tempMax) {
+    this.tempMax = tempMax;
+  }
 
-    @Override
-    public String toString() {
-        return
-                "Main{" +
-                        "temp = '" + temp + '\'' +
-                        ",temp_min = '" + tempMin + '\'' +
-                        ",grnd_level = '" + grndLevel + '\'' +
-                        ",temp_kf = '" + tempKf + '\'' +
-                        ",humidity = '" + humidity + '\'' +
-                        ",pressure = '" + pressure + '\'' +
-                        ",sea_level = '" + seaLevel + '\'' +
-                        ",temp_max = '" + tempMax + '\'' +
-                        "}";
-    }
+  @Override
+  public String toString() {
+    return
+        "Main{" +
+            "temp = '" + temp + '\'' +
+            ",temp_min = '" + tempMin + '\'' +
+            ",grnd_level = '" + grndLevel + '\'' +
+            ",temp_kf = '" + tempKf + '\'' +
+            ",humidity = '" + humidity + '\'' +
+            ",pressure = '" + pressure + '\'' +
+            ",sea_level = '" + seaLevel + '\'' +
+            ",temp_max = '" + tempMax + '\'' +
+            "}";
+  }
 }
