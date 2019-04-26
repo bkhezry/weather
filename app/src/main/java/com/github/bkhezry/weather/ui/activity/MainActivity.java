@@ -1,8 +1,10 @@
-package com.github.bkhezry.weather;
+package com.github.bkhezry.weather.ui.activity;
+
+import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.os.Bundle;
+import com.github.bkhezry.weather.R;
 
 public class MainActivity extends AppCompatActivity {
 
