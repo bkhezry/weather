@@ -18,9 +18,9 @@ public interface ApiService {
       @Query("appid") String appId
   );
 
-  // Get current weather
+  // Get five days weather
   @GET("forecast")
-  Single<FiveDayResponse> getFiveDaytWeather(
+  Single<FiveDayResponse> getFiveDaysWeather(
       @Query("q") String q,
       @Query("units") String units,
       @Query("lang") String lang,
