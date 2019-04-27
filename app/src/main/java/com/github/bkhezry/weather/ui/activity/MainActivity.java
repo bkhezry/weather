@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatTextView;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,6 +18,8 @@ import com.github.bkhezry.weather.utils.Constants;
 import com.mikepenz.fastadapter.FastAdapter;
 import com.mikepenz.fastadapter.adapters.ItemAdapter;
 
+import java.util.Locale;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -28,10 +31,18 @@ public class MainActivity extends AppCompatActivity {
 
   @BindView(R.id.recycler_view)
   RecyclerView recyclerView;
+  @BindView(R.id.location_name_text_view)
+  AppCompatTextView locationNameTextView;
+  @BindView(R.id.temp_text_view)
+  AppCompatTextView tempTextView;
+  @BindView(R.id.description_text_view)
+  AppCompatTextView descriptionTextView;
+  @BindView(R.id.humidity_text_view)
+  AppCompatTextView humidityTextView;
   private FastAdapter<ListItem> mFastAdapter;
   private ItemAdapter<ListItem> mItemAdapter;
   private CompositeDisposable disposable = new CompositeDisposable();
-  private String cityName = "Saqqez,IR";
+  private String cityName = "Saqqez, IR";
   private String defaultLang = "en";
 
   @Override
@@ -39,9 +50,14 @@ public class MainActivity extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
     ButterKnife.bind(this);
+    initValues();
     initRecyclerView();
     generateList();
     getCurrentWeather();
+  }
+
+  private void initValues() {
+    locationNameTextView.setText(cityName);
   }
 
   private void getCurrentWeather() {
@@ -55,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
               @Override
               public void onSuccess(CurrentWeatherResponse currentWeatherResponse) {
                 Log.d("MainActivity", "onSuccess: " + currentWeatherResponse.getName());
+                handleCurrentWeather(currentWeatherResponse);
               }
 
               @Override
@@ -64,6 +81,14 @@ public class MainActivity extends AppCompatActivity {
             })
 
     );
+  }
+
+  private void handleCurrentWeather(CurrentWeatherResponse response) {
+    tempTextView.setText(String.format("%s\u00b0", response.getMain().getTemp()));
+    if (response.getWeather().size() != 0) {
+      descriptionTextView.setText(response.getWeather().get(0).getMain());
+    }
+    humidityTextView.setText(String.format(Locale.getDefault(), "%d%%", response.getMain().getHumidity()));
   }
 
   private void initRecyclerView() {

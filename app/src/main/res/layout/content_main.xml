@@ -24,6 +24,7 @@
             android:paddingTop="@dimen/spacing_medium">
 
             <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/temp_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -33,6 +34,7 @@
                 android:textSize="100sp" />
 
             <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/description_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -69,6 +71,7 @@
                         android:textStyle="bold" />
 
                     <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/humidity_text_view"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
