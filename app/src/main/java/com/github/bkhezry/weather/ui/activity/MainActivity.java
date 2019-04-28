@@ -2,7 +2,10 @@ package com.github.bkhezry.weather.ui.activity;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -21,7 +24,9 @@ import com.github.bkhezry.weather.utils.ApiClient;
 import com.github.bkhezry.weather.utils.AppUtil;
 import com.github.bkhezry.weather.utils.Constants;
 import com.mikepenz.fastadapter.FastAdapter;
+import com.mikepenz.fastadapter.IAdapter;
 import com.mikepenz.fastadapter.adapters.ItemAdapter;
+import com.mikepenz.fastadapter.listeners.OnClickListener;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -187,6 +192,12 @@ public class MainActivity extends AppCompatActivity {
     mFastAdapter = FastAdapter.with(mItemAdapter);
     recyclerView.setItemAnimator(new DefaultItemAnimator());
     recyclerView.setAdapter(mFastAdapter);
+    mFastAdapter.withOnClickListener(new OnClickListener<WeatherCollection>() {
+      @Override
+      public boolean onClick(@Nullable View v, @NonNull IAdapter<WeatherCollection> adapter, @NonNull WeatherCollection item, int position) {
+        return true;
+      }
+    });
   }
 
   @Override
