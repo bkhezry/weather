@@ -86,6 +86,7 @@
                     android:layout_weight="0.5">
 
                     <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/weather_image_view"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         app:srcCompat="@drawable/mostly_cloudy_day" />

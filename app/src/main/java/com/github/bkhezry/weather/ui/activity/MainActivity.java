@@ -7,6 +7,7 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -53,6 +54,8 @@ public class MainActivity extends AppCompatActivity {
   AppCompatTextView descriptionTextView;
   @BindView(R.id.humidity_text_view)
   AppCompatTextView humidityTextView;
+  @BindView(R.id.weather_image_view)
+  AppCompatImageView weatherImageView;
   private FastAdapter<WeatherCollection> mFastAdapter;
   private ItemAdapter<WeatherCollection> mItemAdapter;
   private CompositeDisposable disposable = new CompositeDisposable();
@@ -102,6 +105,7 @@ public class MainActivity extends AppCompatActivity {
     tempTextView.setText(String.format("%s°", response.getMain().getTemp()));
     if (response.getWeather().size() != 0) {
       descriptionTextView.setText(response.getWeather().get(0).getMain());
+      AppUtil.setWeatherIcon(getApplicationContext(), weatherImageView, response.getWeather().get(0).getId());
     }
     humidityTextView.setText(String.format(Locale.getDefault(), "%d%%", response.getMain().getHumidity()));
   }
