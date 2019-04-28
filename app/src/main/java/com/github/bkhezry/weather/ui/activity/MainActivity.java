@@ -166,8 +166,10 @@ public class MainActivity extends AppCompatActivity {
       for (ListItemHourly listItemHourly : listItemHourlies) {
         Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
         calendar.setTimeInMillis(listItemHourly.getDt() * 1000L);
-        if (calendar.getTimeInMillis() <=
-            weatherCollection.getTimestampEnd() && calendar.getTimeInMillis() > weatherCollection.getTimestampStart()) {
+        if (calendar.getTimeInMillis()
+            <= weatherCollection.getTimestampEnd()
+            && calendar.getTimeInMillis()
+            > weatherCollection.getTimestampStart()) {
           weatherCollection.addListItemHourlies(listItemHourly);
         }
       }
