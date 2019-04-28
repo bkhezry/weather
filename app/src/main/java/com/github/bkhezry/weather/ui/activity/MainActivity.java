@@ -94,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
   }
 
   private void handleCurrentWeather(CurrentWeatherResponse response) {
-    tempTextView.setText(String.format("%s\u00b0", response.getMain().getTemp()));
+    tempTextView.setText(String.format("%s°", response.getMain().getTemp()));
     if (response.getWeather().size() != 0) {
       descriptionTextView.setText(response.getWeather().get(0).getMain());
     }
