@@ -1,5 +1,6 @@
 package com.github.bkhezry.weather.model;
 
+import android.content.Context;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -9,6 +10,7 @@ import androidx.appcompat.widget.AppCompatTextView;
 import com.github.bkhezry.weather.R;
 import com.github.bkhezry.weather.model.daysweather.ListItem;
 import com.github.bkhezry.weather.model.fivedayweather.ListItemHourly;
+import com.github.bkhezry.weather.utils.AppUtil;
 import com.github.bkhezry.weather.utils.Constants;
 import com.mikepenz.fastadapter.FastAdapter;
 import com.mikepenz.fastadapter.items.AbstractItem;
@@ -84,6 +86,7 @@ public class WeatherCollection extends AbstractItem<WeatherCollection, WeatherCo
   }
 
   protected static class MyViewHolder extends FastAdapter.ViewHolder<WeatherCollection> {
+    Context context;
     View view;
     @BindView(R.id.day_name_text_view)
     AppCompatTextView dayNameTextView;
@@ -100,6 +103,7 @@ public class WeatherCollection extends AbstractItem<WeatherCollection, WeatherCo
       super(view);
       ButterKnife.bind(this, view);
       this.view = view;
+      this.context = view.getContext();
     }
 
     @Override
@@ -110,6 +114,8 @@ public class WeatherCollection extends AbstractItem<WeatherCollection, WeatherCo
       tempTextView.setText(String.format("%s°", item.getListItem().getTemp().getDay()));
       minTempTextView.setText(String.format("%s°", item.getListItem().getTemp().getMin()));
       maxTempTextView.setText(String.format("%s°", item.getListItem().getTemp().getMax()));
+      int weatherCode = item.getListItem().getWeather().get(0).getId();
+      AppUtil.setWeatherIcon(context, weatherImageView, weatherCode);
     }
 
     @Override

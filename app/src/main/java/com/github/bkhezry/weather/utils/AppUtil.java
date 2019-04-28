@@ -1,5 +1,12 @@
 package com.github.bkhezry.weather.utils;
 
+import android.content.Context;
+
+import androidx.appcompat.widget.AppCompatImageView;
+
+import com.bumptech.glide.Glide;
+import com.github.bkhezry.weather.R;
+
 import java.util.Calendar;
 import java.util.TimeZone;
 
@@ -30,5 +37,27 @@ public class AppUtil {
     calendar.setTimeInMillis(cal.getTimeInMillis());
     calendar.add(Calendar.DATE, days);
     return calendar;
+  }
+
+  public static void setWeatherIcon(Context context, AppCompatImageView imageView, int weatherCode) {
+    if (weatherCode / 100 == 2) {
+      Glide.with(context).load(R.drawable.thunderstorm_day).into(imageView);
+    } else if (weatherCode / 100 == 3) {
+      Glide.with(context).load(R.drawable.rainy_weather).into(imageView);
+    } else if (weatherCode / 100 == 5) {
+      Glide.with(context).load(R.drawable.rainy_day).into(imageView);
+    } else if (weatherCode / 100 == 6) {
+      Glide.with(context).load(R.drawable.snow_weather).into(imageView);
+    } else if (weatherCode / 100 == 7) {
+      Glide.with(context).load(R.drawable.unknown).into(imageView);
+    } else if (weatherCode == 800) {
+      Glide.with(context).load(R.drawable.clear_day).into(imageView);
+    } else if (weatherCode == 801) {
+      Glide.with(context).load(R.drawable.few_clouds_day).into(imageView);
+    } else if (weatherCode == 803) {
+      Glide.with(context).load(R.drawable.broken_clouds).into(imageView);
+    } else if (weatherCode / 100 == 8) {
+      Glide.with(context).load(R.drawable.cloudy_weather).into(imageView);
+    }
   }
 }
