@@ -63,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
   private String defaultLang = "en";
   private List<WeatherCollection> weatherCollections;
   private ApiService apiService;
+  private WeatherCollection todayWeatherCollection;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -183,6 +184,7 @@ public class MainActivity extends AppCompatActivity {
         }
       }
     }
+    todayWeatherCollection = weatherCollections.remove(0);
     mItemAdapter.clear();
     mItemAdapter.add(weatherCollections);
   }
