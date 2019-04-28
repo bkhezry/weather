@@ -3,16 +3,21 @@ package com.github.bkhezry.weather.model;
 import android.view.View;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatTextView;
 
 import com.github.bkhezry.weather.R;
 import com.github.bkhezry.weather.model.daysweather.ListItem;
 import com.github.bkhezry.weather.model.fivedayweather.ListItemHourly;
+import com.github.bkhezry.weather.utils.Constants;
 import com.mikepenz.fastadapter.FastAdapter;
 import com.mikepenz.fastadapter.items.AbstractItem;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.TimeZone;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class WeatherCollection extends AbstractItem<WeatherCollection, WeatherCollection.MyViewHolder> {
@@ -79,7 +84,14 @@ public class WeatherCollection extends AbstractItem<WeatherCollection, WeatherCo
 
   protected static class MyViewHolder extends FastAdapter.ViewHolder<WeatherCollection> {
     View view;
-
+    @BindView(R.id.day_name_text_view)
+    AppCompatTextView dayNameTextView;
+    @BindView(R.id.temp_text_view)
+    AppCompatTextView tempTextView;
+    @BindView(R.id.min_temp_text_view)
+    AppCompatTextView minTempTextView;
+    @BindView(R.id.max_temp_text_view)
+    AppCompatTextView maxTempTextView;
 
     MyViewHolder(View view) {
       super(view);
@@ -89,6 +101,12 @@ public class WeatherCollection extends AbstractItem<WeatherCollection, WeatherCo
 
     @Override
     public void bindView(@NonNull WeatherCollection item, @NonNull List<Object> payloads) {
+      Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+      calendar.setTimeInMillis(item.getListItem().getDt() * 1000L);
+      dayNameTextView.setText(Constants.DAYS_OF_WEEK[calendar.get(Calendar.DAY_OF_WEEK) - 1]);
+      tempTextView.setText(String.format("%s°", item.getListItem().getTemp().getDay()));
+      minTempTextView.setText(String.format("%s°", item.getListItem().getTemp().getMin()));
+      maxTempTextView.setText(String.format("%s°", item.getListItem().getTemp().getMax()));
 
     }
 

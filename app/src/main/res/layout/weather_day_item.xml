@@ -28,6 +28,7 @@
             android:orientation="vertical">
 
             <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/day_name_text_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -41,6 +42,7 @@
                 app:srcCompat="@drawable/mostly_cloudy" />
 
             <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/temp_text_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -54,6 +56,7 @@
                 android:orientation="horizontal">
 
                 <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/min_temp_text_view"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -62,6 +65,7 @@
                     android:textColor="@android:color/darker_gray" />
 
                 <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/max_temp_text_view"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
