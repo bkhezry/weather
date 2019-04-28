@@ -10,15 +10,24 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.github.bkhezry.weather.R;
+import com.github.bkhezry.weather.model.WeatherCollection;
 import com.github.bkhezry.weather.model.currentweather.CurrentWeatherResponse;
-import com.github.bkhezry.weather.model.fivedayweather.ListItem;
+import com.github.bkhezry.weather.model.daysweather.ListItem;
+import com.github.bkhezry.weather.model.daysweather.MultipleDaysWeatherResponse;
+import com.github.bkhezry.weather.model.fivedayweather.FiveDayResponse;
+import com.github.bkhezry.weather.model.fivedayweather.ListItemHourly;
 import com.github.bkhezry.weather.service.ApiService;
 import com.github.bkhezry.weather.utils.ApiClient;
+import com.github.bkhezry.weather.utils.AppUtil;
 import com.github.bkhezry.weather.utils.Constants;
 import com.mikepenz.fastadapter.FastAdapter;
 import com.mikepenz.fastadapter.adapters.ItemAdapter;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
+import java.util.TimeZone;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -39,21 +48,24 @@ public class MainActivity extends AppCompatActivity {
   AppCompatTextView descriptionTextView;
   @BindView(R.id.humidity_text_view)
   AppCompatTextView humidityTextView;
-  private FastAdapter<ListItem> mFastAdapter;
-  private ItemAdapter<ListItem> mItemAdapter;
+  private FastAdapter<WeatherCollection> mFastAdapter;
+  private ItemAdapter<WeatherCollection> mItemAdapter;
   private CompositeDisposable disposable = new CompositeDisposable();
   private String cityName = "Saqqez, IR";
   private String defaultLang = "en";
+  private List<WeatherCollection> weatherCollections;
+  private ApiService apiService;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
     ButterKnife.bind(this);
+    apiService = ApiClient.getClient(getApplicationContext()).create(ApiService.class);
     initValues();
     initRecyclerView();
-    generateList();
     getCurrentWeather();
+    getFiveDaysWeather();
   }
 
   private void initValues() {
@@ -61,7 +73,6 @@ public class MainActivity extends AppCompatActivity {
   }
 
   private void getCurrentWeather() {
-    ApiService apiService = ApiClient.getClient(getApplicationContext()).create(ApiService.class);
     disposable.add(
         apiService.getCurrentWeather(
             cityName, Constants.UNITS, defaultLang, Constants.APP_ID)
@@ -70,7 +81,6 @@ public class MainActivity extends AppCompatActivity {
             .subscribeWith(new DisposableSingleObserver<CurrentWeatherResponse>() {
               @Override
               public void onSuccess(CurrentWeatherResponse currentWeatherResponse) {
-                Log.d("MainActivity", "onSuccess: " + currentWeatherResponse.getName());
                 handleCurrentWeather(currentWeatherResponse);
               }
 
@@ -91,6 +101,82 @@ public class MainActivity extends AppCompatActivity {
     humidityTextView.setText(String.format(Locale.getDefault(), "%d%%", response.getMain().getHumidity()));
   }
 
+  private void getFiveDaysWeather() {
+    disposable.add(
+        apiService.getMultipleDaysWeather(
+            cityName, Constants.UNITS, defaultLang, 5, Constants.APP_ID)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeWith(new DisposableSingleObserver<MultipleDaysWeatherResponse>() {
+              @Override
+              public void onSuccess(MultipleDaysWeatherResponse response) {
+                handleFiveDayResponse(response);
+              }
+
+              @Override
+              public void onError(Throwable e) {
+                Log.e("MainActivity", "onError: " + e.getMessage());
+              }
+            })
+
+    );
+  }
+
+  private void handleFiveDayResponse(MultipleDaysWeatherResponse response) {
+    weatherCollections = new ArrayList<>();
+    List<ListItem> list = response.getList();
+    int day = 0;
+    for (ListItem item : list) {
+      Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("Asia/Tehran"));
+      Calendar newCalendar = AppUtil.addDays(calendar, day);
+      WeatherCollection weatherCollection = new WeatherCollection();
+      weatherCollection.setListItem(item);
+      weatherCollection.setTimestampStart(AppUtil.getStartOfDayTimestamp(newCalendar));
+      weatherCollection.setTimestampEnd(AppUtil.getEndOfDayTimestamp(newCalendar));
+      weatherCollections.add(weatherCollection);
+      day++;
+    }
+    getFiveDaysHourlyWeather();
+  }
+
+  private void getFiveDaysHourlyWeather() {
+    disposable.add(
+        apiService.getFiveDaysWeather(
+            cityName, Constants.UNITS, defaultLang, Constants.APP_ID)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeWith(new DisposableSingleObserver<FiveDayResponse>() {
+              @Override
+              public void onSuccess(FiveDayResponse response) {
+                handleFiveDayHourlyResponse(response);
+              }
+
+              @Override
+              public void onError(Throwable e) {
+                Log.e("MainActivity", "onError: " + e.getMessage());
+              }
+            })
+
+    );
+  }
+
+  private void handleFiveDayHourlyResponse(FiveDayResponse response) {
+    for (WeatherCollection weatherCollection : weatherCollections) {
+      ArrayList<ListItemHourly> listItemHourlies = new ArrayList<>(response.getList());
+      for (ListItemHourly listItemHourly : listItemHourlies) {
+        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+        calendar.setTimeInMillis(listItemHourly.getDt() * 1000L);
+        if (calendar.getTimeInMillis() <=
+            weatherCollection.getTimestampEnd() && calendar.getTimeInMillis() > weatherCollection.getTimestampStart()) {
+          weatherCollection.addListItemHourlies(listItemHourly);
+        }
+      }
+    }
+    mItemAdapter.clear();
+    mItemAdapter.add(weatherCollections);
+  }
+
+
   private void initRecyclerView() {
     LinearLayoutManager layoutManager
         = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
@@ -101,22 +187,9 @@ public class MainActivity extends AppCompatActivity {
     recyclerView.setAdapter(mFastAdapter);
   }
 
-  private void generateList() {
-    //TODO will be replace with five day weather api request.
-    ListItem listItem = new ListItem();
-    mItemAdapter.clear();
-    mItemAdapter.add(listItem);
-    mItemAdapter.add(listItem);
-    mItemAdapter.add(listItem);
-    mItemAdapter.add(listItem);
-    mItemAdapter.add(listItem);
-  }
-
   @Override
   protected void onDestroy() {
     super.onDestroy();
     disposable.dispose();
   }
-
-
 }
