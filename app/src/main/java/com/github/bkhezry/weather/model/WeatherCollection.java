@@ -107,7 +107,6 @@ public class WeatherCollection extends AbstractItem<WeatherCollection, WeatherCo
       tempTextView.setText(String.format("%s°", item.getListItem().getTemp().getDay()));
       minTempTextView.setText(String.format("%s°", item.getListItem().getTemp().getMin()));
       maxTempTextView.setText(String.format("%s°", item.getListItem().getTemp().getMax()));
-
     }
 
     @Override
