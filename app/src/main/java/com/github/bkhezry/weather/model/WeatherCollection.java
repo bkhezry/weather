@@ -3,6 +3,7 @@ package com.github.bkhezry.weather.model;
 import android.view.View;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
 
 import com.github.bkhezry.weather.R;
@@ -92,6 +93,8 @@ public class WeatherCollection extends AbstractItem<WeatherCollection, WeatherCo
     AppCompatTextView minTempTextView;
     @BindView(R.id.max_temp_text_view)
     AppCompatTextView maxTempTextView;
+    @BindView(R.id.weather_image_view)
+    AppCompatImageView weatherImageView;
 
     MyViewHolder(View view) {
       super(view);

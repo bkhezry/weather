@@ -37,6 +37,7 @@
                 android:textStyle="bold" />
 
             <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/weather_image_view"
                 android:layout_width="64dp"
                 android:layout_height="64dp"
                 app:srcCompat="@drawable/mostly_cloudy_day" />
