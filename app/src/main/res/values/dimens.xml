@@ -4,4 +4,5 @@
     <dimen name="spacing_large">15dp</dimen>
     <dimen name="spacing_mlarge">20dp</dimen>
     <dimen name="spacing_xlarge">35dp</dimen>
+    <dimen name="spacing_xxlarge">50dp</dimen>
 </resources>
