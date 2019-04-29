@@ -1,6 +1,8 @@
 package com.github.bkhezry.weather.model;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.view.View;
 
 import androidx.annotation.ColorInt;
@@ -32,6 +34,8 @@ public class WeatherCollection extends AbstractItem<WeatherCollection, WeatherCo
   private long timestampEnd;
   private @ColorInt
   int color;
+  private @ColorInt
+  int colorAlpha;
 
   public List<ListItemHourly> getListItemHourlies() {
     return listItemHourlies;
@@ -80,6 +84,14 @@ public class WeatherCollection extends AbstractItem<WeatherCollection, WeatherCo
     this.color = color;
   }
 
+  public int getColorAlpha() {
+    return colorAlpha;
+  }
+
+  public void setColorAlpha(int colorAlpha) {
+    this.colorAlpha = colorAlpha;
+  }
+
   @NonNull
   @Override
   public MyViewHolder getViewHolder(@NonNull View v) {
@@ -111,6 +123,8 @@ public class WeatherCollection extends AbstractItem<WeatherCollection, WeatherCo
     AppCompatImageView weatherImageView;
     @BindView(R.id.card_view)
     MaterialCardView cardView;
+    @BindView(R.id.shadow_view)
+    View shadowView;
 
     MyViewHolder(View view) {
       super(view);
@@ -122,6 +136,11 @@ public class WeatherCollection extends AbstractItem<WeatherCollection, WeatherCo
     @Override
     public void bindView(@NonNull WeatherCollection item, @NonNull List<Object> payloads) {
       cardView.setCardBackgroundColor(item.getColor());
+      int[] colors = {
+          Color.TRANSPARENT,
+          item.getColorAlpha(),
+          Color.TRANSPARENT
+      };
       Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
       calendar.setTimeInMillis(item.getListItem().getDt() * 1000L);
       dayNameTextView.setText(Constants.DAYS_OF_WEEK[calendar.get(Calendar.DAY_OF_WEEK) - 1]);
@@ -130,6 +149,10 @@ public class WeatherCollection extends AbstractItem<WeatherCollection, WeatherCo
       maxTempTextView.setText(String.format("%s°", item.getListItem().getTemp().getMax()));
       int weatherCode = item.getListItem().getWeather().get(0).getId();
       AppUtil.setWeatherIcon(context, weatherImageView, weatherCode);
+      GradientDrawable shape = new GradientDrawable(GradientDrawable.Orientation.RIGHT_LEFT, colors);
+      shape.setShape(GradientDrawable.OVAL);
+
+      shadowView.setBackground(shape);
     }
 
     @Override

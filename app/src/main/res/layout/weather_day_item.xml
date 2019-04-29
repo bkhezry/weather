@@ -78,6 +78,7 @@
     </com.google.android.material.card.MaterialCardView>
 
     <View
+        android:id="@+id/shadow_view"
         android:layout_width="match_parent"
         android:layout_height="15dp"
         android:background="@drawable/shadow_gradient" />
