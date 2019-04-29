@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <array name="mdcolor_500">
+        <item name="blue_grey_500" type="color">#607d8b</item>
         <item name="green_500" type="color">#259b24</item>
-        <item name="purple_500" type="color">#9c27b0</item>
+        <item name="pink_500" type="color">#e91e63</item>
         <item name="orange_500" type="color">#ff9800</item>
         <item name="blue_500" type="color">#5677fc</item>
         <item name="red_500" type="color">#e51c23</item>
