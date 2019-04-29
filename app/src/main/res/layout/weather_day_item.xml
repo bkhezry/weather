@@ -17,7 +17,6 @@
         android:clipToPadding="false"
         android:divider="@android:color/transparent"
         android:dividerHeight="0.0px"
-        app:cardBackgroundColor="@color/design_default_color_primary"
         app:cardCornerRadius="25dp"
         app:cardPreventCornerOverlap="false">
 
@@ -64,7 +63,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="56\u00b0"
-                    android:textColor="@android:color/darker_gray" />
+                    android:textColor="@color/grey_10" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/max_temp_text_view"
