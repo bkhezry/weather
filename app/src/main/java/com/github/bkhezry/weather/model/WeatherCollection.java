@@ -3,6 +3,7 @@ package com.github.bkhezry.weather.model;
 import android.content.Context;
 import android.view.View;
 
+import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
@@ -12,6 +13,7 @@ import com.github.bkhezry.weather.model.daysweather.ListItem;
 import com.github.bkhezry.weather.model.fivedayweather.ListItemHourly;
 import com.github.bkhezry.weather.utils.AppUtil;
 import com.github.bkhezry.weather.utils.Constants;
+import com.google.android.material.card.MaterialCardView;
 import com.mikepenz.fastadapter.FastAdapter;
 import com.mikepenz.fastadapter.items.AbstractItem;
 
@@ -28,6 +30,8 @@ public class WeatherCollection extends AbstractItem<WeatherCollection, WeatherCo
   private ListItem listItem;
   private long timestampStart;
   private long timestampEnd;
+  private @ColorInt
+  int color;
 
   public List<ListItemHourly> getListItemHourlies() {
     return listItemHourlies;
@@ -68,6 +72,13 @@ public class WeatherCollection extends AbstractItem<WeatherCollection, WeatherCo
     this.timestampEnd = timestampEnd;
   }
 
+  public int getColor() {
+    return color;
+  }
+
+  public void setColor(int color) {
+    this.color = color;
+  }
 
   @NonNull
   @Override
@@ -98,6 +109,8 @@ public class WeatherCollection extends AbstractItem<WeatherCollection, WeatherCo
     AppCompatTextView maxTempTextView;
     @BindView(R.id.weather_image_view)
     AppCompatImageView weatherImageView;
+    @BindView(R.id.card_view)
+    MaterialCardView cardView;
 
     MyViewHolder(View view) {
       super(view);
@@ -108,6 +121,7 @@ public class WeatherCollection extends AbstractItem<WeatherCollection, WeatherCo
 
     @Override
     public void bindView(@NonNull WeatherCollection item, @NonNull List<Object> payloads) {
+      cardView.setCardBackgroundColor(item.getColor());
       Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
       calendar.setTimeInMillis(item.getListItem().getDt() * 1000L);
       dayNameTextView.setText(Constants.DAYS_OF_WEEK[calendar.get(Calendar.DAY_OF_WEEK) - 1]);

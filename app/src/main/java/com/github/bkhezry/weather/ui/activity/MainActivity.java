@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
+import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -36,6 +37,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
+import butterknife.BindArray;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -57,6 +59,9 @@ public class MainActivity extends AppCompatActivity {
   AppCompatTextView humidityTextView;
   @BindView(R.id.weather_image_view)
   AppCompatImageView weatherImageView;
+  @BindArray(R.array.mdcolor_500)
+  @ColorInt
+  int[] colors;
   private FastAdapter<WeatherCollection> mFastAdapter;
   private ItemAdapter<WeatherCollection> mItemAdapter;
   private CompositeDisposable disposable = new CompositeDisposable();
@@ -142,6 +147,7 @@ public class MainActivity extends AppCompatActivity {
       Calendar newCalendar = AppUtil.addDays(calendar, day);
       WeatherCollection weatherCollection = new WeatherCollection();
       weatherCollection.setListItem(item);
+      weatherCollection.setColor(colors[day]);
       weatherCollection.setTimestampStart(AppUtil.getStartOfDayTimestamp(newCalendar));
       weatherCollection.setTimestampEnd(AppUtil.getEndOfDayTimestamp(newCalendar));
       weatherCollections.add(weatherCollection);
