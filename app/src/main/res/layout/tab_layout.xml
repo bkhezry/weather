@@ -27,27 +27,13 @@
             android:layout_width="@dimen/spacing_medium"
             android:layout_height="0dp" />
 
-        <com.google.android.material.button.MaterialButton
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="Tomorrow"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
-            android:textColor="@android:color/black"
-            android:textStyle="bold"
-            app:strokeColor="@android:color/white" />
-
-        <View
-            android:layout_width="@dimen/spacing_medium"
-            android:layout_height="0dp" />
 
         <com.google.android.material.button.MaterialButton
             style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:text="Next Week"
+            android:text="Next 15 Days"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
             android:textColor="@android:color/black"
             android:textStyle="bold"
