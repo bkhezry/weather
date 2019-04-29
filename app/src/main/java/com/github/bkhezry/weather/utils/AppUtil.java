@@ -3,6 +3,9 @@ package com.github.bkhezry.weather.utils;
 import android.content.Context;
 
 import androidx.appcompat.widget.AppCompatImageView;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.bumptech.glide.Glide;
 import com.github.bkhezry.weather.R;
@@ -59,5 +62,11 @@ public class AppUtil {
     } else if (weatherCode / 100 == 8) {
       Glide.with(context).load(R.drawable.cloudy_weather).into(imageView);
     }
+  }
+
+  public static void showFragment(Fragment fragment, FragmentManager fragmentManager) {
+    FragmentTransaction transaction = fragmentManager.beginTransaction();
+    transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+    transaction.add(android.R.id.content, fragment).addToBackStack(null).commit();
   }
 }
