@@ -12,16 +12,24 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 
 import com.github.bkhezry.weather.R;
+import com.github.bkhezry.weather.model.WeatherCollection;
+import com.google.android.material.card.MaterialCardView;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class HourlyFragment extends DialogFragment {
+  @BindView(R.id.card_view)
+  MaterialCardView cardView;
+  WeatherCollection weatherCollection;
+
   @Override
   public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                            Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_hourly,
         container, false);
     ButterKnife.bind(this, view);
+    cardView.setCardBackgroundColor(weatherCollection.getColor());
     return view;
   }
 
@@ -43,5 +51,9 @@ public class HourlyFragment extends DialogFragment {
   public void onActivityCreated(Bundle arg0) {
     super.onActivityCreated(arg0);
 
+  }
+
+  public void setWeatherCollection(WeatherCollection weatherCollection) {
+    this.weatherCollection = weatherCollection;
   }
 }

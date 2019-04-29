@@ -212,7 +212,9 @@ public class MainActivity extends AppCompatActivity {
     mFastAdapter.withOnClickListener(new OnClickListener<WeatherCollection>() {
       @Override
       public boolean onClick(@Nullable View v, @NonNull IAdapter<WeatherCollection> adapter, @NonNull WeatherCollection item, int position) {
-        AppUtil.showFragment(new HourlyFragment(), getSupportFragmentManager(), true);
+        HourlyFragment hourlyFragment = new HourlyFragment();
+        hourlyFragment.setWeatherCollection(item);
+        AppUtil.showFragment(hourlyFragment, getSupportFragmentManager(), true);
         return true;
       }
     });
