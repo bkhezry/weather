@@ -64,9 +64,13 @@ public class AppUtil {
     }
   }
 
-  public static void showFragment(Fragment fragment, FragmentManager fragmentManager) {
+  public static void showFragment(Fragment fragment, FragmentManager fragmentManager, boolean withAnimation) {
     FragmentTransaction transaction = fragmentManager.beginTransaction();
-    transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+    if (withAnimation) {
+      transaction.setCustomAnimations(R.anim.slide_up_anim, R.anim.slide_down_anim);
+    } else {
+      transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+    }
     transaction.add(android.R.id.content, fragment).addToBackStack(null).commit();
   }
 }

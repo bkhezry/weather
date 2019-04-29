@@ -21,6 +21,7 @@ import com.github.bkhezry.weather.model.daysweather.MultipleDaysWeatherResponse;
 import com.github.bkhezry.weather.model.fivedayweather.FiveDayResponse;
 import com.github.bkhezry.weather.model.fivedayweather.ListItemHourly;
 import com.github.bkhezry.weather.service.ApiService;
+import com.github.bkhezry.weather.ui.fragment.HourlyFragment;
 import com.github.bkhezry.weather.utils.ApiClient;
 import com.github.bkhezry.weather.utils.AppUtil;
 import com.github.bkhezry.weather.utils.Constants;
@@ -201,6 +202,7 @@ public class MainActivity extends AppCompatActivity {
     mFastAdapter.withOnClickListener(new OnClickListener<WeatherCollection>() {
       @Override
       public boolean onClick(@Nullable View v, @NonNull IAdapter<WeatherCollection> adapter, @NonNull WeatherCollection item, int position) {
+        AppUtil.showFragment(new HourlyFragment(), getSupportFragmentManager(), true);
         return true;
       }
     });
