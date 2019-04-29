@@ -62,6 +62,9 @@ public class MainActivity extends AppCompatActivity {
   @BindArray(R.array.mdcolor_500)
   @ColorInt
   int[] colors;
+  @BindArray(R.array.mdcolor_500_alpha)
+  @ColorInt
+  int[] colorsAlpha;
   private FastAdapter<WeatherCollection> mFastAdapter;
   private ItemAdapter<WeatherCollection> mItemAdapter;
   private CompositeDisposable disposable = new CompositeDisposable();
@@ -148,6 +151,7 @@ public class MainActivity extends AppCompatActivity {
       WeatherCollection weatherCollection = new WeatherCollection();
       weatherCollection.setListItem(item);
       weatherCollection.setColor(colors[day]);
+      weatherCollection.setColorAlpha(colorsAlpha[day]);
       weatherCollection.setTimestampStart(AppUtil.getStartOfDayTimestamp(newCalendar));
       weatherCollection.setTimestampEnd(AppUtil.getEndOfDayTimestamp(newCalendar));
       weatherCollections.add(weatherCollection);
