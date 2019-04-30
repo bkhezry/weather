@@ -31,6 +31,7 @@ import java.util.TimeZone;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class HourlyFragment extends DialogFragment {
   @BindView(R.id.card_view)
@@ -107,5 +108,13 @@ public class HourlyFragment extends DialogFragment {
 
   public void setWeatherCollection(WeatherCollection weatherCollection) {
     this.weatherCollection = weatherCollection;
+  }
+
+  @OnClick(R.id.close_button)
+  void close() {
+    dismiss();
+    if (getFragmentManager() != null) {
+      getFragmentManager().popBackStack();
+    }
   }
 }
