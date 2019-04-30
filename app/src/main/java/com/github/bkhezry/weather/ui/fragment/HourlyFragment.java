@@ -9,11 +9,19 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatImageView;
+import androidx.appcompat.widget.AppCompatTextView;
 import androidx.fragment.app.DialogFragment;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.github.bkhezry.weather.R;
 import com.github.bkhezry.weather.model.WeatherCollection;
+import com.github.bkhezry.weather.utils.AppUtil;
+import com.github.bkhezry.weather.utils.Constants;
 import com.google.android.material.card.MaterialCardView;
+
+import java.util.Calendar;
+import java.util.TimeZone;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -22,6 +30,18 @@ public class HourlyFragment extends DialogFragment {
   @BindView(R.id.card_view)
   MaterialCardView cardView;
   WeatherCollection weatherCollection;
+  @BindView(R.id.day_name_text_view)
+  AppCompatTextView dayNameTextView;
+  @BindView(R.id.weather_image_view)
+  AppCompatImageView weatherImageView;
+  @BindView(R.id.temp_text_view)
+  AppCompatTextView tempTextView;
+  @BindView(R.id.min_temp_text_view)
+  AppCompatTextView minTempTextView;
+  @BindView(R.id.max_temp_text_view)
+  AppCompatTextView maxTempTextView;
+  @BindView(R.id.recycler_view)
+  RecyclerView recyclerView;
 
   @Override
   public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -29,8 +49,20 @@ public class HourlyFragment extends DialogFragment {
     View view = inflater.inflate(R.layout.fragment_hourly,
         container, false);
     ButterKnife.bind(this, view);
-    cardView.setCardBackgroundColor(weatherCollection.getColor());
+    setVariables();
     return view;
+  }
+
+  private void setVariables() {
+    cardView.setCardBackgroundColor(weatherCollection.getColor());
+    Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+    calendar.setTimeInMillis(weatherCollection.getListItem().getDt() * 1000L);
+    dayNameTextView.setText(Constants.DAYS_OF_WEEK[calendar.get(Calendar.DAY_OF_WEEK) - 1]);
+    tempTextView.setText(String.format("%s°", weatherCollection.getListItem().getTemp().getDay()));
+    minTempTextView.setText(String.format("%s°", weatherCollection.getListItem().getTemp().getMin()));
+    maxTempTextView.setText(String.format("%s°", weatherCollection.getListItem().getTemp().getMax()));
+    int weatherCode = weatherCollection.getListItem().getWeather().get(0).getId();
+    AppUtil.setWeatherIcon(getActivity(), weatherImageView, weatherCode);
   }
 
   @NonNull
@@ -45,12 +77,6 @@ public class HourlyFragment extends DialogFragment {
     lp.height = WindowManager.LayoutParams.MATCH_PARENT;
     dialog.getWindow().setAttributes(lp);
     return dialog;
-  }
-
-  @Override
-  public void onActivityCreated(Bundle arg0) {
-    super.onActivityCreated(arg0);
-
   }
 
   public void setWeatherCollection(WeatherCollection weatherCollection) {
