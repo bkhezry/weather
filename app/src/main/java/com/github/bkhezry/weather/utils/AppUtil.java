@@ -109,10 +109,6 @@ public class AppUtil {
   }
 
   public static boolean isNight(int currentTimestamp, int timestampStart, int timestampEnd) {
-    if (currentTimestamp > timestampStart && currentTimestamp < timestampEnd) {
-      return false;
-    } else {
-      return true;
-    }
+    return currentTimestamp <= timestampStart || currentTimestamp >= timestampEnd;
   }
 }
