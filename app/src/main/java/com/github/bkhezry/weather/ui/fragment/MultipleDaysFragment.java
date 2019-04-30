@@ -81,6 +81,7 @@ public class MultipleDaysFragment extends DialogFragment {
     handler.postDelayed(new Runnable() {
       @Override
       public void run() {
+        response.getList().remove(0);
         mItemAdapter.clear();
         mItemAdapter.add(response.getList());
       }
