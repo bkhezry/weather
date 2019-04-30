@@ -115,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
     tempTextView.setText(String.format(Locale.getDefault(), "%.0f°", response.getMain().getTemp()));
     if (response.getWeather().size() != 0) {
       descriptionTextView.setText(response.getWeather().get(0).getMain());
-      AppUtil.setWeatherIcon(AppUtil.isNight(response.getDt(), response.getSys().getSunrise(), response.getSys().getSunset()), getApplicationContext(), weatherImageView, response.getWeather().get(0).getId());
+      AppUtil.setWeatherIcon(getApplicationContext(), weatherImageView, response.getWeather().get(0).getId());
     }
     humidityTextView.setText(String.format(Locale.getDefault(), "%d%%", response.getMain().getHumidity()));
   }
@@ -137,7 +137,6 @@ public class MainActivity extends AppCompatActivity {
                 Log.e("MainActivity", "onError: " + e.getMessage());
               }
             })
-
     );
   }
 

@@ -42,37 +42,21 @@ public class AppUtil {
     return calendar;
   }
 
-  public static void setWeatherIcon(boolean isNight, Context context, AppCompatImageView imageView, int weatherCode) {
+  public static void setWeatherIcon(Context context, AppCompatImageView imageView, int weatherCode) {
     if (weatherCode / 100 == 2) {
-      if (isNight) {
-        Glide.with(context).load(R.drawable.thunderstorm_night).into(imageView);
-      } else {
-        Glide.with(context).load(R.drawable.thunderstorm_day).into(imageView);
-      }
+      Glide.with(context).load(R.drawable.thunderstorm_day).into(imageView);
     } else if (weatherCode / 100 == 3) {
       Glide.with(context).load(R.drawable.rainy_weather).into(imageView);
     } else if (weatherCode / 100 == 5) {
-      if (isNight) {
-        Glide.with(context).load(R.drawable.rainy_night).into(imageView);
-      } else {
-        Glide.with(context).load(R.drawable.rainy_day).into(imageView);
-      }
+      Glide.with(context).load(R.drawable.rainy_day).into(imageView);
     } else if (weatherCode / 100 == 6) {
       Glide.with(context).load(R.drawable.snow_weather).into(imageView);
     } else if (weatherCode / 100 == 7) {
       Glide.with(context).load(R.drawable.unknown).into(imageView);
     } else if (weatherCode == 800) {
-      if (isNight) {
-        Glide.with(context).load(R.drawable.clear_night).into(imageView);
-      } else {
-        Glide.with(context).load(R.drawable.clear_day).into(imageView);
-      }
+      Glide.with(context).load(R.drawable.clear_day).into(imageView);
     } else if (weatherCode == 801) {
-      if (isNight) {
-        Glide.with(context).load(R.drawable.few_clouds_night).into(imageView);
-      } else {
-        Glide.with(context).load(R.drawable.few_clouds_day).into(imageView);
-      }
+      Glide.with(context).load(R.drawable.few_clouds_day).into(imageView);
     } else if (weatherCode == 803) {
       Glide.with(context).load(R.drawable.broken_clouds).into(imageView);
     } else if (weatherCode / 100 == 8) {
@@ -106,9 +90,5 @@ public class AppUtil {
       minuteString = String.valueOf(minute);
     }
     return hourString + ":" + minuteString;
-  }
-
-  public static boolean isNight(int currentTimestamp, int timestampStart, int timestampEnd) {
-    return currentTimestamp <= timestampStart || currentTimestamp >= timestampEnd;
   }
 }
