@@ -22,6 +22,7 @@ import com.mikepenz.fastadapter.items.AbstractItem;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 import java.util.TimeZone;
 
 import butterknife.BindView;
@@ -144,9 +145,9 @@ public class WeatherCollection extends AbstractItem<WeatherCollection, WeatherCo
       Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
       calendar.setTimeInMillis(item.getListItem().getDt() * 1000L);
       dayNameTextView.setText(Constants.DAYS_OF_WEEK[calendar.get(Calendar.DAY_OF_WEEK) - 1]);
-      tempTextView.setText(String.format("%s°", item.getListItem().getTemp().getDay()));
-      minTempTextView.setText(String.format("%s°", item.getListItem().getTemp().getMin()));
-      maxTempTextView.setText(String.format("%s°", item.getListItem().getTemp().getMax()));
+      tempTextView.setText(String.format(Locale.getDefault(), "%.0f°", item.getListItem().getTemp().getDay()));
+      minTempTextView.setText(String.format(Locale.getDefault(), "%.0f°", item.getListItem().getTemp().getMin()));
+      maxTempTextView.setText(String.format(Locale.getDefault(), "%.0f°", item.getListItem().getTemp().getMax()));
       int weatherCode = item.getListItem().getWeather().get(0).getId();
       AppUtil.setWeatherIcon(context, weatherImageView, weatherCode);
       GradientDrawable shape = new GradientDrawable(GradientDrawable.Orientation.RIGHT_LEFT, colors);

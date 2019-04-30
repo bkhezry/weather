@@ -26,6 +26,7 @@ import com.mikepenz.fastadapter.FastAdapter;
 import com.mikepenz.fastadapter.adapters.ItemAdapter;
 
 import java.util.Calendar;
+import java.util.Locale;
 import java.util.TimeZone;
 
 import butterknife.BindView;
@@ -68,9 +69,9 @@ public class HourlyFragment extends DialogFragment {
     Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
     calendar.setTimeInMillis(weatherCollection.getListItem().getDt() * 1000L);
     dayNameTextView.setText(Constants.DAYS_OF_WEEK[calendar.get(Calendar.DAY_OF_WEEK) - 1]);
-    tempTextView.setText(String.format("%s°", weatherCollection.getListItem().getTemp().getDay()));
-    minTempTextView.setText(String.format("%s°", weatherCollection.getListItem().getTemp().getMin()));
-    maxTempTextView.setText(String.format("%s°", weatherCollection.getListItem().getTemp().getMax()));
+    tempTextView.setText(String.format(Locale.getDefault(), "%.0f°", weatherCollection.getListItem().getTemp().getDay()));
+    minTempTextView.setText(String.format(Locale.getDefault(), "%.0f°", weatherCollection.getListItem().getTemp().getMin()));
+    maxTempTextView.setText(String.format(Locale.getDefault(), "%.0f°", weatherCollection.getListItem().getTemp().getMax()));
     int weatherCode = weatherCollection.getListItem().getWeather().get(0).getId();
     AppUtil.setWeatherIcon(getActivity(), weatherImageView, weatherCode);
   }

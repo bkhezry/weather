@@ -112,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
   }
 
   private void handleCurrentWeather(CurrentWeatherResponse response) {
-    tempTextView.setText(String.format("%s°", response.getMain().getTemp()));
+    tempTextView.setText(String.format(Locale.getDefault(), "%.0f°", response.getMain().getTemp()));
     if (response.getWeather().size() != 0) {
       descriptionTextView.setText(response.getWeather().get(0).getMain());
       AppUtil.setWeatherIcon(getApplicationContext(), weatherImageView, response.getWeather().get(0).getId());
