@@ -1,19 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <array name="mdcolor_500">
-        <item name="blue_grey_500" type="color">#607d8b</item>
-        <item name="green_500" type="color">#259b24</item>
-        <item name="pink_500" type="color">#e91e63</item>
-        <item name="orange_500" type="color">#ff9800</item>
-        <item name="blue_500" type="color">#5677fc</item>
-        <item name="red_500" type="color">#e51c23</item>
+        <item name="blue_grey_500" type="color">#6452f0</item>
+        <item name="green_500" type="color">#28E0AE</item>
+        <item name="pink_500" type="color">#ff0090</item>
+        <item name="orange_500" type="color">#FFAE00</item>
+        <item name="blue_500" type="color">#5d50fe</item>
     </array>
     <array name="mdcolor_500_alpha">
-        <item name="blue_grey_500_alpha" type="color">#4D607D8B</item>
-        <item name="green_500_alpha" type="color">#4D259B24</item>
-        <item name="pink_500_alpha" type="color">#4DE91E63</item>
-        <item name="orange_500_alpha" type="color">#4DFF9800</item>
-        <item name="blue_500_alpha" type="color">#4D5677FC</item>
-        <item name="red_500_alpha" type="color">#4DE51C23</item>
+        <item name="blue_grey_500_alpha" type="color">#4D6452F0</item>
+        <item name="green_500_alpha" type="color">#4D28E0AE</item>
+        <item name="pink_500_alpha" type="color">#4DFF0090</item>
+        <item name="orange_500_alpha" type="color">#4DFFAE00</item>
+        <item name="blue_500_alpha" type="color">#4D5D50FE</item>
     </array>
 </resources>
