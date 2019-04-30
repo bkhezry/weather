@@ -185,7 +185,7 @@ public class MainActivity extends AppCompatActivity {
     for (WeatherCollection weatherCollection : weatherCollections) {
       ArrayList<ItemHourly> listItemHourlies = new ArrayList<>(response.getList());
       for (ItemHourly itemHourly : listItemHourlies) {
-        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("Asia/Tehran"));
         calendar.setTimeInMillis(itemHourly.getDt() * 1000L);
         if (calendar.getTimeInMillis()
             <= weatherCollection.getTimestampEnd()
