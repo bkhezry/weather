@@ -23,6 +23,7 @@ import com.github.bkhezry.weather.model.fivedayweather.FiveDayResponse;
 import com.github.bkhezry.weather.model.fivedayweather.ItemHourly;
 import com.github.bkhezry.weather.service.ApiService;
 import com.github.bkhezry.weather.ui.fragment.HourlyFragment;
+import com.github.bkhezry.weather.ui.fragment.MultipleDaysFragment;
 import com.github.bkhezry.weather.utils.ApiClient;
 import com.github.bkhezry.weather.utils.AppUtil;
 import com.github.bkhezry.weather.utils.Constants;
@@ -40,6 +41,7 @@ import java.util.TimeZone;
 import butterknife.BindArray;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.observers.DisposableSingleObserver;
@@ -223,5 +225,10 @@ public class MainActivity extends AppCompatActivity {
   protected void onDestroy() {
     super.onDestroy();
     disposable.dispose();
+  }
+
+  @OnClick(R.id.next_days_button)
+  public void multipleDays() {
+    AppUtil.showFragment(new MultipleDaysFragment(), getSupportFragmentManager(), true);
   }
 }
