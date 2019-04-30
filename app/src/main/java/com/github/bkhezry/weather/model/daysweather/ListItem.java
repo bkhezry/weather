@@ -1,11 +1,21 @@
 package com.github.bkhezry.weather.model.daysweather;
 
+import android.content.Context;
+import android.view.View;
+
+import androidx.annotation.NonNull;
+
+import com.github.bkhezry.weather.R;
 import com.github.bkhezry.weather.model.common.WeatherItem;
 import com.google.gson.annotations.SerializedName;
+import com.mikepenz.fastadapter.FastAdapter;
+import com.mikepenz.fastadapter.items.AbstractItem;
 
 import java.util.List;
 
-public class ListItem {
+import butterknife.ButterKnife;
+
+public class ListItem extends AbstractItem<ListItem, ListItem.MyViewHolder> {
 
   @SerializedName("dt")
   private int dt;
@@ -104,5 +114,44 @@ public class ListItem {
 
   public void setRain(double rain) {
     this.rain = rain;
+  }
+
+  @NonNull
+  @Override
+  public MyViewHolder getViewHolder(@NonNull View v) {
+    return new MyViewHolder(v);
+  }
+
+  @Override
+  public int getType() {
+    return R.id.fastadapter_item_adapter;
+  }
+
+  @Override
+  public int getLayoutRes() {
+    return R.layout.multiple_days_item;
+  }
+
+  protected static class MyViewHolder extends FastAdapter.ViewHolder<ListItem> {
+    Context context;
+    View view;
+
+    MyViewHolder(View view) {
+      super(view);
+      ButterKnife.bind(this, view);
+      this.view = view;
+      this.context = view.getContext();
+    }
+
+    @Override
+    public void bindView(@NonNull ListItem item, @NonNull List<Object> payloads) {
+
+    }
+
+    @Override
+    public void unbindView(@NonNull ListItem item) {
+
+    }
+
   }
 }
