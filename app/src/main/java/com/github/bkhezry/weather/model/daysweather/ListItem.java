@@ -4,15 +4,23 @@ import android.content.Context;
 import android.view.View;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatImageView;
+import androidx.appcompat.widget.AppCompatTextView;
 
 import com.github.bkhezry.weather.R;
 import com.github.bkhezry.weather.model.common.WeatherItem;
+import com.github.bkhezry.weather.utils.AppUtil;
+import com.github.bkhezry.weather.utils.Constants;
 import com.google.gson.annotations.SerializedName;
 import com.mikepenz.fastadapter.FastAdapter;
 import com.mikepenz.fastadapter.items.AbstractItem;
 
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class ListItem extends AbstractItem<ListItem, ListItem.MyViewHolder> {
@@ -135,6 +143,16 @@ public class ListItem extends AbstractItem<ListItem, ListItem.MyViewHolder> {
   protected static class MyViewHolder extends FastAdapter.ViewHolder<ListItem> {
     Context context;
     View view;
+    @BindView(R.id.day_name_text_view)
+    AppCompatTextView dayNameTextView;
+    @BindView(R.id.date_text_view)
+    AppCompatTextView dateTextView;
+    @BindView(R.id.weather_image_view)
+    AppCompatImageView weatherImageView;
+    @BindView(R.id.max_temp_text_view)
+    AppCompatTextView maxTempTextView;
+    @BindView(R.id.min_temp_text_view)
+    AppCompatTextView minTempTextView;
 
     MyViewHolder(View view) {
       super(view);
@@ -145,7 +163,15 @@ public class ListItem extends AbstractItem<ListItem, ListItem.MyViewHolder> {
 
     @Override
     public void bindView(@NonNull ListItem item, @NonNull List<Object> payloads) {
-
+      Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
+      calendar.setTimeInMillis(item.getDt() * 1000L);
+      dayNameTextView.setText(Constants.DAYS_OF_WEEK[calendar.get(Calendar.DAY_OF_WEEK) - 1]);
+      dateTextView.setText(String.format(Locale.getDefault(), "%s %d",
+          Constants.MONTH_NAME[calendar.get(Calendar.MONTH)], calendar.get(Calendar.DAY_OF_MONTH)));
+      int weatherCode = item.getWeather().get(0).getId();
+      minTempTextView.setText(String.format(Locale.getDefault(), "%.0f°", item.getTemp().getMin()));
+      maxTempTextView.setText(String.format(Locale.getDefault(), "%.0f°", item.getTemp().getMax()));
+      AppUtil.setWeatherIcon(context, weatherImageView, weatherCode);
     }
 
     @Override
