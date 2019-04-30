@@ -58,15 +58,8 @@ public class HourlyFragment extends DialogFragment {
         container, false);
     ButterKnife.bind(this, view);
     setVariables();
-    LinearLayoutManager layoutManager
-        = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
-    recyclerView.setLayoutManager(layoutManager);
-    mItemAdapter = new ItemAdapter<>();
-    mFastAdapter = FastAdapter.with(mItemAdapter);
-    recyclerView.setItemAnimator(new DefaultItemAnimator());
-    recyclerView.setAdapter(mFastAdapter);
-    mItemAdapter.clear();
-    mItemAdapter.add(weatherCollection.getListItemHourlies());
+    initRecyclerView();
+    setItemHourly();
     return view;
   }
 
@@ -80,6 +73,21 @@ public class HourlyFragment extends DialogFragment {
     maxTempTextView.setText(String.format("%s°", weatherCollection.getListItem().getTemp().getMax()));
     int weatherCode = weatherCollection.getListItem().getWeather().get(0).getId();
     AppUtil.setWeatherIcon(getActivity(), weatherImageView, weatherCode);
+  }
+
+  private void initRecyclerView() {
+    LinearLayoutManager layoutManager
+        = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
+    recyclerView.setLayoutManager(layoutManager);
+    mItemAdapter = new ItemAdapter<>();
+    mFastAdapter = FastAdapter.with(mItemAdapter);
+    recyclerView.setItemAnimator(new DefaultItemAnimator());
+    recyclerView.setAdapter(mFastAdapter);
+  }
+
+  private void setItemHourly() {
+    mItemAdapter.clear();
+    mItemAdapter.add(weatherCollection.getListItemHourlies());
   }
 
   @NonNull
