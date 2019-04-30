@@ -18,6 +18,7 @@ import com.mikepenz.fastadapter.items.AbstractItem;
 
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 import java.util.TimeZone;
 
 import butterknife.BindView;
@@ -151,7 +152,7 @@ public class ItemHourly extends AbstractItem<ItemHourly, ItemHourly.MyViewHolder
       Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
       calendar.setTimeInMillis(item.getDt() * 1000L);
       timeTextView.setText(AppUtil.getTime(calendar));
-      tempTextView.setText(String.format("%s°", item.getMain().getTemp()));
+      tempTextView.setText(String.format(Locale.getDefault(), "%.0f°", item.getMain().getTemp()));
       int weatherCode = item.getWeather().get(0).getId();
       AppUtil.setWeatherIcon(context, weatherImageView, weatherCode);
     }
