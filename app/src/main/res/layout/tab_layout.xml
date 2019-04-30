@@ -12,7 +12,7 @@
         android:paddingStart="@dimen/spacing_medium"
         android:paddingEnd="@dimen/spacing_medium">
 
-        <com.google.android.material.button.MaterialButton
+        <androidx.appcompat.widget.AppCompatTextView
             style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -27,8 +27,8 @@
             android:layout_width="@dimen/spacing_medium"
             android:layout_height="0dp" />
 
-
         <com.google.android.material.button.MaterialButton
+            android:id="@+id/next_days_button"
             style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -38,7 +38,6 @@
             android:textColor="@android:color/black"
             android:textStyle="bold"
             app:strokeColor="@android:color/white" />
-
 
     </LinearLayout>
 
