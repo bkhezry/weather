@@ -13,15 +13,13 @@
         android:paddingEnd="@dimen/spacing_medium">
 
         <androidx.appcompat.widget.AppCompatTextView
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center"
             android:text="Today"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
-            android:textColor="@color/design_default_color_primary"
-            android:textStyle="bold"
-            app:strokeColor="@android:color/white" />
+            android:textColor="@color/material_blue"
+            android:textStyle="bold" />
 
         <View
             android:layout_width="@dimen/spacing_medium"
