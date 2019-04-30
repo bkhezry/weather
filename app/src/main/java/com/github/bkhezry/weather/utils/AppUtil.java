@@ -73,4 +73,22 @@ public class AppUtil {
     }
     transaction.add(android.R.id.content, fragment).addToBackStack(null).commit();
   }
+
+  public static String getTime(Calendar calendar) {
+    int hour = calendar.get(Calendar.HOUR_OF_DAY);
+    int minute = calendar.get(Calendar.MINUTE);
+    String hourString;
+    if (hour < 10) {
+      hourString = "0" + hour;
+    } else {
+      hourString = String.valueOf(hour);
+    }
+    String minuteString;
+    if (minute < 10) {
+      minuteString = "0" + minute;
+    } else {
+      minuteString = String.valueOf(minute);
+    }
+    return hourString + ":" + minuteString;
+  }
 }
