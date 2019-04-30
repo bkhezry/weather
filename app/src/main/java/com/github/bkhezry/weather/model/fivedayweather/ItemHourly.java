@@ -1,19 +1,26 @@
 package com.github.bkhezry.weather.model.fivedayweather;
 
+import android.content.Context;
 import android.view.View;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatImageView;
+import androidx.appcompat.widget.AppCompatTextView;
 
 import com.github.bkhezry.weather.R;
 import com.github.bkhezry.weather.model.common.Clouds;
 import com.github.bkhezry.weather.model.common.WeatherItem;
 import com.github.bkhezry.weather.model.common.Wind;
+import com.github.bkhezry.weather.utils.AppUtil;
 import com.google.gson.annotations.SerializedName;
 import com.mikepenz.fastadapter.FastAdapter;
 import com.mikepenz.fastadapter.items.AbstractItem;
 
+import java.util.Calendar;
 import java.util.List;
+import java.util.TimeZone;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class ItemHourly extends AbstractItem<ItemHourly, ItemHourly.MyViewHolder> {
@@ -119,22 +126,34 @@ public class ItemHourly extends AbstractItem<ItemHourly, ItemHourly.MyViewHolder
 
   @Override
   public int getLayoutRes() {
-    return R.layout.weather_day_item;
+    return R.layout.weather_hourly_item;
   }
 
   protected static class MyViewHolder extends FastAdapter.ViewHolder<ItemHourly> {
     View view;
-
+    Context context;
+    @BindView(R.id.time_text_view)
+    AppCompatTextView timeTextView;
+    @BindView(R.id.weather_image_view)
+    AppCompatImageView weatherImageView;
+    @BindView(R.id.temp_text_view)
+    AppCompatTextView tempTextView;
 
     MyViewHolder(View view) {
       super(view);
       ButterKnife.bind(this, view);
       this.view = view;
+      this.context = view.getContext();
     }
 
     @Override
     public void bindView(@NonNull ItemHourly item, @NonNull List<Object> payloads) {
-
+      Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("Asia/Tehran"));
+      calendar.setTimeInMillis(item.getDt() * 1000L);
+      timeTextView.setText(AppUtil.getTime(calendar));
+      tempTextView.setText(String.format("%s°", item.getMain().getTemp()));
+      int weatherCode = item.getWeather().get(0).getId();
+      AppUtil.setWeatherIcon(context, weatherImageView, weatherCode);
     }
 
     @Override
