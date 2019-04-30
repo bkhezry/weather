@@ -141,7 +141,7 @@ public class WeatherCollection extends AbstractItem<WeatherCollection, WeatherCo
           item.getColorAlpha(),
           Color.TRANSPARENT
       };
-      Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("Asia/Tehran"));
+      Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
       calendar.setTimeInMillis(item.getListItem().getDt() * 1000L);
       dayNameTextView.setText(Constants.DAYS_OF_WEEK[calendar.get(Calendar.DAY_OF_WEEK) - 1]);
       tempTextView.setText(String.format("%s°", item.getListItem().getTemp().getDay()));

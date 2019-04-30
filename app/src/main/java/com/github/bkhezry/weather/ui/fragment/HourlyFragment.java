@@ -65,7 +65,7 @@ public class HourlyFragment extends DialogFragment {
 
   private void setVariables() {
     cardView.setCardBackgroundColor(weatherCollection.getColor());
-    Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("Asia/Tehran"));
+    Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
     calendar.setTimeInMillis(weatherCollection.getListItem().getDt() * 1000L);
     dayNameTextView.setText(Constants.DAYS_OF_WEEK[calendar.get(Calendar.DAY_OF_WEEK) - 1]);
     tempTextView.setText(String.format("%s°", weatherCollection.getListItem().getTemp().getDay()));

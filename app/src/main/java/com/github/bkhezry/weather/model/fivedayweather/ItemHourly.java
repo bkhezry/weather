@@ -148,7 +148,7 @@ public class ItemHourly extends AbstractItem<ItemHourly, ItemHourly.MyViewHolder
 
     @Override
     public void bindView(@NonNull ItemHourly item, @NonNull List<Object> payloads) {
-      Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("Asia/Tehran"));
+      Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
       calendar.setTimeInMillis(item.getDt() * 1000L);
       timeTextView.setText(AppUtil.getTime(calendar));
       tempTextView.setText(String.format("%s°", item.getMain().getTemp()));

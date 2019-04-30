@@ -146,7 +146,7 @@ public class MainActivity extends AppCompatActivity {
     List<ListItem> list = response.getList();
     int day = 0;
     for (ListItem item : list) {
-      Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("Asia/Tehran"));
+      Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
       Calendar newCalendar = AppUtil.addDays(calendar, day);
       WeatherCollection weatherCollection = new WeatherCollection();
       weatherCollection.setListItem(item);
@@ -185,7 +185,7 @@ public class MainActivity extends AppCompatActivity {
     for (WeatherCollection weatherCollection : weatherCollections) {
       ArrayList<ItemHourly> listItemHourlies = new ArrayList<>(response.getList());
       for (ItemHourly itemHourly : listItemHourlies) {
-        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("Asia/Tehran"));
+        Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
         calendar.setTimeInMillis(itemHourly.getDt() * 1000L);
         if (calendar.getTimeInMillis()
             <= weatherCollection.getTimestampEnd()

@@ -16,7 +16,7 @@ import java.util.TimeZone;
 public class AppUtil {
 
   public static long getStartOfDayTimestamp(Calendar calendar) {
-    Calendar newCalendar = Calendar.getInstance(TimeZone.getTimeZone("Asia/Tehran"));
+    Calendar newCalendar = Calendar.getInstance(TimeZone.getDefault());
     newCalendar.setTimeInMillis(calendar.getTimeInMillis());
     newCalendar.set(Calendar.HOUR_OF_DAY, 0);
     newCalendar.set(Calendar.MINUTE, 0);
@@ -26,7 +26,7 @@ public class AppUtil {
   }
 
   public static long getEndOfDayTimestamp(Calendar calendar) {
-    Calendar newCalendar = Calendar.getInstance(TimeZone.getTimeZone("Asia/Tehran"));
+    Calendar newCalendar = Calendar.getInstance(TimeZone.getDefault());
     newCalendar.setTimeInMillis(calendar.getTimeInMillis());
     newCalendar.set(Calendar.HOUR_OF_DAY, 23);
     newCalendar.set(Calendar.MINUTE, 59);
@@ -36,7 +36,7 @@ public class AppUtil {
   }
 
   public static Calendar addDays(Calendar cal, int days) {
-    Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("Asia/Tehran"));
+    Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
     calendar.setTimeInMillis(cal.getTimeInMillis());
     calendar.add(Calendar.DATE, days);
     return calendar;
