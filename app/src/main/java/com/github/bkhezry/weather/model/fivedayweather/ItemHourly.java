@@ -16,7 +16,7 @@ import java.util.List;
 
 import butterknife.ButterKnife;
 
-public class ListItemHourly extends AbstractItem<ListItemHourly, ListItemHourly.MyViewHolder> {
+public class ItemHourly extends AbstractItem<ItemHourly, ItemHourly.MyViewHolder> {
 
   @SerializedName("dt")
   private int dt;
@@ -122,7 +122,7 @@ public class ListItemHourly extends AbstractItem<ListItemHourly, ListItemHourly.
     return R.layout.weather_day_item;
   }
 
-  protected static class MyViewHolder extends FastAdapter.ViewHolder<ListItemHourly> {
+  protected static class MyViewHolder extends FastAdapter.ViewHolder<ItemHourly> {
     View view;
 
 
@@ -133,12 +133,12 @@ public class ListItemHourly extends AbstractItem<ListItemHourly, ListItemHourly.
     }
 
     @Override
-    public void bindView(@NonNull ListItemHourly item, @NonNull List<Object> payloads) {
+    public void bindView(@NonNull ItemHourly item, @NonNull List<Object> payloads) {
 
     }
 
     @Override
-    public void unbindView(@NonNull ListItemHourly item) {
+    public void unbindView(@NonNull ItemHourly item) {
 
     }
 

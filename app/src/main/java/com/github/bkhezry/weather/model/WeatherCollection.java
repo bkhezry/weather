@@ -12,7 +12,7 @@ import androidx.appcompat.widget.AppCompatTextView;
 
 import com.github.bkhezry.weather.R;
 import com.github.bkhezry.weather.model.daysweather.ListItem;
-import com.github.bkhezry.weather.model.fivedayweather.ListItemHourly;
+import com.github.bkhezry.weather.model.fivedayweather.ItemHourly;
 import com.github.bkhezry.weather.utils.AppUtil;
 import com.github.bkhezry.weather.utils.Constants;
 import com.google.android.material.card.MaterialCardView;
@@ -28,7 +28,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class WeatherCollection extends AbstractItem<WeatherCollection, WeatherCollection.MyViewHolder> {
-  private List<ListItemHourly> listItemHourlies;
+  private List<ItemHourly> listItemHourlies;
   private ListItem listItem;
   private long timestampStart;
   private long timestampEnd;
@@ -37,15 +37,15 @@ public class WeatherCollection extends AbstractItem<WeatherCollection, WeatherCo
   private @ColorInt
   int colorAlpha;
 
-  public List<ListItemHourly> getListItemHourlies() {
+  public List<ItemHourly> getListItemHourlies() {
     return listItemHourlies;
   }
 
-  public void setListItemHourlies(List<ListItemHourly> listItemHourlies) {
+  public void setListItemHourlies(List<ItemHourly> listItemHourlies) {
     this.listItemHourlies = listItemHourlies;
   }
 
-  public void addListItemHourlies(ListItemHourly listItem) {
+  public void addListItemHourlies(ItemHourly listItem) {
     if (this.listItemHourlies == null) {
       this.listItemHourlies = new ArrayList<>();
     }

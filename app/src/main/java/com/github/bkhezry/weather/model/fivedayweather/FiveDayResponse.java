@@ -19,7 +19,7 @@ public class FiveDayResponse {
   private double message;
 
   @SerializedName("list")
-  private List<ListItemHourly> list;
+  private List<ItemHourly> list;
 
   public City getCity() {
     return city;
@@ -53,11 +53,11 @@ public class FiveDayResponse {
     this.message = message;
   }
 
-  public List<ListItemHourly> getList() {
+  public List<ItemHourly> getList() {
     return list;
   }
 
-  public void setList(List<ListItemHourly> list) {
+  public void setList(List<ItemHourly> list) {
     this.list = list;
   }
 }

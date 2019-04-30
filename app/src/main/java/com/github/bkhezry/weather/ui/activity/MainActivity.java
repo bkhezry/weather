@@ -20,7 +20,7 @@ import com.github.bkhezry.weather.model.currentweather.CurrentWeatherResponse;
 import com.github.bkhezry.weather.model.daysweather.ListItem;
 import com.github.bkhezry.weather.model.daysweather.MultipleDaysWeatherResponse;
 import com.github.bkhezry.weather.model.fivedayweather.FiveDayResponse;
-import com.github.bkhezry.weather.model.fivedayweather.ListItemHourly;
+import com.github.bkhezry.weather.model.fivedayweather.ItemHourly;
 import com.github.bkhezry.weather.service.ApiService;
 import com.github.bkhezry.weather.ui.fragment.HourlyFragment;
 import com.github.bkhezry.weather.utils.ApiClient;
@@ -183,15 +183,15 @@ public class MainActivity extends AppCompatActivity {
 
   private void handleFiveDayHourlyResponse(FiveDayResponse response) {
     for (WeatherCollection weatherCollection : weatherCollections) {
-      ArrayList<ListItemHourly> listItemHourlies = new ArrayList<>(response.getList());
-      for (ListItemHourly listItemHourly : listItemHourlies) {
+      ArrayList<ItemHourly> listItemHourlies = new ArrayList<>(response.getList());
+      for (ItemHourly itemHourly : listItemHourlies) {
         Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
-        calendar.setTimeInMillis(listItemHourly.getDt() * 1000L);
+        calendar.setTimeInMillis(itemHourly.getDt() * 1000L);
         if (calendar.getTimeInMillis()
             <= weatherCollection.getTimestampEnd()
             && calendar.getTimeInMillis()
             > weatherCollection.getTimestampStart()) {
-          weatherCollection.addListItemHourlies(listItemHourly);
+          weatherCollection.addListItemHourlies(itemHourly);
         }
       }
     }
