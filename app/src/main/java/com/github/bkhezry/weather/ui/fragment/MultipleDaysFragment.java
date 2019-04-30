@@ -2,6 +2,7 @@ package com.github.bkhezry.weather.ui.fragment;
 
 import android.app.Dialog;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -76,8 +77,15 @@ public class MultipleDaysFragment extends DialogFragment {
   }
 
   private void handleMultipleDaysResponse(MultipleDaysWeatherResponse response) {
-    mItemAdapter.clear();
-    mItemAdapter.add(response.getList());
+    final Handler handler = new Handler();
+    handler.postDelayed(new Runnable() {
+      @Override
+      public void run() {
+        mItemAdapter.clear();
+        mItemAdapter.add(response.getList());
+      }
+    }, 500);
+
   }
 
   @NonNull
