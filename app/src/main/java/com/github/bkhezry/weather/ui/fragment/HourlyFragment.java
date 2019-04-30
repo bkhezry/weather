@@ -27,9 +27,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class HourlyFragment extends DialogFragment {
+  private WeatherCollection weatherCollection;
   @BindView(R.id.card_view)
   MaterialCardView cardView;
-  WeatherCollection weatherCollection;
   @BindView(R.id.day_name_text_view)
   AppCompatTextView dayNameTextView;
   @BindView(R.id.weather_image_view)
