@@ -31,7 +31,7 @@
                 android:text="--"
                 android:textAppearance="@style/TextAppearance.AppCompat.Title"
                 android:textColor="@android:color/white"
-                android:textSize="100sp" />
+                android:textSize="70sp" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/description_text_view"
@@ -51,13 +51,7 @@
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="0.5" />
-
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.5"
+                    android:layout_weight="1"
                     android:gravity="center"
                     android:orientation="vertical">
 
@@ -83,12 +77,14 @@
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="0.5">
+                    android:layout_weight="1"
+                    android:gravity="center">
 
                     <com.airbnb.lottie.LottieAnimationView
                         android:id="@+id/animation_view"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_width="120dp"
+                        android:layout_height="120dp"
+                        app:lottie_autoPlay="true"
                         app:lottie_loop="true" />
 
                 </LinearLayout>
