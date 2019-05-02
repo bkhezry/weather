@@ -59,7 +59,7 @@
                     android:id="@+id/weather_image_view"
                     android:layout_width="150dp"
                     android:layout_height="150dp"
-                    app:srcCompat="@drawable/mostly_cloudy_day" />
+                    app:srcCompat="@drawable/mostly_cloudy" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/temp_text_view"
