@@ -51,4 +51,6 @@ dependencies {
     implementation 'com.mikepenz:fastadapter:3.3.1'
 
     implementation 'com.github.bumptech.glide:glide:4.9.0'
+
+    implementation 'com.airbnb.android:lottie:3.0.1'
 }
