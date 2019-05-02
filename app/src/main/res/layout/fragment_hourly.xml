@@ -57,8 +57,8 @@
 
                 <com.airbnb.lottie.LottieAnimationView
                     android:id="@+id/animation_view"
-                    android:layout_width="150dp"
-                    android:layout_height="150dp"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
                     app:lottie_autoPlay="true"
                     app:lottie_loop="true" />
 
@@ -70,7 +70,7 @@
                     android:text="40\u00b0"
                     android:textAppearance="@style/TextAppearance.AppCompat.Title"
                     android:textColor="@android:color/white"
-                    android:textSize="80sp" />
+                    android:textSize="60sp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -85,7 +85,7 @@
                         android:gravity="center"
                         android:text="56\u00b0"
                         android:textColor="@color/grey_10"
-                        android:textSize="40sp" />
+                        android:textSize="30sp" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/max_temp_text_view"
@@ -95,7 +95,7 @@
                         android:gravity="center"
                         android:text="64\u00b0"
                         android:textColor="@android:color/white"
-                        android:textSize="40sp" />
+                        android:textSize="30sp" />
                 </LinearLayout>
             </LinearLayout>
 
