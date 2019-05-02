@@ -45,7 +45,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:orientation="horizontal">
 
                 <LinearLayout
@@ -85,11 +85,12 @@
                     android:layout_height="match_parent"
                     android:layout_weight="0.5">
 
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/weather_image_view"
+                    <com.airbnb.lottie.LottieAnimationView
+                        android:id="@+id/animation_view"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        app:srcCompat="@drawable/unknown" />
+                        app:lottie_loop="true" />
+
                 </LinearLayout>
 
             </LinearLayout>
