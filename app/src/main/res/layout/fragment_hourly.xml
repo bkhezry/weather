@@ -55,11 +55,11 @@
                     android:textSize="40sp"
                     android:textStyle="bold" />
 
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/weather_image_view"
+                <com.airbnb.lottie.LottieAnimationView
+                    android:id="@+id/animation_view"
                     android:layout_width="150dp"
                     android:layout_height="150dp"
-                    app:srcCompat="@drawable/mostly_cloudy" />
+                    app:lottie_loop="true" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/temp_text_view"

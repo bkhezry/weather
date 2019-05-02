@@ -9,13 +9,13 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.github.bkhezry.weather.R;
 import com.github.bkhezry.weather.model.WeatherCollection;
 import com.github.bkhezry.weather.model.fivedayweather.ItemHourly;
@@ -38,8 +38,6 @@ public class HourlyFragment extends DialogFragment {
   MaterialCardView cardView;
   @BindView(R.id.day_name_text_view)
   AppCompatTextView dayNameTextView;
-  @BindView(R.id.weather_image_view)
-  AppCompatImageView weatherImageView;
   @BindView(R.id.temp_text_view)
   AppCompatTextView tempTextView;
   @BindView(R.id.min_temp_text_view)
@@ -48,6 +46,8 @@ public class HourlyFragment extends DialogFragment {
   AppCompatTextView maxTempTextView;
   @BindView(R.id.recycler_view)
   RecyclerView recyclerView;
+  @BindView(R.id.animation_view)
+  LottieAnimationView animationView;
   private WeatherCollection weatherCollection;
   private FastAdapter<ItemHourly> mFastAdapter;
   private ItemAdapter<ItemHourly> mItemAdapter;
@@ -74,7 +74,8 @@ public class HourlyFragment extends DialogFragment {
     minTempTextView.setText(String.format(Locale.getDefault(), "%.0f°", weatherCollection.getListItem().getTemp().getMin()));
     maxTempTextView.setText(String.format(Locale.getDefault(), "%.0f°", weatherCollection.getListItem().getTemp().getMax()));
     int weatherCode = weatherCollection.getListItem().getWeather().get(0).getId();
-    AppUtil.setWeatherIcon(getActivity(), weatherImageView, weatherCode);
+    animationView.setAnimation(AppUtil.getWeatherAnimation(weatherCode));
+    animationView.playAnimation();
   }
 
   private void initRecyclerView() {
