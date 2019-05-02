@@ -1,13 +1,16 @@
 apply plugin: 'com.android.application'
 
+def versionMajor = 1
+def versionMinor = 0
+def versionPatch = 0
 android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.github.bkhezry.weather"
         minSdkVersion 17
         targetSdkVersion 28
-        versionCode 1
-        versionName "1.0"
+        versionCode versionMajor * 10000 + versionMinor * 100 + versionPatch
+        versionName "${versionMajor}.${versionMinor}.${versionPatch}"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
     }
@@ -53,4 +56,12 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.9.0'
 
     implementation 'com.airbnb.android:lottie:3.0.1'
+}
+android.applicationVariants.all { variant ->
+    def appName = "Weather"
+    variant.outputs.all { output ->
+        def newApkName
+        newApkName = "${appName}-${output.baseName}-${variant.versionName}.apk"
+        output.outputFileName = new File(newApkName)
+    }
 }
