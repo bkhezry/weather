@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.github.bkhezry.weather.R;
+import com.github.bkhezry.weather.model.CityInfo;
 import com.github.bkhezry.weather.model.WeatherCollection;
 import com.github.bkhezry.weather.model.currentweather.CurrentWeatherResponse;
 import com.github.bkhezry.weather.model.daysweather.ListItem;
@@ -30,6 +31,7 @@ import com.github.bkhezry.weather.ui.fragment.MultipleDaysFragment;
 import com.github.bkhezry.weather.utils.ApiClient;
 import com.github.bkhezry.weather.utils.AppUtil;
 import com.github.bkhezry.weather.utils.Constants;
+import com.github.pwittchen.prefser.library.rx2.Prefser;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 import com.mikepenz.fastadapter.FastAdapter;
 import com.mikepenz.fastadapter.IAdapter;
@@ -50,6 +52,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
+import retrofit2.HttpException;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -78,11 +81,11 @@ public class MainActivity extends AppCompatActivity {
   private FastAdapter<WeatherCollection> mFastAdapter;
   private ItemAdapter<WeatherCollection> mItemAdapter;
   private CompositeDisposable disposable = new CompositeDisposable();
-  private String cityName = "Saqqez, IR";
   private String defaultLang = "en";
   private List<WeatherCollection> weatherCollections;
   private ApiService apiService;
   private WeatherCollection todayWeatherCollection;
+  private Prefser prefser;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -93,8 +96,18 @@ public class MainActivity extends AppCompatActivity {
     initSearchView();
     initValues();
     initRecyclerView();
-    getCurrentWeather();
-    getFiveDaysWeather();
+    if (prefser.contains(Constants.CITY_INFO)) {
+      CityInfo cityInfo = prefser.get(Constants.CITY_INFO, CityInfo.class, null);
+      if (cityInfo != null) {
+        requestWeather(cityInfo.getName());
+        cityNameTextView.setText(String.format("%s, %s", cityInfo.getName(), cityInfo.getCountry()));
+      }
+    }
+  }
+
+  private void requestWeather(String cityName) {
+    getCurrentWeather(cityName);
+    getFiveDaysWeather(cityName);
   }
 
   private void initSearchView() {
@@ -104,6 +117,7 @@ public class MainActivity extends AppCompatActivity {
     searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
       @Override
       public boolean onQueryTextSubmit(String query) {
+        requestWeather(query);
         return false;
       }
 
@@ -115,11 +129,11 @@ public class MainActivity extends AppCompatActivity {
   }
 
   private void initValues() {
+    prefser = new Prefser(this);
     apiService = ApiClient.getClient(getApplicationContext()).create(ApiService.class);
-    cityNameTextView.setText(cityName);
   }
 
-  private void getCurrentWeather() {
+  private void getCurrentWeather(String cityName) {
     disposable.add(
         apiService.getCurrentWeather(
             cityName, Constants.UNITS, defaultLang, Constants.APP_ID)
@@ -129,10 +143,12 @@ public class MainActivity extends AppCompatActivity {
               @Override
               public void onSuccess(CurrentWeatherResponse currentWeatherResponse) {
                 handleCurrentWeather(currentWeatherResponse);
+                storeCityInfo(currentWeatherResponse);
               }
 
               @Override
               public void onError(Throwable e) {
+                HttpException error = (HttpException) e;
                 Log.e("MainActivity", "onError: " + e.getMessage());
               }
             })
@@ -150,7 +166,16 @@ public class MainActivity extends AppCompatActivity {
     humidityTextView.setText(String.format(Locale.getDefault(), "%d%%", response.getMain().getHumidity()));
   }
 
-  private void getFiveDaysWeather() {
+  private void storeCityInfo(CurrentWeatherResponse response) {
+    CityInfo cityInfo = new CityInfo();
+    cityInfo.setCountry(response.getSys().getCountry());
+    cityInfo.setId(response.getId());
+    cityInfo.setName(response.getName());
+    prefser.put(Constants.CITY_INFO, cityInfo);
+    cityNameTextView.setText(String.format("%s, %s", cityInfo.getName(), cityInfo.getCountry()));
+  }
+
+  private void getFiveDaysWeather(String cityName) {
     disposable.add(
         apiService.getMultipleDaysWeather(
             cityName, Constants.UNITS, defaultLang, 5, Constants.APP_ID)
@@ -159,18 +184,19 @@ public class MainActivity extends AppCompatActivity {
             .subscribeWith(new DisposableSingleObserver<MultipleDaysWeatherResponse>() {
               @Override
               public void onSuccess(MultipleDaysWeatherResponse response) {
-                handleFiveDayResponse(response);
+                handleFiveDayResponse(response, cityName);
               }
 
               @Override
               public void onError(Throwable e) {
+                HttpException error = (HttpException) e;
                 Log.e("MainActivity", "onError: " + e.getMessage());
               }
             })
     );
   }
 
-  private void handleFiveDayResponse(MultipleDaysWeatherResponse response) {
+  private void handleFiveDayResponse(MultipleDaysWeatherResponse response, String cityName) {
     weatherCollections = new ArrayList<>();
     List<ListItem> list = response.getList();
     int day = 0;
@@ -186,10 +212,10 @@ public class MainActivity extends AppCompatActivity {
       weatherCollections.add(weatherCollection);
       day++;
     }
-    getFiveDaysHourlyWeather();
+    getFiveDaysHourlyWeather(cityName);
   }
 
-  private void getFiveDaysHourlyWeather() {
+  private void getFiveDaysHourlyWeather(String cityName) {
     disposable.add(
         apiService.getFiveDaysWeather(
             cityName, Constants.UNITS, defaultLang, Constants.APP_ID)
