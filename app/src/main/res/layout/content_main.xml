@@ -153,6 +153,7 @@
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
                 android:textColor="@android:color/black"
                 android:textStyle="bold"
+                app:rippleColor="@color/grey_10"
                 app:strokeColor="@android:color/white" />
 
         </LinearLayout>
