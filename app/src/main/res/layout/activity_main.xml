@@ -8,8 +8,6 @@
 
     <include layout="@layout/toolbar" />
 
-    <include layout="@layout/tab_layout" />
-
     <include layout="@layout/content_main" />
 
 </LinearLayout>
