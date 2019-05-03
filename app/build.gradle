@@ -57,6 +57,7 @@ dependencies {
 
     implementation 'com.airbnb.android:lottie:3.0.1'
     implementation 'com.github.bkhezry:MaterialSearchView:1.6.0'
+    implementation 'com.github.bkhezry:prefser:v2.2.1-rx2'
 }
 android.applicationVariants.all { variant ->
     def appName = "Weather"
