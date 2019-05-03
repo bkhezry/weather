@@ -17,7 +17,7 @@
         android:clipToPadding="false"
         android:divider="@android:color/transparent"
         android:dividerHeight="0.0px"
-        app:cardCornerRadius="25dp"
+        app:cardCornerRadius="20dp"
         app:cardPreventCornerOverlap="false">
 
         <LinearLayout

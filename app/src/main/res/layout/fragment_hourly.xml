@@ -27,7 +27,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="center"
         android:layout_marginTop="-18dp"
-        app:cardCornerRadius="40dp"
+        app:cardCornerRadius="30dp"
         app:cardElevation="2dp">
 
         <LinearLayout
