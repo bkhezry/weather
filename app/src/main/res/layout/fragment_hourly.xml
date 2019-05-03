@@ -15,7 +15,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="@dimen/spacing_xxlarge"
+        android:layout_marginTop="@dimen/spacing_xxxlarge"
         android:tint="@color/colorAccent"
         app:backgroundTint="@android:color/white"
         app:fabSize="mini"
