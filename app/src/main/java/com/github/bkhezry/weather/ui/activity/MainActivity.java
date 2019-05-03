@@ -90,6 +90,14 @@ public class MainActivity extends AppCompatActivity {
     setContentView(R.layout.activity_main);
     ButterKnife.bind(this);
     setSupportActionBar(toolbar);
+    initSearchView();
+    initValues();
+    initRecyclerView();
+    getCurrentWeather();
+    getFiveDaysWeather();
+  }
+
+  private void initSearchView() {
     searchView.setVoiceSearch(false);
     searchView.setCursorDrawable(R.drawable.ic_action_action_search);
     searchView.setEllipsize(true);
@@ -104,14 +112,10 @@ public class MainActivity extends AppCompatActivity {
         return false;
       }
     });
-    apiService = ApiClient.getClient(getApplicationContext()).create(ApiService.class);
-    initValues();
-    initRecyclerView();
-    getCurrentWeather();
-    getFiveDaysWeather();
   }
 
   private void initValues() {
+    apiService = ApiClient.getClient(getApplicationContext()).create(ApiService.class);
     cityNameTextView.setText(cityName);
   }
 
