@@ -96,6 +96,10 @@ public class MainActivity extends AppCompatActivity {
     initSearchView();
     initValues();
     initRecyclerView();
+    checkStoredCityInfo();
+  }
+
+  private void checkStoredCityInfo() {
     if (prefser.contains(Constants.CITY_INFO)) {
       CityInfo cityInfo = prefser.get(Constants.CITY_INFO, CityInfo.class, null);
       if (cityInfo != null) {
