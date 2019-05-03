@@ -2,6 +2,8 @@ package com.github.bkhezry.weather.ui.activity;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 
 import androidx.annotation.ColorInt;
@@ -9,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatTextView;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -27,6 +30,7 @@ import com.github.bkhezry.weather.ui.fragment.MultipleDaysFragment;
 import com.github.bkhezry.weather.utils.ApiClient;
 import com.github.bkhezry.weather.utils.AppUtil;
 import com.github.bkhezry.weather.utils.Constants;
+import com.miguelcatalan.materialsearchview.MaterialSearchView;
 import com.mikepenz.fastadapter.FastAdapter;
 import com.mikepenz.fastadapter.IAdapter;
 import com.mikepenz.fastadapter.adapters.ItemAdapter;
@@ -51,8 +55,6 @@ public class MainActivity extends AppCompatActivity {
 
   @BindView(R.id.recycler_view)
   RecyclerView recyclerView;
-  @BindView(R.id.location_name_text_view)
-  AppCompatTextView locationNameTextView;
   @BindView(R.id.temp_text_view)
   AppCompatTextView tempTextView;
   @BindView(R.id.description_text_view)
@@ -67,6 +69,12 @@ public class MainActivity extends AppCompatActivity {
   int[] colorsAlpha;
   @BindView(R.id.animation_view)
   LottieAnimationView animationView;
+  @BindView(R.id.toolbar)
+  Toolbar toolbar;
+  @BindView(R.id.search_view)
+  MaterialSearchView searchView;
+  @BindView(R.id.city_name_text_view)
+  AppCompatTextView cityNameTextView;
   private FastAdapter<WeatherCollection> mFastAdapter;
   private ItemAdapter<WeatherCollection> mItemAdapter;
   private CompositeDisposable disposable = new CompositeDisposable();
@@ -81,6 +89,21 @@ public class MainActivity extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
     ButterKnife.bind(this);
+    setSupportActionBar(toolbar);
+    searchView.setVoiceSearch(false);
+    searchView.setCursorDrawable(R.drawable.ic_action_action_search);
+    searchView.setEllipsize(true);
+    searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
+      @Override
+      public boolean onQueryTextSubmit(String query) {
+        return false;
+      }
+
+      @Override
+      public boolean onQueryTextChange(String newText) {
+        return false;
+      }
+    });
     apiService = ApiClient.getClient(getApplicationContext()).create(ApiService.class);
     initValues();
     initRecyclerView();
@@ -89,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
   }
 
   private void initValues() {
-    locationNameTextView.setText(cityName);
+    cityNameTextView.setText(cityName);
   }
 
   private void getCurrentWeather() {
@@ -231,5 +254,13 @@ public class MainActivity extends AppCompatActivity {
   @OnClick(R.id.next_days_button)
   public void multipleDays() {
     AppUtil.showFragment(new MultipleDaysFragment(), getSupportFragmentManager(), true);
+  }
+
+  @Override
+  public boolean onCreateOptionsMenu(Menu menu) {
+    getMenuInflater().inflate(R.menu.menu_main, menu);
+    MenuItem item = menu.findItem(R.id.action_search);
+    searchView.setMenuItem(item);
+    return true;
   }
 }
