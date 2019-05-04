@@ -44,23 +44,23 @@ public class AppUtil {
 
   public static void setWeatherIcon(Context context, AppCompatImageView imageView, int weatherCode) {
     if (weatherCode / 100 == 2) {
-      Glide.with(context).load(R.drawable.storm_weather).into(imageView);
+      Glide.with(context).load(R.drawable.ic_storm_weather).into(imageView);
     } else if (weatherCode / 100 == 3) {
-      Glide.with(context).load(R.drawable.rainy_weather).into(imageView);
+      Glide.with(context).load(R.drawable.ic_rainy_weather).into(imageView);
     } else if (weatherCode / 100 == 5) {
-      Glide.with(context).load(R.drawable.rainy_weather).into(imageView);
+      Glide.with(context).load(R.drawable.ic_rainy_weather).into(imageView);
     } else if (weatherCode / 100 == 6) {
-      Glide.with(context).load(R.drawable.snow_weather).into(imageView);
+      Glide.with(context).load(R.drawable.ic_snow_weather).into(imageView);
     } else if (weatherCode / 100 == 7) {
-      Glide.with(context).load(R.drawable.unknown).into(imageView);
+      Glide.with(context).load(R.drawable.ic_unknown).into(imageView);
     } else if (weatherCode == 800) {
-      Glide.with(context).load(R.drawable.clear_day).into(imageView);
+      Glide.with(context).load(R.drawable.ic_clear_day).into(imageView);
     } else if (weatherCode == 801) {
-      Glide.with(context).load(R.drawable.few_clouds).into(imageView);
+      Glide.with(context).load(R.drawable.ic_few_clouds).into(imageView);
     } else if (weatherCode == 803) {
-      Glide.with(context).load(R.drawable.broken_clouds).into(imageView);
+      Glide.with(context).load(R.drawable.ic_broken_clouds).into(imageView);
     } else if (weatherCode / 100 == 8) {
-      Glide.with(context).load(R.drawable.cloudy_weather).into(imageView);
+      Glide.with(context).load(R.drawable.ic_cloudy_weather).into(imageView);
     }
   }
 
