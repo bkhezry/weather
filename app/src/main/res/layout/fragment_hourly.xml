@@ -78,7 +78,8 @@
                             android:layout_width="36dp"
                             android:layout_height="36dp"
                             android:gravity="center"
-                            app:srcCompat="@drawable/ic_keyboard_arrow_down_black_24dp" />
+                            app:srcCompat="@drawable/ic_keyboard_arrow_down_black_24dp"
+                            app:tint="@android:color/white" />
 
                         <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/min_temp_text_view"
@@ -112,7 +113,8 @@
                             android:layout_width="36dp"
                             android:layout_height="36dp"
                             android:gravity="center"
-                            app:srcCompat="@drawable/ic_keyboard_arrow_up_black_24dp" />
+                            app:srcCompat="@drawable/ic_keyboard_arrow_up_black_24dp"
+                            app:tint="@android:color/white" />
 
                         <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/max_temp_text_view"
