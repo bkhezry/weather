@@ -1,5 +1,6 @@
 package com.github.bkhezry.weather.ui.fragment;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.os.Handler;
@@ -17,11 +18,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.github.bkhezry.weather.R;
+import com.github.bkhezry.weather.model.CityInfo;
 import com.github.bkhezry.weather.model.daysweather.ListItem;
 import com.github.bkhezry.weather.model.daysweather.MultipleDaysWeatherResponse;
 import com.github.bkhezry.weather.service.ApiService;
 import com.github.bkhezry.weather.utils.ApiClient;
 import com.github.bkhezry.weather.utils.Constants;
+import com.github.pwittchen.prefser.library.rx2.Prefser;
 import com.mikepenz.fastadapter.FastAdapter;
 import com.mikepenz.fastadapter.adapters.ItemAdapter;
 
@@ -36,11 +39,11 @@ import io.reactivex.schedulers.Schedulers;
 public class MultipleDaysFragment extends DialogFragment {
   @BindView(R.id.recycler_view)
   RecyclerView recyclerView;
-  private String cityName = "Saqqez, IR";
   private String defaultLang = "en";
   private CompositeDisposable disposable = new CompositeDisposable();
   private FastAdapter<ListItem> mFastAdapter;
   private ItemAdapter<ListItem> mItemAdapter;
+  private Activity activity;
 
   @Override
   public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -48,13 +51,21 @@ public class MultipleDaysFragment extends DialogFragment {
     View view = inflater.inflate(R.layout.fragment_multiple_days,
         container, false);
     ButterKnife.bind(this, view);
-    LinearLayoutManager layoutManager
-        = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
-    recyclerView.setLayoutManager(layoutManager);
-    mItemAdapter = new ItemAdapter<>();
-    mFastAdapter = FastAdapter.with(mItemAdapter);
-    recyclerView.setItemAnimator(new DefaultItemAnimator());
-    recyclerView.setAdapter(mFastAdapter);
+    activity = getActivity();
+    initRecyclerView();
+    checkCityInfoExist();
+    return view;
+  }
+
+  private void checkCityInfoExist() {
+    Prefser prefser = new Prefser(activity);
+    CityInfo cityInfo = prefser.get(Constants.CITY_INFO, CityInfo.class, null);
+    if (cityInfo != null) {
+      requestWeathers(cityInfo.getName());
+    }
+  }
+
+  private void requestWeathers(String cityName) {
     ApiService apiService = ApiClient.getClient(getActivity()).create(ApiService.class);
     disposable.add(
         apiService.getMultipleDaysWeather(
@@ -73,7 +84,16 @@ public class MultipleDaysFragment extends DialogFragment {
               }
             })
     );
-    return view;
+  }
+
+  private void initRecyclerView() {
+    LinearLayoutManager layoutManager
+        = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+    recyclerView.setLayoutManager(layoutManager);
+    mItemAdapter = new ItemAdapter<>();
+    mFastAdapter = FastAdapter.with(mItemAdapter);
+    recyclerView.setItemAnimator(new DefaultItemAnimator());
+    recyclerView.setAdapter(mFastAdapter);
   }
 
   private void handleMultipleDaysResponse(MultipleDaysWeatherResponse response) {
