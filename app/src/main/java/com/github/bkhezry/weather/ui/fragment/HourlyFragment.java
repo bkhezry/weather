@@ -1,6 +1,7 @@
 package com.github.bkhezry.weather.ui.fragment;
 
 import android.app.Dialog;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,11 +22,18 @@ import com.github.bkhezry.weather.model.WeatherCollection;
 import com.github.bkhezry.weather.model.fivedayweather.ItemHourly;
 import com.github.bkhezry.weather.utils.AppUtil;
 import com.github.bkhezry.weather.utils.Constants;
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.google.android.material.card.MaterialCardView;
 import com.mikepenz.fastadapter.FastAdapter;
 import com.mikepenz.fastadapter.adapters.ItemAdapter;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
@@ -48,6 +56,8 @@ public class HourlyFragment extends DialogFragment {
   RecyclerView recyclerView;
   @BindView(R.id.animation_view)
   LottieAnimationView animationView;
+  @BindView(R.id.chart)
+  LineChart chart;
   private WeatherCollection weatherCollection;
   private FastAdapter<ItemHourly> mFastAdapter;
   private ItemAdapter<ItemHourly> mItemAdapter;
@@ -62,8 +72,10 @@ public class HourlyFragment extends DialogFragment {
     setVariables();
     initRecyclerView();
     setItemHourly();
+    setChartValues();
     return view;
   }
+
 
   private void setVariables() {
     cardView.setCardBackgroundColor(weatherCollection.getColor());
@@ -91,6 +103,45 @@ public class HourlyFragment extends DialogFragment {
   private void setItemHourly() {
     mItemAdapter.clear();
     mItemAdapter.add(weatherCollection.getListItemHourlies());
+  }
+
+  private void setChartValues() {
+    List<Entry> entries = new ArrayList<>();
+    int i = 0;
+    for (ItemHourly itemHourly : weatherCollection.getListItemHourlies()) {
+      entries.add(new Entry(i, (float) itemHourly.getMain().getTemp()));
+      i++;
+    }
+    LineDataSet dataSet = new LineDataSet(entries, "Label"); // add entries to dataset
+    dataSet.setLineWidth(4f);
+    dataSet.setCircleRadius(7f);
+    dataSet.setHighlightEnabled(false);
+    dataSet.setCircleColor(Color.parseColor("#33b5e5"));
+    dataSet.setValueTextSize(12);
+    dataSet.setValueTextColor(Color.WHITE);
+    dataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
+    dataSet.setValueFormatter(new ValueFormatter() {
+      @Override
+      public String getFormattedValue(float value) {
+        return String.format(Locale.getDefault(), "%.0f", value);
+      }
+    });
+    LineData lineData = new LineData(dataSet);
+    chart.getDescription().setEnabled(false);
+    chart.getAxisLeft().setDrawLabels(false);
+    chart.getAxisRight().setDrawLabels(false);
+    chart.getXAxis().setDrawLabels(false);
+    chart.getLegend().setEnabled(false);   // Hide the legend
+
+    chart.getXAxis().setDrawGridLines(false);
+    chart.getAxisLeft().setDrawGridLines(false);
+    chart.getAxisRight().setDrawGridLines(false);
+    chart.getAxisLeft().setDrawAxisLine(false);
+    chart.getAxisRight().setDrawAxisLine(false);
+    chart.getXAxis().setDrawAxisLine(false);
+    chart.setScaleEnabled(false);
+    chart.setData(lineData);
+    chart.animateY(1000);
   }
 
   @NonNull

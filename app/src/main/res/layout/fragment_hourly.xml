@@ -128,6 +128,14 @@
                 </LinearLayout>
             </LinearLayout>
 
+            <com.github.mikephil.charting.charts.LineChart
+                android:id="@+id/chart"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:layout_margin="@dimen/spacing_medium"
+                android:paddingTop="@dimen/spacing_middle"
+                android:paddingBottom="@dimen/spacing_middle" />
+
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
