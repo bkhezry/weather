@@ -8,6 +8,15 @@
 
     <include layout="@layout/toolbar" />
 
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Today"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+        android:textColor="@color/material_blue"
+        android:textStyle="bold" />
+
     <include layout="@layout/content_main" />
 
 </LinearLayout>
