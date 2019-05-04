@@ -78,6 +78,8 @@ public class MainActivity extends AppCompatActivity {
   MaterialSearchView searchView;
   @BindView(R.id.city_name_text_view)
   AppCompatTextView cityNameTextView;
+  @BindView(R.id.wind_text_view)
+  AppCompatTextView windTextView;
   private FastAdapter<WeatherCollection> mFastAdapter;
   private ItemAdapter<WeatherCollection> mItemAdapter;
   private CompositeDisposable disposable = new CompositeDisposable();
@@ -168,6 +170,7 @@ public class MainActivity extends AppCompatActivity {
       animationView.playAnimation();
     }
     humidityTextView.setText(String.format(Locale.getDefault(), "%d%%", response.getMain().getHumidity()));
+    windTextView.setText(String.format(Locale.getDefault(), "%.0fkm/hr", response.getWind().getSpeed()));
   }
 
   private void storeCityInfo(CurrentWeatherResponse response) {
