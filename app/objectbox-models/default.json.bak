@@ -80,41 +80,43 @@
       "relations": []
     },
     {
-      "id": "3:1871844444029025432",
-      "lastPropertyId": "6:6928836774837123800",
-      "name": "ItemHourly",
+      "id": "4:403425344771221250",
+      "lastPropertyId": "5:4044850713942636527",
+      "name": "ItemHourlyDB",
       "properties": [
         {
-          "id": "1:6236082159592545533",
+          "id": "1:251096751795758088",
           "name": "id"
         },
         {
-          "id": "3:6125530325983103121",
+          "id": "2:7234531252960518378",
+          "name": "fiveDayWeatherId"
+        },
+        {
+          "id": "3:4909113082905328188",
           "name": "dt"
         },
         {
-          "id": "4:5547135791080079888",
+          "id": "4:2244525512796327268",
           "name": "temp"
         },
         {
-          "id": "5:4851710871428331994",
+          "id": "5:4044850713942636527",
           "name": "weatherCode"
-        },
-        {
-          "id": "6:6928836774837123800",
-          "name": "fiveDayWeatherId"
         }
       ],
       "relations": []
     }
   ],
-  "lastEntityId": "3:1871844444029025432",
+  "lastEntityId": "4:403425344771221250",
   "lastIndexId": "0:0",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 4,
   "modelVersionParserMinimum": 4,
-  "retiredEntityUids": [],
+  "retiredEntityUids": [
+    1871844444029025432
+  ],
   "retiredIndexUids": [],
   "retiredPropertyUids": [
     8706503061646728886,
@@ -123,7 +125,12 @@
     50859188967447852,
     8582491103795441736,
     3378747663075919515,
-    3618907675333415316
+    3618907675333415316,
+    6236082159592545533,
+    6125530325983103121,
+    5547135791080079888,
+    4851710871428331994,
+    6928836774837123800
   ],
   "retiredRelationUids": [],
   "version": 1
