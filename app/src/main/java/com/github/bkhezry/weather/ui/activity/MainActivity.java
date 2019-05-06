@@ -154,8 +154,12 @@ public class MainActivity extends AppCompatActivity {
 
               @Override
               public void onError(Throwable e) {
-                HttpException error = (HttpException) e;
-                Log.e("MainActivity", "onError: " + e.getMessage());
+                try {
+                  HttpException error = (HttpException) e;
+                  Log.e("MainActivity", "onError: " + e.getMessage());
+                } catch (Exception exception) {
+
+                }
               }
             })
 
@@ -196,8 +200,12 @@ public class MainActivity extends AppCompatActivity {
 
               @Override
               public void onError(Throwable e) {
-                HttpException error = (HttpException) e;
-                Log.e("MainActivity", "onError: " + e.getMessage());
+                try {
+                  HttpException error = (HttpException) e;
+                  Log.e("MainActivity", "onError: " + e.getMessage());
+                } catch (Exception exception) {
+
+                }
               }
             })
     );
