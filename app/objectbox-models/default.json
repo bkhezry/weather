@@ -46,9 +46,41 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "2:2553997089775313960",
+      "lastPropertyId": "6:8612658466054635984",
+      "name": "FiveDayWeather",
+      "properties": [
+        {
+          "id": "1:7906340935321539171",
+          "name": "id"
+        },
+        {
+          "id": "2:2009020229778560522",
+          "name": "dt"
+        },
+        {
+          "id": "3:3283181229389489574",
+          "name": "temp"
+        },
+        {
+          "id": "4:9214831536521710090",
+          "name": "minTemp"
+        },
+        {
+          "id": "5:5130960657147917878",
+          "name": "maxTemp"
+        },
+        {
+          "id": "6:8612658466054635984",
+          "name": "weatherId"
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "1:380105534448780221",
+  "lastEntityId": "2:2553997089775313960",
   "lastIndexId": "0:0",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
