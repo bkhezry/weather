@@ -23,6 +23,7 @@ import com.github.bkhezry.weather.model.WeatherCollection;
 import com.github.bkhezry.weather.model.currentweather.CurrentWeatherResponse;
 import com.github.bkhezry.weather.model.daysweather.ListItem;
 import com.github.bkhezry.weather.model.daysweather.MultipleDaysWeatherResponse;
+import com.github.bkhezry.weather.model.db.CurrentWeather;
 import com.github.bkhezry.weather.model.fivedayweather.FiveDayResponse;
 import com.github.bkhezry.weather.model.fivedayweather.ItemHourly;
 import com.github.bkhezry.weather.service.ApiService;
@@ -31,6 +32,7 @@ import com.github.bkhezry.weather.ui.fragment.MultipleDaysFragment;
 import com.github.bkhezry.weather.utils.ApiClient;
 import com.github.bkhezry.weather.utils.AppUtil;
 import com.github.bkhezry.weather.utils.Constants;
+import com.github.bkhezry.weather.utils.MyApplication;
 import com.github.pwittchen.prefser.library.rx2.Prefser;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 import com.mikepenz.fastadapter.FastAdapter;
@@ -48,6 +50,8 @@ import butterknife.BindArray;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.objectbox.Box;
+import io.objectbox.BoxStore;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.observers.DisposableSingleObserver;
@@ -88,6 +92,7 @@ public class MainActivity extends AppCompatActivity {
   private ApiService apiService;
   private WeatherCollection todayWeatherCollection;
   private Prefser prefser;
+  private Box<CurrentWeather> currentWeatherBox;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -137,6 +142,8 @@ public class MainActivity extends AppCompatActivity {
   private void initValues() {
     prefser = new Prefser(this);
     apiService = ApiClient.getClient(getApplicationContext()).create(ApiService.class);
+    BoxStore boxStore = MyApplication.getBoxStore();
+    currentWeatherBox = boxStore.boxFor(CurrentWeather.class);
   }
 
   private void getCurrentWeather(String cityName) {
@@ -175,6 +182,24 @@ public class MainActivity extends AppCompatActivity {
     }
     humidityTextView.setText(String.format(Locale.getDefault(), "%d%%", response.getMain().getHumidity()));
     windTextView.setText(String.format(Locale.getDefault(), "%.0fkm/hr", response.getWind().getSpeed()));
+    storeCurrentWeather(response);
+  }
+
+  private void storeCurrentWeather(CurrentWeatherResponse response) {
+    CurrentWeather currentWeather = new CurrentWeather();
+    currentWeather.setTemp(response.getMain().getTemp());
+    currentWeather.setHumidity(response.getMain().getHumidity());
+    currentWeather.setDescription(response.getWeather().get(0).getDescription());
+    currentWeather.setMain(response.getWeather().get(0).getMain());
+    currentWeather.setWeatherId(response.getWeather().get(0).getId());
+    currentWeather.setWindDeg(response.getWind().getDeg());
+    currentWeather.setWindSpeed(response.getWind().getSpeed());
+    if (!currentWeatherBox.isEmpty()) {
+      currentWeatherBox.removeAll();
+      currentWeatherBox.put(currentWeather);
+    } else {
+      currentWeatherBox.put(currentWeather);
+    }
   }
 
   private void storeCityInfo(CurrentWeatherResponse response) {
