@@ -91,13 +91,13 @@ public class MainActivity extends AppCompatActivity {
   AppCompatTextView cityNameTextView;
   @BindView(R.id.wind_text_view)
   AppCompatTextView windTextView;
-  private FastAdapter<WeatherCollection> mFastAdapter;
-  private ItemAdapter<WeatherCollection> mItemAdapter;
+  private FastAdapter<FiveDayWeather> mFastAdapter;
+  private ItemAdapter<FiveDayWeather> mItemAdapter;
   private CompositeDisposable disposable = new CompositeDisposable();
   private String defaultLang = "en";
   private List<WeatherCollection> weatherCollections;
   private ApiService apiService;
-  private WeatherCollection todayWeatherCollection;
+  private FiveDayWeather todayWeatherCollection;
   private Prefser prefser;
   private Box<CurrentWeather> currentWeatherBox;
   private Box<FiveDayWeather> fiveDayWeatherBox;
@@ -114,6 +114,7 @@ public class MainActivity extends AppCompatActivity {
     initValues();
     initRecyclerView();
     showStoredCurrentWeather();
+    showStoredFiveDayWeather();
     checkStoredCityInfo();
   }
 
@@ -131,6 +132,21 @@ public class MainActivity extends AppCompatActivity {
               animationView.playAnimation();
               humidityTextView.setText(String.format(Locale.getDefault(), "%d%%", currentWeather.getHumidity()));
               windTextView.setText(String.format(Locale.getDefault(), "%.0fkm/hr", currentWeather.getWindSpeed()));
+            }
+          }
+        });
+  }
+
+  private void showStoredFiveDayWeather() {
+    Query<FiveDayWeather> query = DbUtil.getFiveDayWeatherQuery(fiveDayWeatherBox);
+    query.subscribe(subscriptions).on(AndroidScheduler.mainThread())
+        .observer(new DataObserver<List<FiveDayWeather>>() {
+          @Override
+          public void onData(@NonNull List<FiveDayWeather> data) {
+            if (data.size() > 0) {
+              todayWeatherCollection = data.remove(0);
+              mItemAdapter.clear();
+              mItemAdapter.add(data);
             }
           }
         });
@@ -311,6 +327,8 @@ public class MainActivity extends AppCompatActivity {
       fiveDayWeather.setMaxTemp(weatherCollection.getListItem().getTemp().getMax());
       fiveDayWeather.setMinTemp(weatherCollection.getListItem().getTemp().getMin());
       fiveDayWeather.setWeatherId(weatherCollection.getListItem().getWeather().get(0).getId());
+      fiveDayWeather.setColor(weatherCollection.getColor());
+      fiveDayWeather.setColorAlpha(weatherCollection.getColorAlpha());
       long fiveDayWeatherId = fiveDayWeatherBox.put(fiveDayWeather);
       ArrayList<ItemHourly> listItemHourlies = new ArrayList<>(response.getList());
       for (ItemHourly itemHourly : listItemHourlies) {
@@ -330,9 +348,6 @@ public class MainActivity extends AppCompatActivity {
         }
       }
     }
-    todayWeatherCollection = weatherCollections.remove(0);
-    mItemAdapter.clear();
-    mItemAdapter.add(weatherCollections);
   }
 
 
@@ -344,11 +359,11 @@ public class MainActivity extends AppCompatActivity {
     mFastAdapter = FastAdapter.with(mItemAdapter);
     recyclerView.setItemAnimator(new DefaultItemAnimator());
     recyclerView.setAdapter(mFastAdapter);
-    mFastAdapter.withOnClickListener(new OnClickListener<WeatherCollection>() {
+    mFastAdapter.withOnClickListener(new OnClickListener<FiveDayWeather>() {
       @Override
-      public boolean onClick(@Nullable View v, @NonNull IAdapter<WeatherCollection> adapter, @NonNull WeatherCollection item, int position) {
+      public boolean onClick(@Nullable View v, @NonNull IAdapter<FiveDayWeather> adapter, @NonNull FiveDayWeather item, int position) {
         HourlyFragment hourlyFragment = new HourlyFragment();
-        hourlyFragment.setWeatherCollection(item);
+        hourlyFragment.setFiveDayWeather(item);
         AppUtil.showFragment(hourlyFragment, getSupportFragmentManager(), true);
         return true;
       }
