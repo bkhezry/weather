@@ -1,0 +1,74 @@
+{
+  "_note1": "KEEP THIS FILE! Check it into a version control system (VCS) like git.",
+  "_note2": "ObjectBox manages crucial IDs for your object model. See docs for details.",
+  "_note3": "If you have VCS merge conflicts, you must resolve them according to ObjectBox docs.",
+  "entities": [
+    {
+      "id": "1:380105534448780221",
+      "lastPropertyId": "12:5662464341337905192",
+      "name": "CurrentWeather",
+      "properties": [
+        {
+          "id": "1:8300327759366563506",
+          "name": "id"
+        },
+        {
+          "id": "2:6693749666440114641",
+          "name": "temp"
+        },
+        {
+          "id": "3:8706503061646728886",
+          "name": "tempMin"
+        },
+        {
+          "id": "4:5216917519027610670",
+          "name": "grndLevel"
+        },
+        {
+          "id": "5:6799256183708237052",
+          "name": "humidity"
+        },
+        {
+          "id": "6:3424082866765469756",
+          "name": "pressure"
+        },
+        {
+          "id": "7:50859188967447852",
+          "name": "seaLevel"
+        },
+        {
+          "id": "8:8582491103795441736",
+          "name": "tempMax"
+        },
+        {
+          "id": "9:3378747663075919515",
+          "name": "icon"
+        },
+        {
+          "id": "10:8684487209081495113",
+          "name": "description"
+        },
+        {
+          "id": "11:8845397155760801578",
+          "name": "main"
+        },
+        {
+          "id": "12:5662464341337905192",
+          "name": "weatherId"
+        }
+      ],
+      "relations": []
+    }
+  ],
+  "lastEntityId": "1:380105534448780221",
+  "lastIndexId": "0:0",
+  "lastRelationId": "0:0",
+  "lastSequenceId": "0:0",
+  "modelVersion": 4,
+  "modelVersionParserMinimum": 4,
+  "retiredEntityUids": [],
+  "retiredIndexUids": [],
+  "retiredPropertyUids": [],
+  "retiredRelationUids": [],
+  "version": 1
+}
