@@ -4,7 +4,7 @@ import io.objectbox.annotation.Entity;
 import io.objectbox.annotation.Id;
 
 @Entity
-public class ItemHourly {
+public class ItemHourlyDB {
   @Id
   private long id;
   private long fiveDayWeatherId;
