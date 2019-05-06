@@ -34,6 +34,7 @@ import com.github.bkhezry.weather.ui.fragment.MultipleDaysFragment;
 import com.github.bkhezry.weather.utils.ApiClient;
 import com.github.bkhezry.weather.utils.AppUtil;
 import com.github.bkhezry.weather.utils.Constants;
+import com.github.bkhezry.weather.utils.DbUtil;
 import com.github.bkhezry.weather.utils.MyApplication;
 import com.github.pwittchen.prefser.library.rx2.Prefser;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
@@ -54,6 +55,10 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.objectbox.Box;
 import io.objectbox.BoxStore;
+import io.objectbox.android.AndroidScheduler;
+import io.objectbox.query.Query;
+import io.objectbox.reactive.DataObserver;
+import io.objectbox.reactive.DataSubscriptionList;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.observers.DisposableSingleObserver;
@@ -97,6 +102,7 @@ public class MainActivity extends AppCompatActivity {
   private Box<CurrentWeather> currentWeatherBox;
   private Box<FiveDayWeather> fiveDayWeatherBox;
   private Box<ItemHourlyDB> itemHourlyDBBox;
+  private DataSubscriptionList subscriptions = new DataSubscriptionList();
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -112,15 +118,22 @@ public class MainActivity extends AppCompatActivity {
   }
 
   private void showStoredCurrentWeather() {
-    if (!currentWeatherBox.isEmpty()) {
-      CurrentWeather currentWeather = currentWeatherBox.getAll().get(0);
-      tempTextView.setText(String.format(Locale.getDefault(), "%.0f°", currentWeather.getTemp()));
-      descriptionTextView.setText(currentWeather.getMain());
-      animationView.setAnimation(AppUtil.getWeatherAnimation(currentWeather.getWeatherId()));
-      animationView.playAnimation();
-      humidityTextView.setText(String.format(Locale.getDefault(), "%d%%", currentWeather.getHumidity()));
-      windTextView.setText(String.format(Locale.getDefault(), "%.0fkm/hr", currentWeather.getWindSpeed()));
-    }
+    Query<CurrentWeather> query = DbUtil.getCurrentWeatherQuery(currentWeatherBox);
+    query.subscribe(subscriptions).on(AndroidScheduler.mainThread())
+        .observer(new DataObserver<List<CurrentWeather>>() {
+          @Override
+          public void onData(@NonNull List<CurrentWeather> data) {
+            if (data.size() > 0) {
+              CurrentWeather currentWeather = data.get(0);
+              tempTextView.setText(String.format(Locale.getDefault(), "%.0f°", currentWeather.getTemp()));
+              descriptionTextView.setText(currentWeather.getMain());
+              animationView.setAnimation(AppUtil.getWeatherAnimation(currentWeather.getWeatherId()));
+              animationView.playAnimation();
+              humidityTextView.setText(String.format(Locale.getDefault(), "%d%%", currentWeather.getHumidity()));
+              windTextView.setText(String.format(Locale.getDefault(), "%.0fkm/hr", currentWeather.getWindSpeed()));
+            }
+          }
+        });
   }
 
   private void checkStoredCityInfo() {
@@ -174,7 +187,7 @@ public class MainActivity extends AppCompatActivity {
             .subscribeWith(new DisposableSingleObserver<CurrentWeatherResponse>() {
               @Override
               public void onSuccess(CurrentWeatherResponse currentWeatherResponse) {
-                handleCurrentWeather(currentWeatherResponse);
+                storeCurrentWeather(currentWeatherResponse);
                 storeCityInfo(currentWeatherResponse);
               }
 
@@ -190,18 +203,6 @@ public class MainActivity extends AppCompatActivity {
             })
 
     );
-  }
-
-  private void handleCurrentWeather(CurrentWeatherResponse response) {
-    tempTextView.setText(String.format(Locale.getDefault(), "%.0f°", response.getMain().getTemp()));
-    if (response.getWeather().size() != 0) {
-      descriptionTextView.setText(response.getWeather().get(0).getMain());
-      animationView.setAnimation(AppUtil.getWeatherAnimation(response.getWeather().get(0).getId()));
-      animationView.playAnimation();
-    }
-    humidityTextView.setText(String.format(Locale.getDefault(), "%d%%", response.getMain().getHumidity()));
-    windTextView.setText(String.format(Locale.getDefault(), "%.0fkm/hr", response.getWind().getSpeed()));
-    storeCurrentWeather(response);
   }
 
   private void storeCurrentWeather(CurrentWeatherResponse response) {
