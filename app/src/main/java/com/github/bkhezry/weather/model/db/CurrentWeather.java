@@ -8,13 +8,7 @@ public class CurrentWeather {
   @Id
   private long id;
   private double temp;
-  private double tempMin;
-  private double grndLevel;
   private int humidity;
-  private double pressure;
-  private double seaLevel;
-  private double tempMax;
-  private String icon;
   private String description;
   private String main;
   private int weatherId;
@@ -35,60 +29,12 @@ public class CurrentWeather {
     this.temp = temp;
   }
 
-  public double getTempMin() {
-    return tempMin;
-  }
-
-  public void setTempMin(double tempMin) {
-    this.tempMin = tempMin;
-  }
-
-  public double getGrndLevel() {
-    return grndLevel;
-  }
-
-  public void setGrndLevel(double grndLevel) {
-    this.grndLevel = grndLevel;
-  }
-
   public int getHumidity() {
     return humidity;
   }
 
   public void setHumidity(int humidity) {
     this.humidity = humidity;
-  }
-
-  public double getPressure() {
-    return pressure;
-  }
-
-  public void setPressure(double pressure) {
-    this.pressure = pressure;
-  }
-
-  public double getSeaLevel() {
-    return seaLevel;
-  }
-
-  public void setSeaLevel(double seaLevel) {
-    this.seaLevel = seaLevel;
-  }
-
-  public double getTempMax() {
-    return tempMax;
-  }
-
-  public void setTempMax(double tempMax) {
-    this.tempMax = tempMax;
-  }
-
-  public String getIcon() {
-    return icon;
-  }
-
-  public void setIcon(String icon) {
-    this.icon = icon;
   }
 
   public String getDescription() {
