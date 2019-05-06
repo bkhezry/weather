@@ -25,6 +25,7 @@ import com.github.bkhezry.weather.model.daysweather.ListItem;
 import com.github.bkhezry.weather.model.daysweather.MultipleDaysWeatherResponse;
 import com.github.bkhezry.weather.model.db.CurrentWeather;
 import com.github.bkhezry.weather.model.db.FiveDayWeather;
+import com.github.bkhezry.weather.model.db.ItemHourlyDB;
 import com.github.bkhezry.weather.model.fivedayweather.FiveDayResponse;
 import com.github.bkhezry.weather.model.fivedayweather.ItemHourly;
 import com.github.bkhezry.weather.service.ApiService;
@@ -95,6 +96,7 @@ public class MainActivity extends AppCompatActivity {
   private Prefser prefser;
   private Box<CurrentWeather> currentWeatherBox;
   private Box<FiveDayWeather> fiveDayWeatherBox;
+  private Box<ItemHourlyDB> itemHourlyDBBox;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -160,6 +162,7 @@ public class MainActivity extends AppCompatActivity {
     BoxStore boxStore = MyApplication.getBoxStore();
     currentWeatherBox = boxStore.boxFor(CurrentWeather.class);
     fiveDayWeatherBox = boxStore.boxFor(FiveDayWeather.class);
+    itemHourlyDBBox = boxStore.boxFor(ItemHourlyDB.class);
   }
 
   private void getCurrentWeather(String cityName) {
@@ -297,6 +300,9 @@ public class MainActivity extends AppCompatActivity {
     if (!fiveDayWeatherBox.isEmpty()) {
       fiveDayWeatherBox.removeAll();
     }
+    if (!itemHourlyDBBox.isEmpty()) {
+      itemHourlyDBBox.removeAll();
+    }
     for (WeatherCollection weatherCollection : weatherCollections) {
       FiveDayWeather fiveDayWeather = new FiveDayWeather();
       fiveDayWeather.setDt(weatherCollection.getListItem().getDt());
@@ -314,6 +320,12 @@ public class MainActivity extends AppCompatActivity {
             && calendar.getTimeInMillis()
             > weatherCollection.getTimestampStart()) {
           weatherCollection.addListItemHourlies(itemHourly);
+          ItemHourlyDB itemHourlyDB = new ItemHourlyDB();
+          itemHourlyDB.setDt(itemHourly.getDt());
+          itemHourlyDB.setFiveDayWeatherId(fiveDayWeatherId);
+          itemHourlyDB.setTemp(itemHourly.getMain().getTemp());
+          itemHourlyDB.setWeatherCode(itemHourly.getWeather().get(0).getId());
+          itemHourlyDBBox.put(itemHourlyDB);
         }
       }
     }
