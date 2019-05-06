@@ -103,7 +103,20 @@ public class MainActivity extends AppCompatActivity {
     initSearchView();
     initValues();
     initRecyclerView();
+    showStoredCurrentWeather();
     checkStoredCityInfo();
+  }
+
+  private void showStoredCurrentWeather() {
+    if (!currentWeatherBox.isEmpty()) {
+      CurrentWeather currentWeather = currentWeatherBox.getAll().get(0);
+      tempTextView.setText(String.format(Locale.getDefault(), "%.0f°", currentWeather.getTemp()));
+      descriptionTextView.setText(currentWeather.getMain());
+      animationView.setAnimation(AppUtil.getWeatherAnimation(currentWeather.getWeatherId()));
+      animationView.playAnimation();
+      humidityTextView.setText(String.format(Locale.getDefault(), "%d%%", currentWeather.getHumidity()));
+      windTextView.setText(String.format(Locale.getDefault(), "%.0fkm/hr", currentWeather.getWindSpeed()));
+    }
   }
 
   private void checkStoredCityInfo() {
