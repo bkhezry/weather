@@ -152,7 +152,6 @@ public class WeatherCollection extends AbstractItem<WeatherCollection, WeatherCo
       AppUtil.setWeatherIcon(context, weatherImageView, weatherCode);
       GradientDrawable shape = new GradientDrawable(GradientDrawable.Orientation.RIGHT_LEFT, colors);
       shape.setShape(GradientDrawable.OVAL);
-
       shadowView.setBackground(shape);
     }
 
