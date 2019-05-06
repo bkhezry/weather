@@ -158,7 +158,7 @@ public class MainActivity extends AppCompatActivity {
                   HttpException error = (HttpException) e;
                   Log.e("MainActivity", "onError: " + e.getMessage());
                 } catch (Exception exception) {
-
+                  e.printStackTrace();
                 }
               }
             })
@@ -204,7 +204,7 @@ public class MainActivity extends AppCompatActivity {
                   HttpException error = (HttpException) e;
                   Log.e("MainActivity", "onError: " + e.getMessage());
                 } catch (Exception exception) {
-
+                  e.printStackTrace();
                 }
               }
             })
