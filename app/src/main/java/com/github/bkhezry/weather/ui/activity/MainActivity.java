@@ -24,6 +24,7 @@ import com.github.bkhezry.weather.model.currentweather.CurrentWeatherResponse;
 import com.github.bkhezry.weather.model.daysweather.ListItem;
 import com.github.bkhezry.weather.model.daysweather.MultipleDaysWeatherResponse;
 import com.github.bkhezry.weather.model.db.CurrentWeather;
+import com.github.bkhezry.weather.model.db.FiveDayWeather;
 import com.github.bkhezry.weather.model.fivedayweather.FiveDayResponse;
 import com.github.bkhezry.weather.model.fivedayweather.ItemHourly;
 import com.github.bkhezry.weather.service.ApiService;
@@ -93,6 +94,7 @@ public class MainActivity extends AppCompatActivity {
   private WeatherCollection todayWeatherCollection;
   private Prefser prefser;
   private Box<CurrentWeather> currentWeatherBox;
+  private Box<FiveDayWeather> fiveDayWeatherBox;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -157,6 +159,7 @@ public class MainActivity extends AppCompatActivity {
     apiService = ApiClient.getClient(getApplicationContext()).create(ApiService.class);
     BoxStore boxStore = MyApplication.getBoxStore();
     currentWeatherBox = boxStore.boxFor(CurrentWeather.class);
+    fiveDayWeatherBox = boxStore.boxFor(FiveDayWeather.class);
   }
 
   private void getCurrentWeather(String cityName) {
@@ -291,7 +294,17 @@ public class MainActivity extends AppCompatActivity {
   }
 
   private void handleFiveDayHourlyResponse(FiveDayResponse response) {
+    if (!fiveDayWeatherBox.isEmpty()) {
+      fiveDayWeatherBox.removeAll();
+    }
     for (WeatherCollection weatherCollection : weatherCollections) {
+      FiveDayWeather fiveDayWeather = new FiveDayWeather();
+      fiveDayWeather.setDt(weatherCollection.getListItem().getDt());
+      fiveDayWeather.setTemp(weatherCollection.getListItem().getTemp().getDay());
+      fiveDayWeather.setMaxTemp(weatherCollection.getListItem().getTemp().getMax());
+      fiveDayWeather.setMinTemp(weatherCollection.getListItem().getTemp().getMin());
+      fiveDayWeather.setWeatherId(weatherCollection.getListItem().getWeather().get(0).getId());
+      long fiveDayWeatherId = fiveDayWeatherBox.put(fiveDayWeather);
       ArrayList<ItemHourly> listItemHourlies = new ArrayList<>(response.getList());
       for (ItemHourly itemHourly : listItemHourlies) {
         Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
