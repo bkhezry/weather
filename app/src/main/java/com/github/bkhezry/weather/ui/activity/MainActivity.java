@@ -194,6 +194,7 @@ public class MainActivity extends AppCompatActivity {
     currentWeather.setWeatherId(response.getWeather().get(0).getId());
     currentWeather.setWindDeg(response.getWind().getDeg());
     currentWeather.setWindSpeed(response.getWind().getSpeed());
+    currentWeather.setStoreTimestamp(System.currentTimeMillis());
     if (!currentWeatherBox.isEmpty()) {
       currentWeatherBox.removeAll();
       currentWeatherBox.put(currentWeather);
