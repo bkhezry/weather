@@ -5,7 +5,7 @@
   "entities": [
     {
       "id": "1:380105534448780221",
-      "lastPropertyId": "12:5662464341337905192",
+      "lastPropertyId": "14:6578418316018648319",
       "name": "CurrentWeather",
       "properties": [
         {
@@ -31,6 +31,14 @@
         {
           "id": "12:5662464341337905192",
           "name": "weatherId"
+        },
+        {
+          "id": "13:6147273812303910100",
+          "name": "windDeg"
+        },
+        {
+          "id": "14:6578418316018648319",
+          "name": "windSpeed"
         }
       ],
       "relations": []

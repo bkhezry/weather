@@ -14,6 +14,7 @@ public class CurrentWeather {
   private int weatherId;
   private double windDeg;
   private double windSpeed;
+  private long storeTimestamp;
 
   public long getId() {
     return id;
@@ -77,5 +78,13 @@ public class CurrentWeather {
 
   public void setWindSpeed(double windSpeed) {
     this.windSpeed = windSpeed;
+  }
+
+  public long getStoreTimestamp() {
+    return storeTimestamp;
+  }
+
+  public void setStoreTimestamp(long storeTimestamp) {
+    this.storeTimestamp = storeTimestamp;
   }
 }
