@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'io.objectbox'
 
 def versionMajor = 1
 def versionMinor = 4
