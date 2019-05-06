@@ -12,6 +12,8 @@ public class CurrentWeather {
   private String description;
   private String main;
   private int weatherId;
+  private double windDeg;
+  private double windSpeed;
 
   public long getId() {
     return id;
@@ -59,5 +61,21 @@ public class CurrentWeather {
 
   public void setWeatherId(int weatherId) {
     this.weatherId = weatherId;
+  }
+
+  public double getWindDeg() {
+    return windDeg;
+  }
+
+  public void setWindDeg(double windDeg) {
+    this.windDeg = windDeg;
+  }
+
+  public double getWindSpeed() {
+    return windSpeed;
+  }
+
+  public void setWindSpeed(double windSpeed) {
+    this.windSpeed = windSpeed;
   }
 }

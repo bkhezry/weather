@@ -17,32 +17,8 @@
           "name": "temp"
         },
         {
-          "id": "3:8706503061646728886",
-          "name": "tempMin"
-        },
-        {
-          "id": "4:5216917519027610670",
-          "name": "grndLevel"
-        },
-        {
           "id": "5:6799256183708237052",
           "name": "humidity"
-        },
-        {
-          "id": "6:3424082866765469756",
-          "name": "pressure"
-        },
-        {
-          "id": "7:50859188967447852",
-          "name": "seaLevel"
-        },
-        {
-          "id": "8:8582491103795441736",
-          "name": "tempMax"
-        },
-        {
-          "id": "9:3378747663075919515",
-          "name": "icon"
         },
         {
           "id": "10:8684487209081495113",
@@ -68,7 +44,14 @@
   "modelVersionParserMinimum": 4,
   "retiredEntityUids": [],
   "retiredIndexUids": [],
-  "retiredPropertyUids": [],
+  "retiredPropertyUids": [
+    8706503061646728886,
+    5216917519027610670,
+    3424082866765469756,
+    50859188967447852,
+    8582491103795441736,
+    3378747663075919515
+  ],
   "retiredRelationUids": [],
   "version": 1
 }
