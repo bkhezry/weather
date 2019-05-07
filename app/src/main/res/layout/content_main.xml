@@ -79,7 +79,7 @@
                             android:layout_height="wrap_content"
                             android:text="--"
                             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                            android:textColor="@android:color/darker_gray" />
+                            android:textColor="@color/grey_10" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -107,7 +107,7 @@
                             android:layout_height="wrap_content"
                             android:text="--"
                             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                            android:textColor="@android:color/darker_gray" />
+                            android:textColor="@color/grey_10" />
                     </LinearLayout>
                 </LinearLayout>
 
