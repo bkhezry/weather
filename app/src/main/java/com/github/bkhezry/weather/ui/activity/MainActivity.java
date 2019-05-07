@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextSwitcher;
 
 import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
@@ -36,6 +37,7 @@ import com.github.bkhezry.weather.utils.AppUtil;
 import com.github.bkhezry.weather.utils.Constants;
 import com.github.bkhezry.weather.utils.DbUtil;
 import com.github.bkhezry.weather.utils.MyApplication;
+import com.github.bkhezry.weather.utils.TextViewFactory;
 import com.github.pwittchen.prefser.library.rx2.Prefser;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 import com.mikepenz.fastadapter.FastAdapter;
@@ -70,11 +72,11 @@ public class MainActivity extends AppCompatActivity {
   @BindView(R.id.recycler_view)
   RecyclerView recyclerView;
   @BindView(R.id.temp_text_view)
-  AppCompatTextView tempTextView;
+  TextSwitcher tempTextView;
   @BindView(R.id.description_text_view)
-  AppCompatTextView descriptionTextView;
+  TextSwitcher descriptionTextView;
   @BindView(R.id.humidity_text_view)
-  AppCompatTextView humidityTextView;
+  TextSwitcher humidityTextView;
   @BindArray(R.array.mdcolor_500)
   @ColorInt
   int[] colors;
@@ -90,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
   @BindView(R.id.city_name_text_view)
   AppCompatTextView cityNameTextView;
   @BindView(R.id.wind_text_view)
-  AppCompatTextView windTextView;
+  TextSwitcher windTextView;
   @BindView(R.id.swipe_container)
   SwipeRefreshLayout swipeContainer;
   private FastAdapter<FiveDayWeather> mFastAdapter;
@@ -105,6 +107,7 @@ public class MainActivity extends AppCompatActivity {
   private Box<FiveDayWeather> fiveDayWeatherBox;
   private Box<ItemHourlyDB> itemHourlyDBBox;
   private DataSubscriptionList subscriptions = new DataSubscriptionList();
+  private boolean isLoad = false;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -112,12 +115,28 @@ public class MainActivity extends AppCompatActivity {
     setContentView(R.layout.activity_main);
     ButterKnife.bind(this);
     setSupportActionBar(toolbar);
+    setupTextSwitchers();
     initSearchView();
     initValues();
     initRecyclerView();
     showStoredCurrentWeather();
     showStoredFiveDayWeather();
     checkStoredCityInfo();
+  }
+
+  private void setupTextSwitchers() {
+    tempTextView.setFactory(new TextViewFactory(MainActivity.this, R.style.TempTextView, true));
+    tempTextView.setInAnimation(MainActivity.this, R.anim.slide_in_right);
+    tempTextView.setOutAnimation(MainActivity.this, R.anim.slide_out_left);
+    descriptionTextView.setFactory(new TextViewFactory(MainActivity.this, R.style.DescriptionTextView, true));
+    descriptionTextView.setInAnimation(MainActivity.this, R.anim.slide_in_right);
+    descriptionTextView.setOutAnimation(MainActivity.this, R.anim.slide_out_left);
+    humidityTextView.setFactory(new TextViewFactory(MainActivity.this, R.style.HumidityTextView, false));
+    humidityTextView.setInAnimation(MainActivity.this, R.anim.slide_in_bottom);
+    humidityTextView.setOutAnimation(MainActivity.this, R.anim.slide_out_top);
+    windTextView.setFactory(new TextViewFactory(MainActivity.this, R.style.WindSpeedTextView, false));
+    windTextView.setInAnimation(MainActivity.this, R.anim.slide_in_bottom);
+    windTextView.setOutAnimation(MainActivity.this, R.anim.slide_out_top);
   }
 
   private void showStoredCurrentWeather() {
@@ -128,12 +147,19 @@ public class MainActivity extends AppCompatActivity {
           public void onData(@NonNull List<CurrentWeather> data) {
             if (data.size() > 0) {
               CurrentWeather currentWeather = data.get(0);
-              tempTextView.setText(String.format(Locale.getDefault(), "%.0f°", currentWeather.getTemp()));
-              descriptionTextView.setText(currentWeather.getMain());
+              if (isLoad) {
+                tempTextView.setText(String.format(Locale.getDefault(), "%.0f°", currentWeather.getTemp()));
+                descriptionTextView.setText(currentWeather.getMain());
+                humidityTextView.setText(String.format(Locale.getDefault(), "%d%%", currentWeather.getHumidity()));
+                windTextView.setText(String.format(Locale.getDefault(), "%.0fkm/hr", currentWeather.getWindSpeed()));
+              } else {
+                tempTextView.setCurrentText(String.format(Locale.getDefault(), "%.0f°", currentWeather.getTemp()));
+                descriptionTextView.setCurrentText(currentWeather.getMain());
+                humidityTextView.setCurrentText(String.format(Locale.getDefault(), "%d%%", currentWeather.getHumidity()));
+                windTextView.setCurrentText(String.format(Locale.getDefault(), "%.0fkm/hr", currentWeather.getWindSpeed()));
+              }
               animationView.setAnimation(AppUtil.getWeatherAnimation(currentWeather.getWeatherId()));
               animationView.playAnimation();
-              humidityTextView.setText(String.format(Locale.getDefault(), "%d%%", currentWeather.getHumidity()));
-              windTextView.setText(String.format(Locale.getDefault(), "%.0fkm/hr", currentWeather.getWindSpeed()));
             }
           }
         });
@@ -217,6 +243,7 @@ public class MainActivity extends AppCompatActivity {
             .subscribeWith(new DisposableSingleObserver<CurrentWeatherResponse>() {
               @Override
               public void onSuccess(CurrentWeatherResponse currentWeatherResponse) {
+                isLoad = true;
                 storeCurrentWeather(currentWeatherResponse);
                 storeCityInfo(currentWeatherResponse);
                 swipeContainer.setRefreshing(false);
