@@ -18,10 +18,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.github.bkhezry.weather.R;
-import com.github.bkhezry.weather.model.WeatherCollection;
-import com.github.bkhezry.weather.model.fivedayweather.ItemHourly;
+import com.github.bkhezry.weather.model.db.FiveDayWeather;
+import com.github.bkhezry.weather.model.db.ItemHourlyDB;
 import com.github.bkhezry.weather.utils.AppUtil;
 import com.github.bkhezry.weather.utils.Constants;
+import com.github.bkhezry.weather.utils.DbUtil;
+import com.github.bkhezry.weather.utils.MyApplication;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
@@ -40,6 +42,11 @@ import java.util.TimeZone;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.objectbox.Box;
+import io.objectbox.BoxStore;
+import io.objectbox.android.AndroidScheduler;
+import io.objectbox.query.Query;
+import io.objectbox.reactive.DataObserver;
 
 public class HourlyFragment extends DialogFragment {
   @BindView(R.id.card_view)
@@ -58,9 +65,10 @@ public class HourlyFragment extends DialogFragment {
   LottieAnimationView animationView;
   @BindView(R.id.chart)
   LineChart chart;
-  private WeatherCollection weatherCollection;
-  private FastAdapter<ItemHourly> mFastAdapter;
-  private ItemAdapter<ItemHourly> mItemAdapter;
+  private FastAdapter<ItemHourlyDB> mFastAdapter;
+  private ItemAdapter<ItemHourlyDB> mItemAdapter;
+  private FiveDayWeather fiveDayWeather;
+  private Box<ItemHourlyDB> itemHourlyDBBox;
 
 
   @Override
@@ -69,24 +77,39 @@ public class HourlyFragment extends DialogFragment {
     View view = inflater.inflate(R.layout.fragment_hourly,
         container, false);
     ButterKnife.bind(this, view);
+    BoxStore boxStore = MyApplication.getBoxStore();
+    itemHourlyDBBox = boxStore.boxFor(ItemHourlyDB.class);
     setVariables();
     initRecyclerView();
-    setItemHourly();
-    setChartValues();
+    showItemHourlyDB();
     return view;
+  }
+
+  private void showItemHourlyDB() {
+    Query<ItemHourlyDB> query = DbUtil.getItemHourlyDBQuery(itemHourlyDBBox, fiveDayWeather.getId());
+    query.subscribe().on(AndroidScheduler.mainThread())
+        .observer(new DataObserver<List<ItemHourlyDB>>() {
+          @Override
+          public void onData(@NonNull List<ItemHourlyDB> data) {
+            if (data.size() > 0) {
+              mItemAdapter.clear();
+              mItemAdapter.add(data);
+              setChartValues(data);
+            }
+          }
+        });
   }
 
 
   private void setVariables() {
-    cardView.setCardBackgroundColor(weatherCollection.getColor());
+    cardView.setCardBackgroundColor(fiveDayWeather.getColor());
     Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
-    calendar.setTimeInMillis(weatherCollection.getListItem().getDt() * 1000L);
+    calendar.setTimeInMillis(fiveDayWeather.getDt() * 1000L);
     dayNameTextView.setText(Constants.DAYS_OF_WEEK[calendar.get(Calendar.DAY_OF_WEEK) - 1]);
-    tempTextView.setText(String.format(Locale.getDefault(), "%.0f°", weatherCollection.getListItem().getTemp().getDay()));
-    minTempTextView.setText(String.format(Locale.getDefault(), "%.0f°", weatherCollection.getListItem().getTemp().getMin()));
-    maxTempTextView.setText(String.format(Locale.getDefault(), "%.0f°", weatherCollection.getListItem().getTemp().getMax()));
-    int weatherCode = weatherCollection.getListItem().getWeather().get(0).getId();
-    animationView.setAnimation(AppUtil.getWeatherAnimation(weatherCode));
+    tempTextView.setText(String.format(Locale.getDefault(), "%.0f°", fiveDayWeather.getTemp()));
+    minTempTextView.setText(String.format(Locale.getDefault(), "%.0f°", fiveDayWeather.getMinTemp()));
+    maxTempTextView.setText(String.format(Locale.getDefault(), "%.0f°", fiveDayWeather.getMaxTemp()));
+    animationView.setAnimation(AppUtil.getWeatherAnimation(fiveDayWeather.getWeatherId()));
     animationView.playAnimation();
   }
 
@@ -100,16 +123,11 @@ public class HourlyFragment extends DialogFragment {
     recyclerView.setAdapter(mFastAdapter);
   }
 
-  private void setItemHourly() {
-    mItemAdapter.clear();
-    mItemAdapter.add(weatherCollection.getListItemHourlies());
-  }
-
-  private void setChartValues() {
+  private void setChartValues(List<ItemHourlyDB> itemHourlyDBList) {
     List<Entry> entries = new ArrayList<>();
     int i = 0;
-    for (ItemHourly itemHourly : weatherCollection.getListItemHourlies()) {
-      entries.add(new Entry(i, (float) itemHourly.getMain().getTemp()));
+    for (ItemHourlyDB itemHourlyDB : itemHourlyDBList) {
+      entries.add(new Entry(i, (float) itemHourlyDB.getTemp()));
       i++;
     }
     LineDataSet dataSet = new LineDataSet(entries, "Label"); // add entries to dataset
@@ -158,8 +176,8 @@ public class HourlyFragment extends DialogFragment {
     return dialog;
   }
 
-  public void setWeatherCollection(WeatherCollection weatherCollection) {
-    this.weatherCollection = weatherCollection;
+  public void setFiveDayWeather(FiveDayWeather fiveDayWeather) {
+    this.fiveDayWeather = fiveDayWeather;
   }
 
   @OnClick(R.id.close_button)
