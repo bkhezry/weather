@@ -19,7 +19,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.airbnb.lottie.LottieAnimationView;
 import com.github.bkhezry.weather.R;
 import com.github.bkhezry.weather.model.CityInfo;
-import com.github.bkhezry.weather.model.WeatherCollection;
 import com.github.bkhezry.weather.model.currentweather.CurrentWeatherResponse;
 import com.github.bkhezry.weather.model.daysweather.ListItem;
 import com.github.bkhezry.weather.model.daysweather.MultipleDaysWeatherResponse;
@@ -95,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
   private ItemAdapter<FiveDayWeather> mItemAdapter;
   private CompositeDisposable disposable = new CompositeDisposable();
   private String defaultLang = "en";
-  private List<WeatherCollection> weatherCollections;
+  private List<FiveDayWeather> fiveDayWeathers;
   private ApiService apiService;
   private FiveDayWeather todayWeatherCollection;
   private Prefser prefser;
@@ -274,19 +273,23 @@ public class MainActivity extends AppCompatActivity {
   }
 
   private void handleFiveDayResponse(MultipleDaysWeatherResponse response, String cityName) {
-    weatherCollections = new ArrayList<>();
+    fiveDayWeathers = new ArrayList<>();
     List<ListItem> list = response.getList();
     int day = 0;
     for (ListItem item : list) {
       Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
       Calendar newCalendar = AppUtil.addDays(calendar, day);
-      WeatherCollection weatherCollection = new WeatherCollection();
-      weatherCollection.setListItem(item);
-      weatherCollection.setColor(colors[day]);
-      weatherCollection.setColorAlpha(colorsAlpha[day]);
-      weatherCollection.setTimestampStart(AppUtil.getStartOfDayTimestamp(newCalendar));
-      weatherCollection.setTimestampEnd(AppUtil.getEndOfDayTimestamp(newCalendar));
-      weatherCollections.add(weatherCollection);
+      FiveDayWeather fiveDayWeather = new FiveDayWeather();
+      fiveDayWeather.setWeatherId(item.getWeather().get(0).getId());
+      fiveDayWeather.setDt(item.getDt());
+      fiveDayWeather.setMaxTemp(item.getTemp().getMax());
+      fiveDayWeather.setMinTemp(item.getTemp().getMin());
+      fiveDayWeather.setTemp(item.getTemp().getDay());
+      fiveDayWeather.setColor(colors[day]);
+      fiveDayWeather.setColorAlpha(colorsAlpha[day]);
+      fiveDayWeather.setTimestampStart(AppUtil.getStartOfDayTimestamp(newCalendar));
+      fiveDayWeather.setTimestampEnd(AppUtil.getEndOfDayTimestamp(newCalendar));
+      fiveDayWeathers.add(fiveDayWeather);
       day++;
     }
     getFiveDaysHourlyWeather(cityName);
@@ -320,25 +323,16 @@ public class MainActivity extends AppCompatActivity {
     if (!itemHourlyDBBox.isEmpty()) {
       itemHourlyDBBox.removeAll();
     }
-    for (WeatherCollection weatherCollection : weatherCollections) {
-      FiveDayWeather fiveDayWeather = new FiveDayWeather();
-      fiveDayWeather.setDt(weatherCollection.getListItem().getDt());
-      fiveDayWeather.setTemp(weatherCollection.getListItem().getTemp().getDay());
-      fiveDayWeather.setMaxTemp(weatherCollection.getListItem().getTemp().getMax());
-      fiveDayWeather.setMinTemp(weatherCollection.getListItem().getTemp().getMin());
-      fiveDayWeather.setWeatherId(weatherCollection.getListItem().getWeather().get(0).getId());
-      fiveDayWeather.setColor(weatherCollection.getColor());
-      fiveDayWeather.setColorAlpha(weatherCollection.getColorAlpha());
+    for (FiveDayWeather fiveDayWeather : fiveDayWeathers) {
       long fiveDayWeatherId = fiveDayWeatherBox.put(fiveDayWeather);
       ArrayList<ItemHourly> listItemHourlies = new ArrayList<>(response.getList());
       for (ItemHourly itemHourly : listItemHourlies) {
         Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
         calendar.setTimeInMillis(itemHourly.getDt() * 1000L);
         if (calendar.getTimeInMillis()
-            <= weatherCollection.getTimestampEnd()
+            <= fiveDayWeather.getTimestampEnd()
             && calendar.getTimeInMillis()
-            > weatherCollection.getTimestampStart()) {
-          weatherCollection.addListItemHourlies(itemHourly);
+            > fiveDayWeather.getTimestampStart()) {
           ItemHourlyDB itemHourlyDB = new ItemHourlyDB();
           itemHourlyDB.setDt(itemHourly.getDt());
           itemHourlyDB.setFiveDayWeatherId(fiveDayWeatherId);
