@@ -175,6 +175,7 @@ public class MultipleDaysFragment extends DialogFragment {
       multipleDaysWeather.setWeatherId(listItem.getWeather().get(0).getId());
       multipleDaysWeatherBox.put(multipleDaysWeather);
     }
+    prefser.put(Constants.LAST_STORED_MULTIPLE_DAYS, System.currentTimeMillis());
   }
 
   @NonNull
