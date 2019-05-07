@@ -65,9 +65,21 @@ public class MultipleDaysFragment extends DialogFragment {
     View view = inflater.inflate(R.layout.fragment_multiple_days,
         container, false);
     ButterKnife.bind(this, view);
+    initVariables();
+    initSwipeView();
+    initRecyclerView();
+    showStoredMultipleDaysWeather();
+    checkCityInfoExist();
+    return view;
+  }
+
+  private void initVariables() {
     activity = getActivity();
     BoxStore boxStore = MyApplication.getBoxStore();
     multipleDaysWeatherBox = boxStore.boxFor(MultipleDaysWeather.class);
+  }
+
+  private void initSwipeView() {
     swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
         android.R.color.holo_green_light,
         android.R.color.holo_orange_light,
@@ -80,10 +92,6 @@ public class MultipleDaysFragment extends DialogFragment {
       }
 
     });
-    initRecyclerView();
-    showStoredMultipleDaysWeather();
-    checkCityInfoExist();
-    return view;
   }
 
   private void showStoredMultipleDaysWeather() {
