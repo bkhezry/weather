@@ -55,6 +55,7 @@
                             android:padding="@dimen/spacing_middle">
 
                             <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/humidity_label_text_view"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
@@ -82,6 +83,7 @@
                             android:padding="@dimen/spacing_middle">
 
                             <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/wind_label_text_view"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
@@ -126,6 +128,7 @@
             android:orientation="vertical">
 
             <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/four_day_label_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Next 4 Days/Hourly"

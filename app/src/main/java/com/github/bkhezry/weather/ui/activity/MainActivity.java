@@ -39,6 +39,7 @@ import com.github.bkhezry.weather.utils.DbUtil;
 import com.github.bkhezry.weather.utils.MyApplication;
 import com.github.bkhezry.weather.utils.TextViewFactory;
 import com.github.pwittchen.prefser.library.rx2.Prefser;
+import com.google.android.material.button.MaterialButton;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 import com.mikepenz.fastadapter.FastAdapter;
 import com.mikepenz.fastadapter.IAdapter;
@@ -95,6 +96,14 @@ public class MainActivity extends AppCompatActivity {
   TextSwitcher windTextView;
   @BindView(R.id.swipe_container)
   SwipeRefreshLayout swipeContainer;
+  @BindView(R.id.humidity_label_text_view)
+  AppCompatTextView humidityLabelTextView;
+  @BindView(R.id.wind_label_text_view)
+  AppCompatTextView windLabelTextView;
+  @BindView(R.id.four_day_label_text_view)
+  AppCompatTextView fourDayLabelTextView;
+  @BindView(R.id.next_days_button)
+  MaterialButton nextDaysButton;
   private FastAdapter<FiveDayWeather> mFastAdapter;
   private ItemAdapter<FiveDayWeather> mItemAdapter;
   private CompositeDisposable disposable = new CompositeDisposable();
@@ -157,6 +166,7 @@ public class MainActivity extends AppCompatActivity {
           @Override
           public void onData(@NonNull List<CurrentWeather> data) {
             if (data.size() > 0) {
+              showHiddenViews();
               CurrentWeather currentWeather = data.get(0);
               if (isLoad) {
                 tempTextView.setText(String.format(Locale.getDefault(), "%.0f°", currentWeather.getTemp()));
@@ -273,6 +283,13 @@ public class MainActivity extends AppCompatActivity {
             })
 
     );
+  }
+
+  private void showHiddenViews() {
+    fourDayLabelTextView.setVisibility(View.VISIBLE);
+    humidityLabelTextView.setVisibility(View.VISIBLE);
+    windLabelTextView.setVisibility(View.VISIBLE);
+    nextDaysButton.setVisibility(View.VISIBLE);
   }
 
   private void storeCurrentWeather(CurrentWeatherResponse response) {
