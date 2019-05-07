@@ -25,6 +25,7 @@ import com.github.bkhezry.weather.model.daysweather.MultipleDaysWeatherResponse;
 import com.github.bkhezry.weather.model.db.MultipleDaysWeather;
 import com.github.bkhezry.weather.service.ApiService;
 import com.github.bkhezry.weather.utils.ApiClient;
+import com.github.bkhezry.weather.utils.AppUtil;
 import com.github.bkhezry.weather.utils.Constants;
 import com.github.bkhezry.weather.utils.DbUtil;
 import com.github.bkhezry.weather.utils.MyApplication;
@@ -58,6 +59,7 @@ public class MultipleDaysFragment extends DialogFragment {
   private ItemAdapter<MultipleDaysWeather> mItemAdapter;
   private Activity activity;
   private Box<MultipleDaysWeather> multipleDaysWeatherBox;
+  private Prefser prefser;
 
   @Override
   public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -69,12 +71,20 @@ public class MultipleDaysFragment extends DialogFragment {
     initSwipeView();
     initRecyclerView();
     showStoredMultipleDaysWeather();
-    checkCityInfoExist();
+    if (prefser.contains(Constants.LAST_STORED_MULTIPLE_DAYS)) {
+      long lastUpdate = prefser.get(Constants.LAST_STORED_MULTIPLE_DAYS, Long.class, 0L);
+      if (AppUtil.isTenMinutePass(lastUpdate)) {
+        checkCityInfoExist();
+      }
+    } else {
+      checkCityInfoExist();
+    }
     return view;
   }
 
   private void initVariables() {
     activity = getActivity();
+    prefser = new Prefser(activity);
     BoxStore boxStore = MyApplication.getBoxStore();
     multipleDaysWeatherBox = boxStore.boxFor(MultipleDaysWeather.class);
   }
@@ -116,7 +126,6 @@ public class MultipleDaysFragment extends DialogFragment {
   }
 
   private void checkCityInfoExist() {
-    Prefser prefser = new Prefser(activity);
     CityInfo cityInfo = prefser.get(Constants.CITY_INFO, CityInfo.class, null);
     if (cityInfo != null) {
       requestWeathers(cityInfo.getName());
