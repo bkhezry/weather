@@ -114,4 +114,8 @@ public class AppUtil {
     }
     return R.raw.unknown;
   }
+
+  public static boolean isTenMinutePass(long lastStored) {
+    return System.currentTimeMillis() - lastStored > Constants.TEN_MINUTES;
+  }
 }

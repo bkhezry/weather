@@ -121,7 +121,18 @@ public class MainActivity extends AppCompatActivity {
     initRecyclerView();
     showStoredCurrentWeather();
     showStoredFiveDayWeather();
-    checkStoredCityInfo();
+    checkLastUpdate();
+  }
+
+  private void checkLastUpdate() {
+    if (prefser.contains(Constants.LAST_STORED_CURRENT)) {
+      long lastStored = prefser.get(Constants.LAST_STORED_CURRENT, Long.class, 0L);
+      if (AppUtil.isTenMinutePass(lastStored)) {
+        checkStoredCityInfo();
+      }
+    } else {
+      checkStoredCityInfo();
+    }
   }
 
   private void setupTextSwitchers() {
@@ -274,6 +285,7 @@ public class MainActivity extends AppCompatActivity {
     currentWeather.setWindDeg(response.getWind().getDeg());
     currentWeather.setWindSpeed(response.getWind().getSpeed());
     currentWeather.setStoreTimestamp(System.currentTimeMillis());
+    prefser.put(Constants.LAST_STORED_CURRENT, System.currentTimeMillis());
     if (!currentWeatherBox.isEmpty()) {
       currentWeatherBox.removeAll();
       currentWeatherBox.put(currentWeather);
