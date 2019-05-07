@@ -16,6 +16,7 @@ import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.github.bkhezry.weather.R;
 import com.github.bkhezry.weather.model.CityInfo;
@@ -49,6 +50,8 @@ import io.reactivex.schedulers.Schedulers;
 public class MultipleDaysFragment extends DialogFragment {
   @BindView(R.id.recycler_view)
   RecyclerView recyclerView;
+  @BindView(R.id.swipe_container)
+  SwipeRefreshLayout swipeContainer;
   private String defaultLang = "en";
   private CompositeDisposable disposable = new CompositeDisposable();
   private FastAdapter<MultipleDaysWeather> mFastAdapter;
@@ -65,6 +68,18 @@ public class MultipleDaysFragment extends DialogFragment {
     activity = getActivity();
     BoxStore boxStore = MyApplication.getBoxStore();
     multipleDaysWeatherBox = boxStore.boxFor(MultipleDaysWeather.class);
+    swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
+        android.R.color.holo_green_light,
+        android.R.color.holo_orange_light,
+        android.R.color.holo_red_light);
+    swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+
+      @Override
+      public void onRefresh() {
+        checkCityInfoExist();
+      }
+
+    });
     initRecyclerView();
     showStoredMultipleDaysWeather();
     checkCityInfoExist();
@@ -111,10 +126,12 @@ public class MultipleDaysFragment extends DialogFragment {
               @Override
               public void onSuccess(MultipleDaysWeatherResponse response) {
                 handleMultipleDaysResponse(response);
+                swipeContainer.setRefreshing(false);
               }
 
               @Override
               public void onError(Throwable e) {
+                swipeContainer.setRefreshing(false);
                 Log.e("MainActivity", "onError: " + e.getMessage());
               }
             })
