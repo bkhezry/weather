@@ -117,6 +117,7 @@ public class MainActivity extends AppCompatActivity {
   private Box<ItemHourlyDB> itemHourlyDBBox;
   private DataSubscriptionList subscriptions = new DataSubscriptionList();
   private boolean isLoad = false;
+  private CityInfo cityInfo;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -134,14 +135,20 @@ public class MainActivity extends AppCompatActivity {
   }
 
   private void checkLastUpdate() {
-    if (prefser.contains(Constants.LAST_STORED_CURRENT)) {
-      long lastStored = prefser.get(Constants.LAST_STORED_CURRENT, Long.class, 0L);
-      if (AppUtil.isTenMinutePass(lastStored)) {
-        checkStoredCityInfo();
+    cityInfo = prefser.get(Constants.CITY_INFO, CityInfo.class, null);
+    if (cityInfo != null) {
+      cityNameTextView.setText(String.format("%s, %s", cityInfo.getName(), cityInfo.getCountry()));
+      if (prefser.contains(Constants.LAST_STORED_CURRENT)) {
+        long lastStored = prefser.get(Constants.LAST_STORED_CURRENT, Long.class, 0L);
+        if (AppUtil.isTenMinutePass(lastStored)) {
+          requestWeather(cityInfo.getName());
+
+        }
+      } else {
+        requestWeather(cityInfo.getName());
       }
-    } else {
-      checkStoredCityInfo();
     }
+
   }
 
   private void setupTextSwitchers() {
@@ -201,16 +208,6 @@ public class MainActivity extends AppCompatActivity {
         });
   }
 
-  private void checkStoredCityInfo() {
-    if (prefser.contains(Constants.CITY_INFO)) {
-      CityInfo cityInfo = prefser.get(Constants.CITY_INFO, CityInfo.class, null);
-      if (cityInfo != null) {
-        requestWeather(cityInfo.getName());
-        cityNameTextView.setText(String.format("%s, %s", cityInfo.getName(), cityInfo.getCountry()));
-      }
-    }
-  }
-
   private void requestWeather(String cityName) {
     getCurrentWeather(cityName);
     getFiveDaysWeather(cityName);
@@ -249,7 +246,7 @@ public class MainActivity extends AppCompatActivity {
 
       @Override
       public void onRefresh() {
-        checkStoredCityInfo();
+        requestWeather(cityInfo.getName());
       }
 
     });
