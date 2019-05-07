@@ -250,6 +250,7 @@ public class MainActivity extends AppCompatActivity {
 
       @Override
       public void onRefresh() {
+        cityInfo = prefser.get(Constants.CITY_INFO, CityInfo.class, null);
         if (cityInfo != null) {
           requestWeather(cityInfo.getName());
         } else {
