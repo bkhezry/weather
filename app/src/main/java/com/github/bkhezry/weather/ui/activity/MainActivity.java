@@ -5,20 +5,24 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.TextSwitcher;
 
 import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.bumptech.glide.Glide;
 import com.github.bkhezry.weather.R;
 import com.github.bkhezry.weather.model.CityInfo;
 import com.github.bkhezry.weather.model.currentweather.CurrentWeatherResponse;
@@ -39,7 +43,6 @@ import com.github.bkhezry.weather.utils.DbUtil;
 import com.github.bkhezry.weather.utils.MyApplication;
 import com.github.bkhezry.weather.utils.TextViewFactory;
 import com.github.pwittchen.prefser.library.rx2.Prefser;
-import com.google.android.material.button.MaterialButton;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 import com.mikepenz.fastadapter.FastAdapter;
 import com.mikepenz.fastadapter.IAdapter;
@@ -96,14 +99,12 @@ public class MainActivity extends AppCompatActivity {
   TextSwitcher windTextView;
   @BindView(R.id.swipe_container)
   SwipeRefreshLayout swipeContainer;
-  @BindView(R.id.humidity_label_text_view)
-  AppCompatTextView humidityLabelTextView;
-  @BindView(R.id.wind_label_text_view)
-  AppCompatTextView windLabelTextView;
-  @BindView(R.id.four_day_label_text_view)
-  AppCompatTextView fourDayLabelTextView;
-  @BindView(R.id.next_days_button)
-  MaterialButton nextDaysButton;
+  @BindView(R.id.no_city_image_view)
+  AppCompatImageView noCityImageView;
+  @BindView(R.id.empty_layout)
+  RelativeLayout emptyLayout;
+  @BindView(R.id.nested_scroll_view)
+  NestedScrollView nestedScrollView;
   private FastAdapter<FiveDayWeather> mFastAdapter;
   private ItemAdapter<FiveDayWeather> mItemAdapter;
   private CompositeDisposable disposable = new CompositeDisposable();
@@ -125,6 +126,7 @@ public class MainActivity extends AppCompatActivity {
     setContentView(R.layout.activity_main);
     ButterKnife.bind(this);
     setSupportActionBar(toolbar);
+    Glide.with(MainActivity.this).load(R.drawable.no_city).into(noCityImageView);
     setupTextSwitchers();
     initSearchView();
     initValues();
@@ -147,6 +149,8 @@ public class MainActivity extends AppCompatActivity {
       } else {
         requestWeather(cityInfo.getName());
       }
+    } else {
+      showEmptyLayout();
     }
 
   }
@@ -173,7 +177,7 @@ public class MainActivity extends AppCompatActivity {
           @Override
           public void onData(@NonNull List<CurrentWeather> data) {
             if (data.size() > 0) {
-              showHiddenViews();
+              hideEmptyLayout();
               CurrentWeather currentWeather = data.get(0);
               if (isLoad) {
                 tempTextView.setText(String.format(Locale.getDefault(), "%.0f°", currentWeather.getTemp()));
@@ -246,7 +250,11 @@ public class MainActivity extends AppCompatActivity {
 
       @Override
       public void onRefresh() {
-        requestWeather(cityInfo.getName());
+        if (cityInfo != null) {
+          requestWeather(cityInfo.getName());
+        } else {
+          swipeContainer.setRefreshing(false);
+        }
       }
 
     });
@@ -282,12 +290,16 @@ public class MainActivity extends AppCompatActivity {
     );
   }
 
-  private void showHiddenViews() {
-    fourDayLabelTextView.setVisibility(View.VISIBLE);
-    humidityLabelTextView.setVisibility(View.VISIBLE);
-    windLabelTextView.setVisibility(View.VISIBLE);
-    nextDaysButton.setVisibility(View.VISIBLE);
+  private void showEmptyLayout() {
+    emptyLayout.setVisibility(View.VISIBLE);
+    nestedScrollView.setVisibility(View.GONE);
   }
+
+  private void hideEmptyLayout() {
+    emptyLayout.setVisibility(View.GONE);
+    nestedScrollView.setVisibility(View.VISIBLE);
+  }
+
 
   private void storeCurrentWeather(CurrentWeatherResponse response) {
     CurrentWeather currentWeather = new CurrentWeather();
