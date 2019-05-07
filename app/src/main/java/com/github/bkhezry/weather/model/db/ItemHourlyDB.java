@@ -1,10 +1,29 @@
 package com.github.bkhezry.weather.model.db;
 
+import android.content.Context;
+import android.view.View;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatImageView;
+import androidx.appcompat.widget.AppCompatTextView;
+
+import com.github.bkhezry.weather.R;
+import com.github.bkhezry.weather.utils.AppUtil;
+import com.mikepenz.fastadapter.FastAdapter;
+import com.mikepenz.fastadapter.items.AbstractItem;
+
+import java.util.Calendar;
+import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import io.objectbox.annotation.Entity;
 import io.objectbox.annotation.Id;
 
 @Entity
-public class ItemHourlyDB {
+public class ItemHourlyDB extends AbstractItem<ItemHourlyDB, ItemHourlyDB.MyViewHolder> {
   @Id
   private long id;
   private long fiveDayWeatherId;
@@ -50,5 +69,54 @@ public class ItemHourlyDB {
 
   public void setWeatherCode(int weatherCode) {
     this.weatherCode = weatherCode;
+  }
+
+  @NonNull
+  @Override
+  public MyViewHolder getViewHolder(@NonNull View v) {
+    return new MyViewHolder(v);
+  }
+
+  @Override
+  public int getType() {
+    return R.id.fastadapter_item_adapter;
+  }
+
+  @Override
+  public int getLayoutRes() {
+    return R.layout.weather_hourly_item;
+  }
+
+  protected static class MyViewHolder extends FastAdapter.ViewHolder<ItemHourlyDB> {
+    View view;
+    Context context;
+    @BindView(R.id.time_text_view)
+    AppCompatTextView timeTextView;
+    @BindView(R.id.weather_image_view)
+    AppCompatImageView weatherImageView;
+    @BindView(R.id.temp_text_view)
+    AppCompatTextView tempTextView;
+
+    MyViewHolder(View view) {
+      super(view);
+      ButterKnife.bind(this, view);
+      this.view = view;
+      this.context = view.getContext();
+    }
+
+    @Override
+    public void bindView(@NonNull ItemHourlyDB item, @NonNull List<Object> payloads) {
+      Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
+      calendar.setTimeInMillis(item.getDt() * 1000L);
+      timeTextView.setText(AppUtil.getTime(calendar));
+      tempTextView.setText(String.format(Locale.getDefault(), "%.0f°", item.getTemp()));
+      AppUtil.setWeatherIcon(context, weatherImageView, item.weatherCode);
+    }
+
+    @Override
+    public void unbindView(@NonNull ItemHourlyDB item) {
+
+    }
+
   }
 }
