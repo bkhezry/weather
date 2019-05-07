@@ -21,16 +21,26 @@ import com.github.bkhezry.weather.R;
 import com.github.bkhezry.weather.model.CityInfo;
 import com.github.bkhezry.weather.model.daysweather.ListItem;
 import com.github.bkhezry.weather.model.daysweather.MultipleDaysWeatherResponse;
+import com.github.bkhezry.weather.model.db.MultipleDaysWeather;
 import com.github.bkhezry.weather.service.ApiService;
 import com.github.bkhezry.weather.utils.ApiClient;
 import com.github.bkhezry.weather.utils.Constants;
+import com.github.bkhezry.weather.utils.DbUtil;
+import com.github.bkhezry.weather.utils.MyApplication;
 import com.github.pwittchen.prefser.library.rx2.Prefser;
 import com.mikepenz.fastadapter.FastAdapter;
 import com.mikepenz.fastadapter.adapters.ItemAdapter;
 
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.objectbox.Box;
+import io.objectbox.BoxStore;
+import io.objectbox.android.AndroidScheduler;
+import io.objectbox.query.Query;
+import io.objectbox.reactive.DataObserver;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.observers.DisposableSingleObserver;
@@ -41,9 +51,10 @@ public class MultipleDaysFragment extends DialogFragment {
   RecyclerView recyclerView;
   private String defaultLang = "en";
   private CompositeDisposable disposable = new CompositeDisposable();
-  private FastAdapter<ListItem> mFastAdapter;
-  private ItemAdapter<ListItem> mItemAdapter;
+  private FastAdapter<MultipleDaysWeather> mFastAdapter;
+  private ItemAdapter<MultipleDaysWeather> mItemAdapter;
   private Activity activity;
+  private Box<MultipleDaysWeather> multipleDaysWeatherBox;
 
   @Override
   public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -52,9 +63,33 @@ public class MultipleDaysFragment extends DialogFragment {
         container, false);
     ButterKnife.bind(this, view);
     activity = getActivity();
+    BoxStore boxStore = MyApplication.getBoxStore();
+    multipleDaysWeatherBox = boxStore.boxFor(MultipleDaysWeather.class);
     initRecyclerView();
+    showStoredMultipleDaysWeather();
     checkCityInfoExist();
     return view;
+  }
+
+  private void showStoredMultipleDaysWeather() {
+    Query<MultipleDaysWeather> query = DbUtil.getMultipleDaysWeatherQuery(multipleDaysWeatherBox);
+    query.subscribe().on(AndroidScheduler.mainThread())
+        .observer(new DataObserver<List<MultipleDaysWeather>>() {
+          @Override
+          public void onData(@NonNull List<MultipleDaysWeather> data) {
+            if (data.size() > 0) {
+              final Handler handler = new Handler();
+              handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                  data.remove(0);
+                  mItemAdapter.clear();
+                  mItemAdapter.add(data);
+                }
+              }, 500);
+            }
+          }
+        });
   }
 
   private void checkCityInfoExist() {
@@ -97,16 +132,15 @@ public class MultipleDaysFragment extends DialogFragment {
   }
 
   private void handleMultipleDaysResponse(MultipleDaysWeatherResponse response) {
-    final Handler handler = new Handler();
-    handler.postDelayed(new Runnable() {
-      @Override
-      public void run() {
-        response.getList().remove(0);
-        mItemAdapter.clear();
-        mItemAdapter.add(response.getList());
-      }
-    }, 500);
-
+    List<ListItem> listItems = response.getList();
+    for (ListItem listItem : listItems) {
+      MultipleDaysWeather multipleDaysWeather = new MultipleDaysWeather();
+      multipleDaysWeather.setDt(listItem.getDt());
+      multipleDaysWeather.setMaxTemp(listItem.getTemp().getMax());
+      multipleDaysWeather.setMinTemp(listItem.getTemp().getMin());
+      multipleDaysWeather.setWeatherId(listItem.getWeather().get(0).getId());
+      multipleDaysWeatherBox.put(multipleDaysWeather);
+    }
   }
 
   @NonNull
