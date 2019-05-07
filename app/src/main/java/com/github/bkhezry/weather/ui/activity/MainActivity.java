@@ -15,6 +15,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.github.bkhezry.weather.R;
@@ -90,13 +91,15 @@ public class MainActivity extends AppCompatActivity {
   AppCompatTextView cityNameTextView;
   @BindView(R.id.wind_text_view)
   AppCompatTextView windTextView;
+  @BindView(R.id.swipe_container)
+  SwipeRefreshLayout swipeContainer;
   private FastAdapter<FiveDayWeather> mFastAdapter;
   private ItemAdapter<FiveDayWeather> mItemAdapter;
   private CompositeDisposable disposable = new CompositeDisposable();
   private String defaultLang = "en";
   private List<FiveDayWeather> fiveDayWeathers;
   private ApiService apiService;
-  private FiveDayWeather todayWeatherCollection;
+  private FiveDayWeather todayFiveDayWeather;
   private Prefser prefser;
   private Box<CurrentWeather> currentWeatherBox;
   private Box<FiveDayWeather> fiveDayWeatherBox;
@@ -143,7 +146,7 @@ public class MainActivity extends AppCompatActivity {
           @Override
           public void onData(@NonNull List<FiveDayWeather> data) {
             if (data.size() > 0) {
-              todayWeatherCollection = data.remove(0);
+              todayFiveDayWeather = data.remove(0);
               mItemAdapter.clear();
               mItemAdapter.add(data);
             }
@@ -191,6 +194,18 @@ public class MainActivity extends AppCompatActivity {
     currentWeatherBox = boxStore.boxFor(CurrentWeather.class);
     fiveDayWeatherBox = boxStore.boxFor(FiveDayWeather.class);
     itemHourlyDBBox = boxStore.boxFor(ItemHourlyDB.class);
+    swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
+        android.R.color.holo_green_light,
+        android.R.color.holo_orange_light,
+        android.R.color.holo_red_light);
+    swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+
+      @Override
+      public void onRefresh() {
+        checkStoredCityInfo();
+      }
+
+    });
   }
 
   private void getCurrentWeather(String cityName) {
@@ -204,11 +219,13 @@ public class MainActivity extends AppCompatActivity {
               public void onSuccess(CurrentWeatherResponse currentWeatherResponse) {
                 storeCurrentWeather(currentWeatherResponse);
                 storeCityInfo(currentWeatherResponse);
+                swipeContainer.setRefreshing(false);
               }
 
               @Override
               public void onError(Throwable e) {
                 try {
+                  swipeContainer.setRefreshing(false);
                   HttpException error = (HttpException) e;
                   Log.e("MainActivity", "onError: " + e.getMessage());
                 } catch (Exception exception) {
