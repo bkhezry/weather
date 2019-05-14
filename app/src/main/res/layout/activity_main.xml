@@ -65,7 +65,7 @@
                 <com.google.android.material.card.MaterialCardView
                     style="@style/Widget.MaterialComponents.CardView"
                     android:layout_width="match_parent"
-                    android:layout_height="250dp"
+                    android:layout_height="@dimen/card_view_height"
                     app:cardBackgroundColor="@color/material_blue"
                     app:cardCornerRadius="30dp">
 
@@ -90,6 +90,7 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/spacing_large"
                             android:orientation="horizontal">
 
                             <LinearLayout
