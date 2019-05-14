@@ -166,6 +166,7 @@ public class MultipleDaysFragment extends DialogFragment {
   }
 
   private void handleMultipleDaysResponse(MultipleDaysWeatherResponse response) {
+    multipleDaysWeatherBox.removeAll();
     List<ListItem> listItems = response.getList();
     for (ListItem listItem : listItems) {
       MultipleDaysWeather multipleDaysWeather = new MultipleDaysWeather();
