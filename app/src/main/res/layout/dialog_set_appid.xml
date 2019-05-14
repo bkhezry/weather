@@ -34,7 +34,7 @@
             android:id="@+id/message_text_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="For using application you should provide app id. It is free. Please open below link and create account. After that you can get app id."
+            android:text="For using application you should provide API key. It is free. Please open link below and create account. After that you can get API key."
             android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
             android:textColor="@android:color/black"
             android:textStyle="bold|italic" />
@@ -44,11 +44,12 @@
             android:layout_height="@dimen/spacing_medium" />
 
         <com.google.android.material.button.MaterialButton
+            android:id="@+id/open_openweather_button"
             style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
-            android:text="Get App ID"
+            android:text="Get API Key"
             android:textAllCaps="false" />
 
         <View
@@ -59,7 +60,7 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="App ID" />
+            android:hint="API Key" />
 
         <View
             android:layout_width="0dp"

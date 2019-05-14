@@ -2,6 +2,9 @@ package com.github.bkhezry.weather.utils;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
@@ -133,6 +136,14 @@ public class AppUtil {
     lp.width = WindowManager.LayoutParams.MATCH_PARENT;
     lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
     dialog.getWindow().setAttributes(lp);
+    dialog.findViewById(R.id.open_openweather_button).setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        Intent i = new Intent(Intent.ACTION_VIEW,
+            Uri.parse(Constants.OPEN_WEATHER_MAP_WEBSITE));
+        context.startActivity(i);
+      }
+    });
     dialog.show();
   }
 }
