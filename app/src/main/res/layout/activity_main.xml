@@ -28,7 +28,8 @@
                 android:layout_marginTop="@dimen/spacing_xxlarge"
                 android:text="Search for a city"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                android:textColor="@android:color/black" />
+                android:textColor="@android:color/black"
+                android:textStyle="bold|italic" />
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/no_city_image_view"
