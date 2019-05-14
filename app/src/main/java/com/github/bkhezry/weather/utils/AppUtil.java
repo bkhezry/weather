@@ -16,6 +16,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.bumptech.glide.Glide;
 import com.github.bkhezry.weather.R;
+import com.github.bkhezry.weather.listener.OnSetApiKeyEventListener;
 import com.github.pwittchen.prefser.library.rx2.Prefser;
 
 import java.util.Calendar;
@@ -127,7 +128,7 @@ public class AppUtil {
     return System.currentTimeMillis() - lastStored > Constants.TEN_MINUTES;
   }
 
-  public static void showSetAppIdDialog(Context context, Prefser prefser) {
+  public static void showSetAppIdDialog(Context context, Prefser prefser, OnSetApiKeyEventListener listener) {
     final Dialog dialog = new Dialog(context);
     dialog.requestWindowFeature(Window.FEATURE_NO_TITLE); // before
     dialog.setContentView(R.layout.dialog_set_appid);
@@ -153,6 +154,7 @@ public class AppUtil {
         String apiKey = apiKeyEditText.getText().toString();
         if (!apiKey.equals("")) {
           prefser.put(Constants.API_KEY, apiKey);
+          listener.setApiKey();
           dialog.dismiss();
         }
       }
