@@ -1,6 +1,9 @@
 package com.github.bkhezry.weather.utils;
 
+import android.app.Dialog;
 import android.content.Context;
+import android.view.Window;
+import android.view.WindowManager;
 
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.fragment.app.Fragment;
@@ -117,5 +120,19 @@ public class AppUtil {
 
   public static boolean isTenMinutePass(long lastStored) {
     return System.currentTimeMillis() - lastStored > Constants.TEN_MINUTES;
+  }
+
+  public static void showSetAppIdDialog(Context context) {
+    final Dialog dialog = new Dialog(context);
+    dialog.requestWindowFeature(Window.FEATURE_NO_TITLE); // before
+    dialog.setContentView(R.layout.dialog_set_appid);
+    dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+    dialog.setCancelable(false);
+    WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+    lp.copyFrom(dialog.getWindow().getAttributes());
+    lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+    lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+    dialog.getWindow().setAttributes(lp);
+    dialog.show();
   }
 }

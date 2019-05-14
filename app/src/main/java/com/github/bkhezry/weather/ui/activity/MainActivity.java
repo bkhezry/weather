@@ -131,6 +131,9 @@ public class MainActivity extends AppCompatActivity {
     initSearchView();
     initValues();
     initRecyclerView();
+    if (!prefser.contains(Constants.APP_ID)) {
+      AppUtil.showSetAppIdDialog(this);
+    }
     showStoredCurrentWeather();
     showStoredFiveDayWeather();
     checkLastUpdate();

@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Weather</string>
+    <string name="cancel_label">Cancel</string>
+    <string name="store_label">Store</string>
 </resources>
