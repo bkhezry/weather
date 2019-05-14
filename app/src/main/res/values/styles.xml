@@ -29,4 +29,13 @@
         <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/grey_10</item>
     </style>
+
+    <style name="HeadlineTextStyle">
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Headline</item>
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:paddingTop">8dp</item>
+        <item name="android:paddingBottom">8dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
 </resources>

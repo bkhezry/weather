@@ -42,7 +42,43 @@
                 android:layout_gravity="center_horizontal"
                 android:gravity="center_horizontal"
                 android:orientation="vertical"
-                android:paddingTop="@dimen/spacing_large">
+                android:padding="@dimen/spacing_large">
+
+                <TextView
+                    style="@style/HeadlineTextStyle"
+                    android:text="@string/application_info_title" />
+
+                <TextView
+                    android:id="@+id/text_application_info"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    style="@style/HeadlineTextStyle"
+                    android:text="@string/developer_info_title" />
+
+                <TextView
+                    android:id="@+id/text_developer_info"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    style="@style/HeadlineTextStyle"
+                    android:text="@string/libraries_title" />
+
+                <TextView
+                    android:id="@+id/text_libraries"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    style="@style/HeadlineTextStyle"
+                    android:text="@string/license_title" />
+
+                <TextView
+                    android:id="@+id/text_license"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
 
 
             </LinearLayout>
