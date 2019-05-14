@@ -35,6 +35,7 @@ import com.github.bkhezry.weather.model.db.ItemHourlyDB;
 import com.github.bkhezry.weather.model.fivedayweather.FiveDayResponse;
 import com.github.bkhezry.weather.model.fivedayweather.ItemHourly;
 import com.github.bkhezry.weather.service.ApiService;
+import com.github.bkhezry.weather.ui.fragment.AboutFragment;
 import com.github.bkhezry.weather.ui.fragment.HourlyFragment;
 import com.github.bkhezry.weather.ui.fragment.MultipleDaysFragment;
 import com.github.bkhezry.weather.utils.ApiClient;
@@ -477,5 +478,10 @@ public class MainActivity extends AppCompatActivity {
     MenuItem item = menu.findItem(R.id.action_search);
     searchView.setMenuItem(item);
     return true;
+  }
+
+  @OnClick(R.id.about_image_button)
+  public void showAboutFragment() {
+    AppUtil.showFragment(new AboutFragment(), getSupportFragmentManager(), true);
   }
 }
