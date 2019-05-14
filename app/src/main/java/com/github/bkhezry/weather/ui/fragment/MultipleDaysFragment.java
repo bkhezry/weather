@@ -60,6 +60,7 @@ public class MultipleDaysFragment extends DialogFragment {
   private Activity activity;
   private Box<MultipleDaysWeather> multipleDaysWeatherBox;
   private Prefser prefser;
+  private String apiKey;
 
   @Override
   public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -71,13 +72,16 @@ public class MultipleDaysFragment extends DialogFragment {
     initSwipeView();
     initRecyclerView();
     showStoredMultipleDaysWeather();
-    if (prefser.contains(Constants.LAST_STORED_MULTIPLE_DAYS)) {
-      long lastUpdate = prefser.get(Constants.LAST_STORED_MULTIPLE_DAYS, Long.class, 0L);
-      if (AppUtil.isTenMinutePass(lastUpdate)) {
+    if (prefser.contains(Constants.API_KEY)) {
+      apiKey = prefser.get(Constants.API_KEY, String.class, "");
+      if (prefser.contains(Constants.LAST_STORED_MULTIPLE_DAYS)) {
+        long lastUpdate = prefser.get(Constants.LAST_STORED_MULTIPLE_DAYS, Long.class, 0L);
+        if (AppUtil.isTenMinutePass(lastUpdate)) {
+          checkCityInfoExist();
+        }
+      } else {
         checkCityInfoExist();
       }
-    } else {
-      checkCityInfoExist();
     }
     return view;
   }
@@ -136,7 +140,7 @@ public class MultipleDaysFragment extends DialogFragment {
     ApiService apiService = ApiClient.getClient(getActivity()).create(ApiService.class);
     disposable.add(
         apiService.getMultipleDaysWeather(
-            cityName, Constants.UNITS, defaultLang, 16, Constants.APP_ID)
+            cityName, Constants.UNITS, defaultLang, 16, apiKey)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeWith(new DisposableSingleObserver<MultipleDaysWeatherResponse>() {

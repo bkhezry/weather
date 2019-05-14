@@ -119,6 +119,7 @@ public class MainActivity extends AppCompatActivity {
   private DataSubscriptionList subscriptions = new DataSubscriptionList();
   private boolean isLoad = false;
   private CityInfo cityInfo;
+  private String apiKey;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -131,12 +132,15 @@ public class MainActivity extends AppCompatActivity {
     initSearchView();
     initValues();
     initRecyclerView();
-    if (!prefser.contains(Constants.APP_ID)) {
-      AppUtil.showSetAppIdDialog(this);
+    if (!prefser.contains(Constants.API_KEY)) {
+      AppUtil.showSetAppIdDialog(this, prefser);
+    } else {
+      apiKey = prefser.get(Constants.API_KEY, String.class, "");
+      checkLastUpdate();
     }
     showStoredCurrentWeather();
     showStoredFiveDayWeather();
-    checkLastUpdate();
+
   }
 
   private void checkLastUpdate() {
@@ -267,7 +271,7 @@ public class MainActivity extends AppCompatActivity {
   private void getCurrentWeather(String cityName) {
     disposable.add(
         apiService.getCurrentWeather(
-            cityName, Constants.UNITS, defaultLang, Constants.APP_ID)
+            cityName, Constants.UNITS, defaultLang, apiKey)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeWith(new DisposableSingleObserver<CurrentWeatherResponse>() {
@@ -336,7 +340,7 @@ public class MainActivity extends AppCompatActivity {
   private void getFiveDaysWeather(String cityName) {
     disposable.add(
         apiService.getMultipleDaysWeather(
-            cityName, Constants.UNITS, defaultLang, 5, Constants.APP_ID)
+            cityName, Constants.UNITS, defaultLang, 5, apiKey)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeWith(new DisposableSingleObserver<MultipleDaysWeatherResponse>() {
@@ -384,7 +388,7 @@ public class MainActivity extends AppCompatActivity {
   private void getFiveDaysHourlyWeather(String cityName) {
     disposable.add(
         apiService.getFiveDaysWeather(
-            cityName, Constants.UNITS, defaultLang, Constants.APP_ID)
+            cityName, Constants.UNITS, defaultLang, apiKey)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeWith(new DisposableSingleObserver<FiveDayResponse>() {

@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
+import androidx.appcompat.widget.AppCompatEditText;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -15,6 +16,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.bumptech.glide.Glide;
 import com.github.bkhezry.weather.R;
+import com.github.pwittchen.prefser.library.rx2.Prefser;
 
 import java.util.Calendar;
 import java.util.TimeZone;
@@ -125,7 +127,7 @@ public class AppUtil {
     return System.currentTimeMillis() - lastStored > Constants.TEN_MINUTES;
   }
 
-  public static void showSetAppIdDialog(Context context) {
+  public static void showSetAppIdDialog(Context context, Prefser prefser) {
     final Dialog dialog = new Dialog(context);
     dialog.requestWindowFeature(Window.FEATURE_NO_TITLE); // before
     dialog.setContentView(R.layout.dialog_set_appid);
@@ -142,6 +144,17 @@ public class AppUtil {
         Intent i = new Intent(Intent.ACTION_VIEW,
             Uri.parse(Constants.OPEN_WEATHER_MAP_WEBSITE));
         context.startActivity(i);
+      }
+    });
+    dialog.findViewById(R.id.store_button).setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        AppCompatEditText apiKeyEditText = dialog.findViewById(R.id.api_key_edit_text);
+        String apiKey = apiKeyEditText.getText().toString();
+        if (!apiKey.equals("")) {
+          prefser.put(Constants.API_KEY, apiKey);
+          dialog.dismiss();
+        }
       }
     });
     dialog.show();
