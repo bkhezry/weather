@@ -62,6 +62,7 @@ import butterknife.BindArray;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.github.inflationx.viewpump.ViewPumpContextWrapper;
 import io.objectbox.Box;
 import io.objectbox.BoxStore;
 import io.objectbox.android.AndroidScheduler;
@@ -488,6 +489,7 @@ public class MainActivity extends AppCompatActivity {
 
   @Override
   protected void attachBaseContext(Context base) {
-    super.attachBaseContext(MyApplication.localeManager.setLocale(base));
+    Context newContext = MyApplication.localeManager.setLocale(base);
+    super.attachBaseContext(ViewPumpContextWrapper.wrap(newContext));
   }
 }
