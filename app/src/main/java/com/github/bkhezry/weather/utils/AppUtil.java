@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatEditText;
 import androidx.appcompat.widget.AppCompatImageView;
+import androidx.core.os.ConfigurationCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -29,6 +30,7 @@ import com.github.bkhezry.weather.listener.OnSetApiKeyEventListener;
 import com.github.pwittchen.prefser.library.rx2.Prefser;
 
 import java.util.Calendar;
+import java.util.Locale;
 import java.util.TimeZone;
 
 public class AppUtil {
@@ -237,5 +239,12 @@ public class AppUtil {
 
   static boolean isAtLeastVersion(int version) {
     return Build.VERSION.SDK_INT >= version;
+  }
+
+  public static boolean isRTL(Context context) {
+    Locale locale = ConfigurationCompat.getLocales(context.getResources().getConfiguration()).get(0);
+    final int directionality = Character.getDirectionality(locale.getDisplayName().charAt(0));
+    return directionality == Character.DIRECTIONALITY_RIGHT_TO_LEFT ||
+        directionality == Character.DIRECTIONALITY_RIGHT_TO_LEFT_ARABIC;
   }
 }
