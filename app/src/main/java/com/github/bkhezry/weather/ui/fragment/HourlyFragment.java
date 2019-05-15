@@ -1,5 +1,6 @@
 package com.github.bkhezry.weather.ui.fragment;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -69,6 +70,7 @@ public class HourlyFragment extends DialogFragment {
   private ItemAdapter<ItemHourlyDB> mItemAdapter;
   private FiveDayWeather fiveDayWeather;
   private Box<ItemHourlyDB> itemHourlyDBBox;
+  private Activity activity;
 
 
   @Override
@@ -79,6 +81,7 @@ public class HourlyFragment extends DialogFragment {
     ButterKnife.bind(this, view);
     BoxStore boxStore = MyApplication.getBoxStore();
     itemHourlyDBBox = boxStore.boxFor(ItemHourlyDB.class);
+    activity = getActivity();
     setVariables();
     initRecyclerView();
     showItemHourlyDB();
@@ -105,7 +108,7 @@ public class HourlyFragment extends DialogFragment {
     cardView.setCardBackgroundColor(fiveDayWeather.getColor());
     Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
     calendar.setTimeInMillis(fiveDayWeather.getDt() * 1000L);
-    if (AppUtil.isRTL(getActivity())) {
+    if (AppUtil.isRTL(activity)) {
       dayNameTextView.setText(Constants.DAYS_OF_WEEK_PERSIAN[calendar.get(Calendar.DAY_OF_WEEK) - 1]);
     } else {
       dayNameTextView.setText(Constants.DAYS_OF_WEEK[calendar.get(Calendar.DAY_OF_WEEK) - 1]);
