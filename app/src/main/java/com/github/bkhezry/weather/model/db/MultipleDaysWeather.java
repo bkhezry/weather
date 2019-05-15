@@ -10,6 +10,7 @@ import androidx.appcompat.widget.AppCompatTextView;
 import com.github.bkhezry.weather.R;
 import com.github.bkhezry.weather.utils.AppUtil;
 import com.github.bkhezry.weather.utils.Constants;
+import com.github.bkhezry.weather.utils.DateConverter;
 import com.mikepenz.fastadapter.FastAdapter;
 import com.mikepenz.fastadapter.items.AbstractItem;
 
@@ -114,9 +115,13 @@ public class MultipleDaysWeather extends AbstractItem<MultipleDaysWeather, Multi
       Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
       calendar.setTimeInMillis(item.getDt() * 1000L);
       if (AppUtil.isRTL(context)) {
+        DateConverter converter = new DateConverter(
+            calendar.get(Calendar.YEAR),
+            calendar.get(Calendar.MONTH) + 1,
+            calendar.get(Calendar.DAY_OF_MONTH));
         dayNameTextView.setText(Constants.DAYS_OF_WEEK_PERSIAN[calendar.get(Calendar.DAY_OF_WEEK) - 1]);
-        dateTextView.setText(String.format(Locale.getDefault(), "%s %d",
-            Constants.MONTH_NAME_PERSIAN[calendar.get(Calendar.MONTH)], calendar.get(Calendar.DAY_OF_MONTH)));
+        dateTextView.setText(String.format(Locale.getDefault(), "%d %s", converter.getIranianDay()
+            , Constants.MONTH_NAME_PERSIAN[converter.getIranianMonth() - 1]));
       } else {
         dayNameTextView.setText(Constants.DAYS_OF_WEEK[calendar.get(Calendar.DAY_OF_WEEK) - 1]);
         dateTextView.setText(String.format(Locale.getDefault(), "%s %d",
