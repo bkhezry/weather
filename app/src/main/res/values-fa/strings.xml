@@ -1,0 +1,44 @@
+<resources>
+    <string name="app_name">برنامه هواشناسی</string>
+    <string name="cancel_label">لغو</string>
+    <string name="store_label">ذخیره</string>
+    <string name="license_title">لایسنس</string>
+    <string name="libraries_title">کتابخانه و منابع</string>
+    <string name="developer_info_title">توسعه‌دهنده</string>
+    <string name="application_info_title">اطلاعات برنامه</string>
+    <string name="application_info_text">
+        <![CDATA[
+            <p>نسخه برنامه: %1$s</p>
+            <p>برنامه هواشناسی</p>
+            <p>
+            سورس این برنامه در گیت‌هاب به این نشانی در دسترس است
+            <br/>
+            <a href="https://github.com/bkhezry/weather">https://github.com/bkhezry/weather</a></p>
+        ]]>
+    </string>
+    <string name="developer_info_text" translatable="false">
+        <![CDATA[
+            <p>Behrouz Khezry</p>
+            <p><a href="https://twitter.com/bkhezry">@bkhezry</a></p>
+        ]]>
+    </string>
+    <string name="license_text" translatable="false">
+        <![CDATA[
+            <p>Copyright 2019 Behrouz Khezry</p>
+            <p>Licensed under the Apache License, Version 2.0 (the "License");
+            you may not use this file except in compliance with the License.
+            You may obtain a copy of the License at</p>
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.apache.org/licenses/LICENSE-2.0">http://www.apache.org/licenses/LICENSE-2.0</a></p>
+            <p>Unless required by applicable law or agreed to in writing, software
+            distributed under the License is distributed on an "AS IS" BASIS,
+            WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+            See the License for the specific language governing permissions and
+            limitations under the License.</p>
+        ]]>
+    </string>
+    <string name="libraries_text" translatable="false">
+        <![CDATA[
+            <p><a href="https://github.com/google/material-design-icons">Material design icons</a> - Creative Common Attribution 4.0 International License</p>
+        ]]>
+</string>
+</resources>
