@@ -108,7 +108,7 @@ public class ItemHourlyDB extends AbstractItem<ItemHourlyDB, ItemHourlyDB.MyView
     public void bindView(@NonNull ItemHourlyDB item, @NonNull List<Object> payloads) {
       Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
       calendar.setTimeInMillis(item.getDt() * 1000L);
-      timeTextView.setText(AppUtil.getTime(calendar));
+      timeTextView.setText(AppUtil.getTime(calendar, context));
       tempTextView.setText(String.format(Locale.getDefault(), "%.0f°", item.getTemp()));
       AppUtil.setWeatherIcon(context, weatherImageView, item.weatherCode);
     }

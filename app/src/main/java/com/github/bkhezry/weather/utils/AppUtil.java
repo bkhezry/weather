@@ -94,20 +94,20 @@ public class AppUtil {
     transaction.add(android.R.id.content, fragment).addToBackStack(null).commit();
   }
 
-  public static String getTime(Calendar calendar) {
+  public static String getTime(Calendar calendar, Context context) {
     int hour = calendar.get(Calendar.HOUR_OF_DAY);
     int minute = calendar.get(Calendar.MINUTE);
     String hourString;
     if (hour < 10) {
-      hourString = "0" + hour;
+      hourString = String.format(Locale.getDefault(), context.getString(R.string.zero_label), hour);
     } else {
-      hourString = String.valueOf(hour);
+      hourString = String.format(Locale.getDefault(), "%d", hour);
     }
     String minuteString;
     if (minute < 10) {
-      minuteString = "0" + minute;
+      minuteString = String.format(Locale.getDefault(), context.getString(R.string.zero_label), minute);
     } else {
-      minuteString = String.valueOf(minute);
+      minuteString = String.format(Locale.getDefault(), "%d", minute);
     }
     return hourString + ":" + minuteString;
   }
