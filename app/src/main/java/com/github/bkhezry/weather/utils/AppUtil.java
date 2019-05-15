@@ -239,4 +239,8 @@ public class AppUtil {
     }
     return charSequence.subSequence(0, end + 1);
   }
+
+  static boolean isAtLeastVersion(int version) {
+    return Build.VERSION.SDK_INT >= version;
+  }
 }
