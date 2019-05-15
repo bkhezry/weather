@@ -27,7 +27,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="@dimen/spacing_xxlarge"
-                android:text="Search for a city"
+                android:text="@string/search_for_a_city_label"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 android:textColor="@android:color/black"
                 android:textStyle="bold|italic" />
@@ -59,7 +59,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="Current"
+                    android:text="@string/current_label"
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
                     android:textColor="@color/material_blue"
                     android:textStyle="bold" />
@@ -112,7 +112,7 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:gravity="center"
-                                        android:text="Humidity"
+                                        android:text="@string/humidity_label"
                                         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                                         android:textColor="@android:color/white"
                                         android:textStyle="bold" />
@@ -123,7 +123,7 @@
 
                                     <TextSwitcher
                                         android:id="@+id/humidity_text_view"
-                                        android:layout_width="match_parent"
+                                        android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_gravity="center" />
                                 </LinearLayout>
@@ -138,7 +138,7 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:gravity="center"
-                                        android:text="Wind"
+                                        android:text="@string/wind_label"
                                         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                                         android:textColor="@android:color/white"
                                         android:textStyle="bold" />
@@ -149,7 +149,7 @@
 
                                     <TextSwitcher
                                         android:id="@+id/wind_text_view"
-                                        android:layout_width="match_parent"
+                                        android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_gravity="center" />
                                 </LinearLayout>
@@ -180,7 +180,7 @@
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Next 4 Days/Hourly"
+                        android:text="@string/next_4_days_hourly"
                         android:textAppearance="@style/TextAppearance.AppCompat.Title"
                         android:textColor="@android:color/black" />
 
@@ -203,7 +203,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center|bottom"
                     android:gravity="center"
-                    android:text="Next 15 Days"
+                    android:text="@string/next_15_days_label"
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
                     android:textColor="@android:color/black"
                     android:textStyle="bold"

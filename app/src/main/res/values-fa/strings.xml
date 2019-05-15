@@ -16,4 +16,10 @@
             <a href="https://github.com/bkhezry/weather">https://github.com/bkhezry/weather</a></p>
         ]]>
     </string>
+    <string name="current_label">هم‌اکنون</string>
+    <string name="humidity_label">رطوبت</string>
+    <string name="wind_label">باد</string>
+    <string name="next_4_days_hourly">۴ روز بعد/ساعتی</string>
+    <string name="next_15_days_label">۱۵روز بعد</string>
+    <string name="search_for_a_city_label">شهر را جستجو کنید</string>
 </resources>
