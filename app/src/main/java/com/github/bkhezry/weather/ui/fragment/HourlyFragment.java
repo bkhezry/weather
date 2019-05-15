@@ -133,9 +133,18 @@ public class HourlyFragment extends DialogFragment {
   private void setChartValues(List<ItemHourlyDB> itemHourlyDBList) {
     List<Entry> entries = new ArrayList<>();
     int i = 0;
-    for (ItemHourlyDB itemHourlyDB : itemHourlyDBList) {
-      entries.add(new Entry(i, (float) itemHourlyDB.getTemp()));
-      i++;
+    if (AppUtil.isRTL(activity)) {
+      int j = itemHourlyDBList.size() - 1;
+      while (j >= 0) {
+        entries.add(new Entry(i, (float) itemHourlyDBList.get(j).getTemp()));
+        i++;
+        j--;
+      }
+    } else {
+      for (ItemHourlyDB itemHourlyDB : itemHourlyDBList) {
+        entries.add(new Entry(i, (float) itemHourlyDB.getTemp()));
+        i++;
+      }
     }
     LineDataSet dataSet = new LineDataSet(entries, "Label"); // add entries to dataset
     dataSet.setLineWidth(4f);
