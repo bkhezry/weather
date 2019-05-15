@@ -60,6 +60,9 @@ dependencies {
     implementation 'com.github.bkhezry:MaterialSearchView:1.6.0'
     implementation 'com.github.bkhezry:prefser:v2.2.1-rx2'
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+
+    implementation 'io.github.inflationx:viewpump:1.0.0'
+    implementation 'io.github.inflationx:calligraphy3:3.1.0'
 }
 android.applicationVariants.all { variant ->
     def appName = "Weather"
