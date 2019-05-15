@@ -4,6 +4,7 @@
     android:layout_width="120dp"
     android:layout_height="200dp"
     android:layout_marginEnd="@dimen/spacing_large"
+    android:layoutDirection="locale"
     android:orientation="vertical"
     android:paddingBottom="@dimen/spacing_medium">
 
