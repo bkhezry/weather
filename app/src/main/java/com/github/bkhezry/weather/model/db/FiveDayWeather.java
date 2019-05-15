@@ -174,7 +174,11 @@ public class FiveDayWeather extends AbstractItem<FiveDayWeather, FiveDayWeather.
       };
       Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
       calendar.setTimeInMillis(item.getDt() * 1000L);
-      dayNameTextView.setText(Constants.DAYS_OF_WEEK[calendar.get(Calendar.DAY_OF_WEEK) - 1]);
+      if (AppUtil.isRTL(context)) {
+        dayNameTextView.setText(Constants.DAYS_OF_WEEK_PERSIAN[calendar.get(Calendar.DAY_OF_WEEK) - 1]);
+      } else {
+        dayNameTextView.setText(Constants.DAYS_OF_WEEK[calendar.get(Calendar.DAY_OF_WEEK) - 1]);
+      }
       tempTextView.setText(String.format(Locale.getDefault(), "%.0f°", item.getTemp()));
       minTempTextView.setText(String.format(Locale.getDefault(), "%.0f°", item.getMinTemp()));
       maxTempTextView.setText(String.format(Locale.getDefault(), "%.0f°", item.getMaxTemp()));

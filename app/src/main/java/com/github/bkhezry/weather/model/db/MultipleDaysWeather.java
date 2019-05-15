@@ -113,9 +113,15 @@ public class MultipleDaysWeather extends AbstractItem<MultipleDaysWeather, Multi
     public void bindView(@NonNull MultipleDaysWeather item, @NonNull List<Object> payloads) {
       Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
       calendar.setTimeInMillis(item.getDt() * 1000L);
-      dayNameTextView.setText(Constants.DAYS_OF_WEEK[calendar.get(Calendar.DAY_OF_WEEK) - 1]);
-      dateTextView.setText(String.format(Locale.getDefault(), "%s %d",
-          Constants.MONTH_NAME[calendar.get(Calendar.MONTH)], calendar.get(Calendar.DAY_OF_MONTH)));
+      if (AppUtil.isRTL(context)) {
+        dayNameTextView.setText(Constants.DAYS_OF_WEEK_PERSIAN[calendar.get(Calendar.DAY_OF_WEEK) - 1]);
+        dateTextView.setText(String.format(Locale.getDefault(), "%s %d",
+            Constants.MONTH_NAME_PERSIAN[calendar.get(Calendar.MONTH)], calendar.get(Calendar.DAY_OF_MONTH)));
+      } else {
+        dayNameTextView.setText(Constants.DAYS_OF_WEEK[calendar.get(Calendar.DAY_OF_WEEK) - 1]);
+        dateTextView.setText(String.format(Locale.getDefault(), "%s %d",
+            Constants.MONTH_NAME[calendar.get(Calendar.MONTH)], calendar.get(Calendar.DAY_OF_MONTH)));
+      }
       minTempTextView.setText(String.format(Locale.getDefault(), "%.0f°", item.getMinTemp()));
       maxTempTextView.setText(String.format(Locale.getDefault(), "%.0f°", item.getMaxTemp()));
       AppUtil.setWeatherIcon(context, weatherImageView, item.getWeatherId());
