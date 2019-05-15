@@ -1,5 +1,6 @@
 package com.github.bkhezry.weather.ui.activity;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -483,5 +484,10 @@ public class MainActivity extends AppCompatActivity {
   @OnClick(R.id.about_image_button)
   public void showAboutFragment() {
     AppUtil.showFragment(new AboutFragment(), getSupportFragmentManager(), true);
+  }
+
+  @Override
+  protected void attachBaseContext(Context base) {
+    super.attachBaseContext(MyApplication.localeManager.setLocale(base));
   }
 }
