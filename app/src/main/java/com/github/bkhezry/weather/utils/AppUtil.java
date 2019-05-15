@@ -220,7 +220,6 @@ public class AppUtil {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
       spanned = Html.fromHtml(htmlText, Html.FROM_HTML_MODE_LEGACY);
     } else {
-      //noinspection deprecation
       spanned = Html.fromHtml(htmlText);
     }
     return trim(spanned);
