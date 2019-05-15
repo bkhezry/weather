@@ -199,12 +199,12 @@ public class MainActivity extends AppCompatActivity {
                 tempTextView.setText(String.format(Locale.getDefault(), "%.0f°", currentWeather.getTemp()));
                 descriptionTextView.setText(currentWeather.getMain());
                 humidityTextView.setText(String.format(Locale.getDefault(), "%d%%", currentWeather.getHumidity()));
-                windTextView.setText(String.format(Locale.getDefault(), "%.0fkm/hr", currentWeather.getWindSpeed()));
+                windTextView.setText(String.format(Locale.getDefault(), getResources().getString(R.string.wind_unit_label), currentWeather.getWindSpeed()));
               } else {
                 tempTextView.setCurrentText(String.format(Locale.getDefault(), "%.0f°", currentWeather.getTemp()));
                 descriptionTextView.setCurrentText(currentWeather.getMain());
                 humidityTextView.setCurrentText(String.format(Locale.getDefault(), "%d%%", currentWeather.getHumidity()));
-                windTextView.setCurrentText(String.format(Locale.getDefault(), "%.0fkm/hr", currentWeather.getWindSpeed()));
+                windTextView.setCurrentText(String.format(Locale.getDefault(), getResources().getString(R.string.wind_unit_label), currentWeather.getWindSpeed()));
               }
               animationView.setAnimation(AppUtil.getWeatherAnimation(currentWeather.getWeatherId()));
               animationView.playAnimation();

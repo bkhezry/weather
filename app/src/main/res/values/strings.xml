@@ -45,4 +45,5 @@
     <string name="next_15_days_label">Next 15 Days</string>
     <string name="search_for_a_city_label">Search for a city</string>
     <string name="zero_label">0%d</string>
+    <string name="wind_unit_label">%.0f km/hr</string>
 </resources>
