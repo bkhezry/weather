@@ -120,7 +120,7 @@ public class AboutFragment extends DialogFragment {
   }
 
   @OnClick(R.id.toggle_info_button)
-  public void toggleInfoLayout(View view) {
+  void toggleInfoLayout(View view) {
     boolean show = toggleArrow(view);
     if (show) {
       ViewAnimation.expand(expandLayout, new ViewAnimation.AnimListener() {
