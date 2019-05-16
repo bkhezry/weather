@@ -57,7 +57,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="Monday"
                         android:textColor="@android:color/white"
                         android:textSize="40sp"
                         android:textStyle="bold" />
@@ -93,7 +92,6 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
-                                android:text="56\u00b0"
                                 android:textColor="@color/grey_10"
                                 android:textSize="30sp" />
                         </LinearLayout>
@@ -104,7 +102,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:gravity="center"
-                            android:text="40\u00b0"
                             android:textAppearance="@style/TextAppearance.AppCompat.Title"
                             android:textColor="@android:color/white"
                             android:textSize="60sp" />
@@ -128,7 +125,6 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
-                                android:text="64\u00b0"
                                 android:textColor="@android:color/white"
                                 android:textSize="30sp" />
                         </LinearLayout>

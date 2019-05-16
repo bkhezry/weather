@@ -28,7 +28,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="Monday"
                 android:textColor="@android:color/white"
                 android:textStyle="bold" />
 
@@ -42,7 +41,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="40\u00b0"
                 android:textAppearance="@style/TextAppearance.AppCompat.Title"
                 android:textColor="@android:color/white" />
 
@@ -70,7 +68,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="56\u00b0"
                         android:textColor="@color/grey_10" />
                 </LinearLayout>
 
@@ -94,7 +91,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="64\u00b0"
                         android:textColor="@android:color/white" />
                 </LinearLayout>
             </LinearLayout>

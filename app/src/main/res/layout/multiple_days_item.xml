@@ -33,7 +33,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="Monday"
                     android:textColor="@android:color/black"
                     android:textStyle="bold" />
 
@@ -42,7 +41,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="June 12"
                     android:textColor="@android:color/black" />
             </LinearLayout>
 
@@ -63,7 +61,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="64\u00b0"
                     android:textColor="@android:color/black" />
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -71,7 +68,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="56\u00b0"
                     android:textColor="@android:color/black" />
             </LinearLayout>
         </LinearLayout>
