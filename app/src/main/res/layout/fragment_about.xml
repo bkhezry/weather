@@ -49,7 +49,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/english_label"
-                    android:textAllCaps="false" />
+                    android:textAllCaps="false"
+                    app:iconTint="@color/green_success" />
 
                 <View
                     android:layout_width="@dimen/spacing_medium"
@@ -61,7 +62,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/persian_label"
-                    android:textAllCaps="false" />
+                    android:textAllCaps="false"
+                    app:iconTint="@color/green_success" />
 
             </LinearLayout>
 
