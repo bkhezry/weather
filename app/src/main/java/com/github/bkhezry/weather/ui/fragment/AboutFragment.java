@@ -11,9 +11,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.DialogFragment;
 
 import com.github.bkhezry.weather.R;
@@ -21,6 +24,7 @@ import com.github.bkhezry.weather.ui.activity.MainActivity;
 import com.github.bkhezry.weather.utils.AppUtil;
 import com.github.bkhezry.weather.utils.LocaleManager;
 import com.github.bkhezry.weather.utils.MyApplication;
+import com.github.bkhezry.weather.utils.ViewAnimation;
 import com.google.android.material.button.MaterialButton;
 
 import butterknife.BindView;
@@ -33,6 +37,12 @@ public class AboutFragment extends DialogFragment {
   MaterialButton englishButton;
   @BindView(R.id.persian_button)
   MaterialButton persianButton;
+  @BindView(R.id.toggle_info_button)
+  ImageButton toggleInfoButton;
+  @BindView(R.id.expand_layout)
+  LinearLayout expandLayout;
+  @BindView(R.id.nested_scroll_view)
+  NestedScrollView nestedScrollView;
   private Activity activity;
 
   @Override
@@ -107,5 +117,29 @@ public class AboutFragment extends DialogFragment {
     Intent intent = new Intent(activity, MainActivity.class);
     activity.startActivity(intent);
     activity.finish();
+  }
+
+  @OnClick(R.id.toggle_info_button)
+  public void toggleInfoLayout(View view) {
+    boolean show = toggleArrow(view);
+    if (show) {
+      ViewAnimation.expand(expandLayout, new ViewAnimation.AnimListener() {
+        @Override
+        public void onFinish() {
+        }
+      });
+    } else {
+      ViewAnimation.collapse(expandLayout);
+    }
+  }
+
+  private boolean toggleArrow(View view) {
+    if (view.getRotation() == 0) {
+      view.animate().setDuration(200).rotation(180);
+      return true;
+    } else {
+      view.animate().setDuration(200).rotation(0);
+      return false;
+    }
   }
 }
