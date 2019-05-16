@@ -24,4 +24,8 @@
     <string name="search_for_a_city_label">شهر را جستجو کنید</string>
     <string name="zero_label">۰%d</string>
     <string name="wind_unit_label">%.0f کیلومتر/ساعت</string>
+    <string name="openweathermap_api_key_label">OpenWeatherMap API Key</string>
+    <string name="api_key_description">برای استفاده از برنامه باید یک API Key دریافت کنید. این کار رایگان است. لطفا بر روی لینک زیر کلیک کنید و یک حساب‌کاربری ایجاد کنید. بعد از آن می‌توانید API Key را دریافت کنید.</string>
+    <string name="get_api_key_label">دریافت API Key</string>
+    <string name="api_key_label">API Key</string>
 </resources>

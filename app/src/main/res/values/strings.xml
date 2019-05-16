@@ -46,4 +46,8 @@
     <string name="search_for_a_city_label">Search for a city</string>
     <string name="zero_label">0%d</string>
     <string name="wind_unit_label">%.0f km/hr</string>
+    <string name="openweathermap_api_key_label">OpenWeatherMap API Key</string>
+    <string name="api_key_description">For using application you should provide API key. It is free. Please open link below and create account. After that you can get API key.</string>
+    <string name="get_api_key_label">Get API Key</string>
+    <string name="api_key_label">API Key</string>
 </resources>
