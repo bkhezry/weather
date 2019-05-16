@@ -79,7 +79,7 @@ public class Constants {
 
   public static final String CITY_INFO = "city-info";
 
-  public static final long TEN_MINUTES = 600000;
+  public static final long THIRTY_MINUTES = 3 * 600000;
 
   public static final String LAST_STORED_CURRENT = "last-stored-current";
   public static final String LAST_STORED_MULTIPLE_DAYS = "last-stored-multiple-days";

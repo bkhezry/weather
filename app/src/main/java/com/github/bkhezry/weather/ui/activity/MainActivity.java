@@ -157,9 +157,8 @@ public class MainActivity extends AppCompatActivity {
       cityNameTextView.setText(String.format("%s, %s", cityInfo.getName(), cityInfo.getCountry()));
       if (prefser.contains(Constants.LAST_STORED_CURRENT)) {
         long lastStored = prefser.get(Constants.LAST_STORED_CURRENT, Long.class, 0L);
-        if (AppUtil.isTenMinutePass(lastStored)) {
+        if (AppUtil.isThirtyMinutePass(lastStored)) {
           requestWeather(cityInfo.getName());
-
         }
       } else {
         requestWeather(cityInfo.getName());
@@ -267,7 +266,12 @@ public class MainActivity extends AppCompatActivity {
       public void onRefresh() {
         cityInfo = prefser.get(Constants.CITY_INFO, CityInfo.class, null);
         if (cityInfo != null) {
-          requestWeather(cityInfo.getName());
+          long lastStored = prefser.get(Constants.LAST_STORED_CURRENT, Long.class, 0L);
+          if (AppUtil.isThirtyMinutePass(lastStored)) {
+            requestWeather(cityInfo.getName());
+          } else {
+            swipeContainer.setRefreshing(false);
+          }
         } else {
           swipeContainer.setRefreshing(false);
         }

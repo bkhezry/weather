@@ -75,10 +75,7 @@ public class MultipleDaysFragment extends DialogFragment {
     if (prefser.contains(Constants.API_KEY)) {
       apiKey = prefser.get(Constants.API_KEY, String.class, "");
       if (prefser.contains(Constants.LAST_STORED_MULTIPLE_DAYS)) {
-        long lastUpdate = prefser.get(Constants.LAST_STORED_MULTIPLE_DAYS, Long.class, 0L);
-        if (AppUtil.isTenMinutePass(lastUpdate)) {
-          checkCityInfoExist();
-        }
+        requestWeather();
       } else {
         checkCityInfoExist();
       }
@@ -102,10 +99,19 @@ public class MultipleDaysFragment extends DialogFragment {
 
       @Override
       public void onRefresh() {
-        checkCityInfoExist();
+        requestWeather();
       }
 
     });
+  }
+
+  private void requestWeather() {
+    long lastUpdate = prefser.get(Constants.LAST_STORED_MULTIPLE_DAYS, Long.class, 0L);
+    if (AppUtil.isThirtyMinutePass(lastUpdate)) {
+      checkCityInfoExist();
+    } else {
+      swipeContainer.setRefreshing(false);
+    }
   }
 
   private void showStoredMultipleDaysWeather() {

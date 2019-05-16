@@ -198,8 +198,8 @@ public class AppUtil {
     }
   }
 
-  public static boolean isTenMinutePass(long lastStored) {
-    return System.currentTimeMillis() - lastStored > Constants.TEN_MINUTES;
+  public static boolean isThirtyMinutePass(long lastStored) {
+    return System.currentTimeMillis() - lastStored > Constants.THIRTY_MINUTES;
   }
 
   public static void showSetAppIdDialog(Context context, Prefser prefser, OnSetApiKeyEventListener listener) {
