@@ -144,7 +144,6 @@ public class MainActivity extends AppCompatActivity {
         }
       });
     } else {
-      apiKey = prefser.get(Constants.API_KEY, String.class, "");
       checkLastUpdate();
     }
     showStoredCurrentWeather();
@@ -278,6 +277,7 @@ public class MainActivity extends AppCompatActivity {
   }
 
   private void getCurrentWeather(String cityName) {
+    apiKey = prefser.get(Constants.API_KEY, String.class, "");
     disposable.add(
         apiService.getCurrentWeather(
             cityName, Constants.UNITS, defaultLang, apiKey)
