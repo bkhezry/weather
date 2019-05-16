@@ -196,12 +196,12 @@ public class MainActivity extends AppCompatActivity {
               CurrentWeather currentWeather = data.get(0);
               if (isLoad) {
                 tempTextView.setText(String.format(Locale.getDefault(), "%.0f°", currentWeather.getTemp()));
-                descriptionTextView.setText(currentWeather.getMain());
+                descriptionTextView.setText(AppUtil.getWeatherStatus(currentWeather.getWeatherId(), AppUtil.isRTL(MainActivity.this)));
                 humidityTextView.setText(String.format(Locale.getDefault(), "%d%%", currentWeather.getHumidity()));
                 windTextView.setText(String.format(Locale.getDefault(), getResources().getString(R.string.wind_unit_label), currentWeather.getWindSpeed()));
               } else {
                 tempTextView.setCurrentText(String.format(Locale.getDefault(), "%.0f°", currentWeather.getTemp()));
-                descriptionTextView.setCurrentText(currentWeather.getMain());
+                descriptionTextView.setCurrentText(AppUtil.getWeatherStatus(currentWeather.getWeatherId(), AppUtil.isRTL(MainActivity.this)));
                 humidityTextView.setCurrentText(String.format(Locale.getDefault(), "%d%%", currentWeather.getHumidity()));
                 windTextView.setCurrentText(String.format(Locale.getDefault(), getResources().getString(R.string.wind_unit_label), currentWeather.getWindSpeed()));
               }
