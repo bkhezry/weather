@@ -50,4 +50,6 @@
     <string name="api_key_description">For using application you should provide API key. It is free. Please open link below and create account. After that you can get API key.</string>
     <string name="get_api_key_label">Get API Key</string>
     <string name="api_key_label">API Key</string>
+    <string name="english_label" translatable="false">English</string>
+    <string name="persian_label" translatable="false">فارسی</string>
 </resources>

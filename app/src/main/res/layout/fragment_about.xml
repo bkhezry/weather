@@ -31,58 +31,93 @@
         app:cardCornerRadius="30dp"
         app:cardElevation="2dp">
 
-        <androidx.core.widget.NestedScrollView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fillViewport="true"
-            android:scrollbars="none">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_xlarge"
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center_horizontal"
+                android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
-                android:orientation="vertical"
-                android:padding="@dimen/spacing_large">
+                android:orientation="horizontal">
 
-                <TextView
-                    style="@style/HeadlineTextStyle"
-                    android:text="@string/application_info_title" />
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/english_button"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/english_label"
+                    android:textAllCaps="false" />
 
-                <TextView
-                    android:id="@+id/text_application_info"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                <View
+                    android:layout_width="@dimen/spacing_medium"
+                    android:layout_height="0dp" />
 
-                <TextView
-                    style="@style/HeadlineTextStyle"
-                    android:text="@string/developer_info_title" />
-
-                <TextView
-                    android:id="@+id/text_developer_info"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
-                <TextView
-                    style="@style/HeadlineTextStyle"
-                    android:text="@string/libraries_title" />
-
-                <TextView
-                    android:id="@+id/text_libraries"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
-                <TextView
-                    style="@style/HeadlineTextStyle"
-                    android:text="@string/license_title" />
-
-                <TextView
-                    android:id="@+id/text_license"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/persian_button"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/persian_label"
+                    android:textAllCaps="false" />
 
             </LinearLayout>
-        </androidx.core.widget.NestedScrollView>
+
+            <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fillViewport="true"
+                android:scrollbars="none">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_horizontal"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical"
+                    android:padding="@dimen/spacing_large">
+
+                    <TextView
+                        style="@style/HeadlineTextStyle"
+                        android:text="@string/application_info_title" />
+
+                    <TextView
+                        android:id="@+id/text_application_info"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        style="@style/HeadlineTextStyle"
+                        android:text="@string/developer_info_title" />
+
+                    <TextView
+                        android:id="@+id/text_developer_info"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        style="@style/HeadlineTextStyle"
+                        android:text="@string/libraries_title" />
+
+                    <TextView
+                        android:id="@+id/text_libraries"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        style="@style/HeadlineTextStyle"
+                        android:text="@string/license_title" />
+
+                    <TextView
+                        android:id="@+id/text_license"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+
+                </LinearLayout>
+            </androidx.core.widget.NestedScrollView>
+        </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 </LinearLayout>
