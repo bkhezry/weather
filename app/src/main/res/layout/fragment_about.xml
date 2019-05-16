@@ -28,7 +28,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="-18dp"
-        app:cardCornerRadius="30dp"
+        app:cardCornerRadius="20dp"
         app:cardElevation="2dp">
 
         <LinearLayout
@@ -68,6 +68,7 @@
             </LinearLayout>
 
             <androidx.core.widget.NestedScrollView
+                android:id="@+id/nested_scroll_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:fillViewport="true"
@@ -75,49 +76,84 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center_horizontal"
-                    android:gravity="center_horizontal"
+                    android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:padding="@dimen/spacing_large">
 
-                    <TextView
-                        style="@style/HeadlineTextStyle"
-                        android:text="@string/application_info_title" />
-
-                    <TextView
-                        android:id="@+id/text_application_info"
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/white"
+                        android:gravity="center_vertical"
+                        android:minHeight="?attr/actionBarSize"
+                        android:orientation="horizontal">
 
-                    <TextView
-                        style="@style/HeadlineTextStyle"
-                        android:text="@string/developer_info_title" />
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/application_info_title"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                            android:textColor="@android:color/black"
+                            android:textStyle="bold" />
 
-                    <TextView
-                        android:id="@+id/text_developer_info"
+                        <View
+                            android:layout_width="@dimen/spacing_large"
+                            android:layout_height="wrap_content" />
+
+                        <ImageButton
+                            android:id="@+id/toggle_info_button"
+                            android:layout_width="?attr/actionBarSize"
+                            android:layout_height="?attr/actionBarSize"
+                            android:background="?attr/selectableItemBackgroundBorderless"
+                            android:tint="@android:color/black"
+                            app:srcCompat="@drawable/ic_keyboard_arrow_down_black_24dp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/expand_layout"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_horizontal"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical"
+                        android:visibility="gone">
 
-                    <TextView
-                        style="@style/HeadlineTextStyle"
-                        android:text="@string/libraries_title" />
+                        <TextView
+                            android:id="@+id/text_application_info"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
 
-                    <TextView
-                        android:id="@+id/text_libraries"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        <TextView
+                            style="@style/HeadlineTextStyle"
+                            android:text="@string/developer_info_title" />
 
-                    <TextView
-                        style="@style/HeadlineTextStyle"
-                        android:text="@string/license_title" />
+                        <TextView
+                            android:id="@+id/text_developer_info"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
 
-                    <TextView
-                        android:id="@+id/text_license"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        <TextView
+                            style="@style/HeadlineTextStyle"
+                            android:text="@string/libraries_title" />
+
+                        <TextView
+                            android:id="@+id/text_libraries"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+
+                        <TextView
+                            style="@style/HeadlineTextStyle"
+                            android:text="@string/license_title" />
+
+                        <TextView
+                            android:id="@+id/text_license"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
 
 
+                    </LinearLayout>
                 </LinearLayout>
             </androidx.core.widget.NestedScrollView>
         </LinearLayout>
