@@ -8,15 +8,18 @@
     <string name="application_info_title">Application Info</string>
     <string name="application_info_text">
         <![CDATA[
-            <p>Version: %1$s</p>
-            <p>Weather application</p>
+            <p>Version: %1$s
+            <br/>
+            <b>Weather application</b>
+            </p>
             <p>This application is open source at <a href="https://github.com/bkhezry/weather">https://github.com/bkhezry/weather</a></p>
         ]]>
     </string>
     <string name="developer_info_text" translatable="false">
         <![CDATA[
-            <p>Behrouz Khezry</p>
-            <p><a href="https://twitter.com/bkhezry">@bkhezry</a></p>
+            <p>Behrouz Khezry
+            <br/>
+            <a href="https://twitter.com/bkhezry">@bkhezry</a></p>
         ]]>
     </string>
     <string name="license_text" translatable="false">
@@ -35,7 +38,30 @@
     </string>
     <string name="libraries_text" translatable="false">
         <![CDATA[
-            <p><a href="https://github.com/google/material-design-icons">Material design icons</a> - Creative Common Attribution 4.0 International License</p>
+           <p>
+            <a href="https://github.com/JakeWharton/butterknife">ButterKnife</a> - Apache-2.0
+            <br/>
+            <a href="https://github.com/square/retrofit">Retrofit</a> - Apache-2.0
+            <br/>
+            <a href="https://github.com/ReactiveX/RxAndroid">RxAndroid</a> - Apache-2.0
+            <br/>
+            <a href="https://github.com/mikepenz/FastAdapter">FastAdapter</a> - Apache-2.0
+            <br/>
+            <a href="https://github.com/bumptech/glide">Glide</a> - Apache-2.0
+            <br/>
+            <a href="https://github.com/airbnb/lottie-android">Lottie-Android</a> - Apache-2.0
+            <br/>
+            <a href="https://github.com/MiguelCatalan/MaterialSearchView">MaterialSearchView</a> - Apache-2.0
+            <br/>
+            <a href="https://github.com/pwittchen/prefser">Prefser</a> - Apache-2.0
+            <br/>
+            <a href="https://github.com/PhilJay/MPAndroidChart">MPAndroidChart</a> - Apache-2.0
+            <br/>
+            <a href="https://github.com/InflationX/Calligraphy">Calligraphy</a> - Apache-2.0
+            <br/>
+            <a href="https://github.com/google/material-design-icons">Material design icons</a> - Creative Common Attribution 4.0 International License
+           </p>
+
         ]]>
 </string>
     <string name="current_label">Current</string>
