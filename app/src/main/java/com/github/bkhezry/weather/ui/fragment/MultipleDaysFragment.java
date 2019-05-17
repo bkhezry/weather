@@ -72,13 +72,12 @@ public class MultipleDaysFragment extends DialogFragment {
     initSwipeView();
     initRecyclerView();
     showStoredMultipleDaysWeather();
-    if (prefser.contains(Constants.API_KEY)) {
-      apiKey = prefser.get(Constants.API_KEY, String.class, "");
-      if (prefser.contains(Constants.LAST_STORED_MULTIPLE_DAYS)) {
-        requestWeather();
-      } else {
-        checkCityInfoExist();
-      }
+
+    apiKey = getResources().getString(R.string.open_weather_map_api);
+    if (prefser.contains(Constants.LAST_STORED_MULTIPLE_DAYS)) {
+      requestWeather();
+    } else {
+      checkCityInfoExist();
     }
     return view;
   }
