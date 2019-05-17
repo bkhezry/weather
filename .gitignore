@@ -88,4 +88,7 @@ lint/tmp/
 gen-external-apklibs
 output.json
 
+/app/src/main/res/values/open_weather_map_api.xml
+
+
 # End of https://www.gitignore.io/api/android
