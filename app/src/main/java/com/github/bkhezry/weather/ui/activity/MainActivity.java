@@ -25,7 +25,6 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.airbnb.lottie.LottieAnimationView;
 import com.bumptech.glide.Glide;
 import com.github.bkhezry.weather.R;
-import com.github.bkhezry.weather.listener.OnSetApiKeyEventListener;
 import com.github.bkhezry.weather.model.CityInfo;
 import com.github.bkhezry.weather.model.currentweather.CurrentWeatherResponse;
 import com.github.bkhezry.weather.model.daysweather.ListItem;
@@ -136,18 +135,9 @@ public class MainActivity extends AppCompatActivity {
     initSearchView();
     initValues();
     initRecyclerView();
-    if (!prefser.contains(Constants.API_KEY)) {
-      AppUtil.showSetAppIdDialog(this, prefser, new OnSetApiKeyEventListener() {
-        @Override
-        public void setApiKey() {
-          checkLastUpdate();
-        }
-      });
-    } else {
-      checkLastUpdate();
-    }
     showStoredCurrentWeather();
     showStoredFiveDayWeather();
+    checkLastUpdate();
 
   }
 
@@ -281,7 +271,7 @@ public class MainActivity extends AppCompatActivity {
   }
 
   private void getCurrentWeather(String cityName) {
-    apiKey = prefser.get(Constants.API_KEY, String.class, "");
+    apiKey = getResources().getString(R.string.open_weather_map_api);
     disposable.add(
         apiService.getCurrentWeather(
             cityName, Constants.UNITS, defaultLang, apiKey)
