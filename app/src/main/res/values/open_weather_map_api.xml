@@ -1,0 +1,3 @@
+<resources>
+    <string name="open_weather_map_api" templateMergeStrategy="preserve" translatable="false">API_KEY</string>
+</resources>
