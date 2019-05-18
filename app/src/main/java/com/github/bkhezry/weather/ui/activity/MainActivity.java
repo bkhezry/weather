@@ -1,6 +1,7 @@
 package com.github.bkhezry.weather.ui.activity;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -126,6 +127,7 @@ public class MainActivity extends AppCompatActivity {
   private boolean isLoad = false;
   private CityInfo cityInfo;
   private String apiKey;
+  private Typeface typeface;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -134,9 +136,9 @@ public class MainActivity extends AppCompatActivity {
     ButterKnife.bind(this);
     setSupportActionBar(toolbar);
     Glide.with(MainActivity.this).load(R.drawable.no_city).into(noCityImageView);
+    initValues();
     setupTextSwitchers();
     initSearchView();
-    initValues();
     initRecyclerView();
     showStoredCurrentWeather();
     showStoredFiveDayWeather();
@@ -163,16 +165,16 @@ public class MainActivity extends AppCompatActivity {
   }
 
   private void setupTextSwitchers() {
-    tempTextView.setFactory(new TextViewFactory(MainActivity.this, R.style.TempTextView, true));
+    tempTextView.setFactory(new TextViewFactory(MainActivity.this, R.style.TempTextView, true, typeface));
     tempTextView.setInAnimation(MainActivity.this, R.anim.slide_in_right);
     tempTextView.setOutAnimation(MainActivity.this, R.anim.slide_out_left);
-    descriptionTextView.setFactory(new TextViewFactory(MainActivity.this, R.style.DescriptionTextView, true));
+    descriptionTextView.setFactory(new TextViewFactory(MainActivity.this, R.style.DescriptionTextView, true, typeface));
     descriptionTextView.setInAnimation(MainActivity.this, R.anim.slide_in_right);
     descriptionTextView.setOutAnimation(MainActivity.this, R.anim.slide_out_left);
-    humidityTextView.setFactory(new TextViewFactory(MainActivity.this, R.style.HumidityTextView, false));
+    humidityTextView.setFactory(new TextViewFactory(MainActivity.this, R.style.HumidityTextView, false, typeface));
     humidityTextView.setInAnimation(MainActivity.this, R.anim.slide_in_bottom);
     humidityTextView.setOutAnimation(MainActivity.this, R.anim.slide_out_top);
-    windTextView.setFactory(new TextViewFactory(MainActivity.this, R.style.WindSpeedTextView, false));
+    windTextView.setFactory(new TextViewFactory(MainActivity.this, R.style.WindSpeedTextView, false, typeface));
     windTextView.setInAnimation(MainActivity.this, R.anim.slide_in_bottom);
     windTextView.setOutAnimation(MainActivity.this, R.anim.slide_out_top);
   }
@@ -277,6 +279,7 @@ public class MainActivity extends AppCompatActivity {
         showAboutFragment();
       }
     });
+    typeface = Typeface.createFromAsset(getAssets(), "fonts/Vazir.ttf");
   }
 
   private void getCurrentWeather(String cityName) {
@@ -455,6 +458,7 @@ public class MainActivity extends AppCompatActivity {
     mFastAdapter = FastAdapter.with(mItemAdapter);
     recyclerView.setItemAnimator(new DefaultItemAnimator());
     recyclerView.setAdapter(mFastAdapter);
+    recyclerView.setFocusable(false);
     mFastAdapter.withOnClickListener(new OnClickListener<FiveDayWeather>() {
       @Override
       public boolean onClick(@Nullable View v, @NonNull IAdapter<FiveDayWeather> adapter, @NonNull FiveDayWeather item, int position) {

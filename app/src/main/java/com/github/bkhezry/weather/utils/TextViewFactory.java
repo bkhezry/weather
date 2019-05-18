@@ -1,6 +1,7 @@
 package com.github.bkhezry.weather.utils;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.os.Build;
 import android.view.Gravity;
 import android.view.View;
@@ -15,11 +16,13 @@ public class TextViewFactory implements ViewSwitcher.ViewFactory {
   private final int styleId;
   private final boolean center;
   private final Context context;
+  private final Typeface typeface;
 
-  public TextViewFactory(Context context, @StyleRes int styleId, boolean center) {
+  public TextViewFactory(Context context, @StyleRes int styleId, boolean center, Typeface typeface) {
     this.styleId = styleId;
     this.center = center;
     this.context = context;
+    this.typeface = typeface;
   }
 
   @Override
@@ -33,7 +36,7 @@ public class TextViewFactory implements ViewSwitcher.ViewFactory {
     } else {
       textView.setTextAppearance(styleId);
     }
-
+    textView.setTypeface(typeface);
     return textView;
   }
 
