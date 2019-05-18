@@ -9,7 +9,7 @@ if (googleServicesFile.exists()) {
 
 def versionMajor = 1
 def versionMinor = 6
-def versionPatch = 0
+def versionPatch = 3
 android {
     compileSdkVersion 28
     defaultConfig {
