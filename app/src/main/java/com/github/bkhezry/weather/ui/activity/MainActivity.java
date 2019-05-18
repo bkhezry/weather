@@ -135,10 +135,9 @@ public class MainActivity extends AppCompatActivity {
     setContentView(R.layout.activity_main);
     ButterKnife.bind(this);
     setSupportActionBar(toolbar);
-    Glide.with(MainActivity.this).load(R.drawable.no_city).into(noCityImageView);
+    initSearchView();
     initValues();
     setupTextSwitchers();
-    initSearchView();
     initRecyclerView();
     showStoredCurrentWeather();
     showStoredFiveDayWeather();
@@ -315,6 +314,7 @@ public class MainActivity extends AppCompatActivity {
   }
 
   private void showEmptyLayout() {
+    Glide.with(MainActivity.this).load(R.drawable.no_city).into(noCityImageView);
     emptyLayout.setVisibility(View.VISIBLE);
     nestedScrollView.setVisibility(View.GONE);
   }
