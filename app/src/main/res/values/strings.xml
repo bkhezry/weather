@@ -78,4 +78,5 @@
     <string name="api_key_label">API Key</string>
     <string name="english_label" translatable="false">English</string>
     <string name="persian_label" translatable="false">فارسی</string>
+    <string name="search_label">Search</string>
 </resources>
