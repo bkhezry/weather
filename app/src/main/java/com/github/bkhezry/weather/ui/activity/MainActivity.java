@@ -45,6 +45,7 @@ import com.github.bkhezry.weather.utils.DbUtil;
 import com.github.bkhezry.weather.utils.MyApplication;
 import com.github.bkhezry.weather.utils.TextViewFactory;
 import com.github.pwittchen.prefser.library.rx2.Prefser;
+import com.google.android.material.bottomappbar.BottomAppBar;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 import com.mikepenz.fastadapter.FastAdapter;
 import com.mikepenz.fastadapter.IAdapter;
@@ -108,6 +109,8 @@ public class MainActivity extends AppCompatActivity {
   RelativeLayout emptyLayout;
   @BindView(R.id.nested_scroll_view)
   NestedScrollView nestedScrollView;
+  @BindView(R.id.bar)
+  BottomAppBar bar;
   private FastAdapter<FiveDayWeather> mFastAdapter;
   private ItemAdapter<FiveDayWeather> mItemAdapter;
   private CompositeDisposable disposable = new CompositeDisposable();
@@ -267,6 +270,12 @@ public class MainActivity extends AppCompatActivity {
         }
       }
 
+    });
+    bar.setNavigationOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        showAboutFragment();
+      }
     });
   }
 
@@ -476,7 +485,6 @@ public class MainActivity extends AppCompatActivity {
     return true;
   }
 
-  @OnClick(R.id.about_image_button)
   public void showAboutFragment() {
     AppUtil.showFragment(new AboutFragment(), getSupportFragmentManager(), true);
   }
