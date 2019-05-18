@@ -3,6 +3,7 @@ package com.github.bkhezry.weather.utils;
 import android.content.Context;
 import android.content.res.Configuration;
 
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.multidex.MultiDexApplication;
 
 import com.github.bkhezry.weather.BuildConfig;
@@ -25,6 +26,7 @@ public class MyApplication extends MultiDexApplication {
 
   @Override
   public void onCreate() {
+    AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
     super.onCreate();
     ViewPump.init(ViewPump.builder()
         .addInterceptor(new CalligraphyInterceptor(
