@@ -35,6 +35,7 @@
             <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
                 android:id="@+id/next_days_button"
                 android:layout_width="wrap_content"
+                android:gravity="center"
                 android:layout_height="wrap_content"
                 android:text="@string/next_15_days_label"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
