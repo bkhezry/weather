@@ -50,6 +50,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/english_label"
                     android:textAllCaps="false"
+                    android:textColor="@android:color/black"
                     app:iconTint="@color/green_success" />
 
                 <View
@@ -63,6 +64,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/persian_label"
                     android:textAllCaps="false"
+                    android:textColor="@android:color/black"
                     app:iconTint="@color/green_success" />
 
             </LinearLayout>
