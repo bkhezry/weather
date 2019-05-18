@@ -17,12 +17,13 @@
 
         <include layout="@layout/content_empty" />
 
-        <include layout="@layout/content_main" />
-
         <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:id="@+id/coordinator_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
+            <include layout="@layout/content_main" />
+
 
             <com.google.android.material.bottomappbar.BottomAppBar
                 android:id="@+id/bar"
@@ -35,8 +36,8 @@
             <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
                 android:id="@+id/next_days_button"
                 android:layout_width="wrap_content"
-                android:gravity="center"
                 android:layout_height="wrap_content"
+                android:gravity="center"
                 android:text="@string/next_15_days_label"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
                 android:textColor="@android:color/white"
