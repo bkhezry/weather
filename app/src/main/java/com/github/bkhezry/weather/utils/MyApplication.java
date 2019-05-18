@@ -1,8 +1,9 @@
 package com.github.bkhezry.weather.utils;
 
-import android.app.Application;
 import android.content.Context;
 import android.content.res.Configuration;
+
+import androidx.multidex.MultiDexApplication;
 
 import com.github.bkhezry.weather.BuildConfig;
 import com.github.bkhezry.weather.R;
@@ -14,7 +15,7 @@ import io.github.inflationx.viewpump.ViewPump;
 import io.objectbox.BoxStore;
 import io.objectbox.android.AndroidObjectBrowser;
 
-public class MyApplication extends Application {
+public class MyApplication extends MultiDexApplication {
   private static BoxStore boxStore;
   public static LocaleManager localeManager;
 
