@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
@@ -61,11 +62,12 @@ public class MultipleDaysFragment extends DialogFragment {
   private Box<MultipleDaysWeather> multipleDaysWeatherBox;
   private Prefser prefser;
   private String apiKey;
+  private View view;
 
   @Override
   public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                            Bundle savedInstanceState) {
-    View view = inflater.inflate(R.layout.fragment_multiple_days,
+    view = inflater.inflate(R.layout.fragment_multiple_days,
         container, false);
     ButterKnife.bind(this, view);
     initVariables();
@@ -137,7 +139,11 @@ public class MultipleDaysFragment extends DialogFragment {
   private void checkCityInfoExist() {
     CityInfo cityInfo = prefser.get(Constants.CITY_INFO, CityInfo.class, null);
     if (cityInfo != null) {
-      requestWeathers(cityInfo.getName());
+      if (AppUtil.isNetworkConnected()) {
+        requestWeathers(cityInfo.getName());
+      } else {
+        Toast.makeText(activity, getResources().getString(R.string.no_internet_message), Toast.LENGTH_SHORT).show();
+      }
     }
   }
 
