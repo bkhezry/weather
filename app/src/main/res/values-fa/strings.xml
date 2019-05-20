@@ -29,4 +29,5 @@
     <string name="get_api_key_label">دریافت API Key</string>
     <string name="api_key_label">API Key</string>
     <string name="search_label">جستجو</string>
+    <string name="no_internet_message">لطفا دسترسی به اینترنت را چک کنید</string>
 </resources>

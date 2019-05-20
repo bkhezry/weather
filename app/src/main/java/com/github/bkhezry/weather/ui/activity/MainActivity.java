@@ -8,7 +8,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextSwitcher;
-import android.widget.Toast;
 
 import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
@@ -44,6 +43,7 @@ import com.github.bkhezry.weather.utils.AppUtil;
 import com.github.bkhezry.weather.utils.Constants;
 import com.github.bkhezry.weather.utils.DbUtil;
 import com.github.bkhezry.weather.utils.MyApplication;
+import com.github.bkhezry.weather.utils.SnackbarUtil;
 import com.github.bkhezry.weather.utils.TextViewFactory;
 import com.github.pwittchen.prefser.library.rx2.Prefser;
 import com.google.android.material.bottomappbar.BottomAppBar;
@@ -224,7 +224,12 @@ public class MainActivity extends AppCompatActivity {
       getCurrentWeather(cityName);
       getFiveDaysWeather(cityName);
     } else {
-      Toast.makeText(this, "No", Toast.LENGTH_SHORT).show();
+      SnackbarUtil
+          .with(swipeContainer)
+          .setMessage(getString(R.string.no_internet_message))
+          .setDuration(SnackbarUtil.LENGTH_LONG)
+          .showError();
+      swipeContainer.setRefreshing(false);
     }
   }
 

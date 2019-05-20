@@ -79,4 +79,5 @@
     <string name="english_label" translatable="false">English</string>
     <string name="persian_label" translatable="false">فارسی</string>
     <string name="search_label">Search</string>
+    <string name="no_internet_message">Please check internet connection</string>
 </resources>
