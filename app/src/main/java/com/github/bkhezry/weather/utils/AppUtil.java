@@ -5,6 +5,8 @@ import android.app.Application;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.text.Html;
@@ -18,6 +20,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
 
+import androidx.annotation.RequiresPermission;
 import androidx.appcompat.widget.AppCompatEditText;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.core.os.ConfigurationCompat;
@@ -34,6 +37,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.Calendar;
 import java.util.Locale;
 import java.util.TimeZone;
+
+import static android.Manifest.permission.ACCESS_NETWORK_STATE;
 
 public class AppUtil {
 
@@ -312,17 +317,14 @@ public class AppUtil {
         directionality == Character.DIRECTIONALITY_RIGHT_TO_LEFT_ARABIC;
   }
 
+  /**
+   * Network status functions.
+   */
 
   @SuppressLint("StaticFieldLeak")
   private static Application sApplication;
 
 
-  /**
-   * Init utils.
-   * <p>Init it in the class of Application.</p>
-   *
-   * @param app application
-   */
   private static void init(final Application app) {
     if (sApplication == null) {
       if (app == null) {
@@ -337,11 +339,6 @@ public class AppUtil {
     }
   }
 
-  /**
-   * Return the context of Application object.
-   *
-   * @return the context of Application object
-   */
   public static Application getApp() {
     if (sApplication != null) return sApplication;
     Application app = getApplicationByReflect();
@@ -371,4 +368,18 @@ public class AppUtil {
     throw new NullPointerException("u should init first");
   }
 
+  @RequiresPermission(ACCESS_NETWORK_STATE)
+  public static boolean isNetworkConnected() {
+    NetworkInfo info = getActiveNetworkInfo();
+    return info != null && info.isConnected();
+  }
+
+
+  @RequiresPermission(ACCESS_NETWORK_STATE)
+  private static NetworkInfo getActiveNetworkInfo() {
+    ConnectivityManager cm =
+        (ConnectivityManager) getApp().getSystemService(Context.CONNECTIVITY_SERVICE);
+    if (cm == null) return null;
+    return cm.getActiveNetworkInfo();
+  }
 }
