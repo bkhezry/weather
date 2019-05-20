@@ -143,6 +143,7 @@ public class MultipleDaysFragment extends DialogFragment {
         requestWeathers(cityInfo.getName());
       } else {
         Toast.makeText(activity, getResources().getString(R.string.no_internet_message), Toast.LENGTH_SHORT).show();
+        swipeContainer.setRefreshing(false);
       }
     }
   }
