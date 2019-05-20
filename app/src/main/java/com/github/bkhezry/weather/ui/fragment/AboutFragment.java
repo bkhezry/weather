@@ -25,7 +25,7 @@ import com.github.bkhezry.weather.utils.AppUtil;
 import com.github.bkhezry.weather.utils.LocaleManager;
 import com.github.bkhezry.weather.utils.MyApplication;
 import com.github.bkhezry.weather.utils.ViewAnimation;
-import com.google.android.material.button.MaterialButton;
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -34,9 +34,9 @@ import butterknife.OnClick;
 public class AboutFragment extends DialogFragment {
 
   @BindView(R.id.english_button)
-  MaterialButton englishButton;
+  ExtendedFloatingActionButton englishButton;
   @BindView(R.id.persian_button)
-  MaterialButton persianButton;
+  ExtendedFloatingActionButton persianButton;
   @BindView(R.id.toggle_info_button)
   ImageButton toggleInfoButton;
   @BindView(R.id.expand_layout)
@@ -44,6 +44,7 @@ public class AboutFragment extends DialogFragment {
   @BindView(R.id.nested_scroll_view)
   NestedScrollView nestedScrollView;
   private Activity activity;
+  private String currentLangeuage;
 
   @Override
   public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -51,6 +52,12 @@ public class AboutFragment extends DialogFragment {
     View view = inflater.inflate(R.layout.fragment_about,
         container, false);
     ButterKnife.bind(this, view);
+    initVariables(view);
+    return view;
+  }
+
+  private void initVariables(View view) {
+    currentLangeuage = MyApplication.localeManager.getLanguage();
     activity = getActivity();
     Drawable drawable = activity.getResources().getDrawable(R.drawable.ic_done_black_24dp);
     String versionName = "";
@@ -63,12 +70,11 @@ public class AboutFragment extends DialogFragment {
     setTextWithLinks(view.findViewById(R.id.text_developer_info), getString(R.string.developer_info_text));
     setTextWithLinks(view.findViewById(R.id.text_libraries), getString(R.string.libraries_text));
     setTextWithLinks(view.findViewById(R.id.text_license), getString(R.string.license_text));
-    if (MyApplication.localeManager.getLanguage().equals(LocaleManager.LANGUAGE_ENGLISH)) {
+    if (currentLangeuage.equals(LocaleManager.LANGUAGE_ENGLISH)) {
       englishButton.setIcon(drawable);
     } else {
       persianButton.setIcon(drawable);
     }
-    return view;
   }
 
   private void setTextWithLinks(TextView textView, String htmlText) {
@@ -103,12 +109,16 @@ public class AboutFragment extends DialogFragment {
   void handleChangeLanguage(View view) {
     switch (view.getId()) {
       case R.id.english_button:
-        MyApplication.localeManager.setNewLocale(activity, LocaleManager.LANGUAGE_ENGLISH);
-        restartActivity();
+        if (currentLangeuage.equals(LocaleManager.LANGUAGE_PERSIAN)) {
+          MyApplication.localeManager.setNewLocale(activity, LocaleManager.LANGUAGE_ENGLISH);
+          restartActivity();
+        }
         break;
       case R.id.persian_button:
-        MyApplication.localeManager.setNewLocale(activity, LocaleManager.LANGUAGE_PERSIAN);
-        restartActivity();
+        if (currentLangeuage.equals(LocaleManager.LANGUAGE_ENGLISH)) {
+          MyApplication.localeManager.setNewLocale(activity, LocaleManager.LANGUAGE_PERSIAN);
+          restartActivity();
+        }
         break;
     }
   }
