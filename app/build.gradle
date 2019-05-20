@@ -9,7 +9,7 @@ if (googleServicesFile.exists()) {
 
 def versionMajor = 1
 def versionMinor = 6
-def versionPatch = 3
+def versionPatch = 6
 android {
     compileSdkVersion 28
     defaultConfig {
@@ -76,8 +76,6 @@ dependencies {
     implementation 'com.crashlytics.sdk.android:crashlytics:2.10.0'
 
     implementation 'com.android.support:multidex:1.0.3'
-
-
 
 }
 android.applicationVariants.all { variant ->
