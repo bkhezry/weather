@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextSwitcher;
+import android.widget.Toast;
 
 import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
@@ -141,7 +142,6 @@ public class MainActivity extends AppCompatActivity {
     showStoredCurrentWeather();
     showStoredFiveDayWeather();
     checkLastUpdate();
-
   }
 
   private void checkLastUpdate() {
@@ -220,8 +220,12 @@ public class MainActivity extends AppCompatActivity {
   }
 
   private void requestWeather(String cityName) {
-    getCurrentWeather(cityName);
-    getFiveDaysWeather(cityName);
+    if (AppUtil.isNetworkConnected()) {
+      getCurrentWeather(cityName);
+      getFiveDaysWeather(cityName);
+    } else {
+      Toast.makeText(this, "No", Toast.LENGTH_SHORT).show();
+    }
   }
 
   private void initSearchView() {
