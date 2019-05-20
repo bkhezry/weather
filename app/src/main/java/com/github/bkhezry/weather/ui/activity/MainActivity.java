@@ -3,7 +3,6 @@ package com.github.bkhezry.weather.ui.activity;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -300,10 +299,10 @@ public class MainActivity extends AppCompatActivity {
 
               @Override
               public void onError(Throwable e) {
+                swipeContainer.setRefreshing(false);
                 try {
-                  swipeContainer.setRefreshing(false);
+
                   HttpException error = (HttpException) e;
-                  Log.e("MainActivity", "onError: " + e.getMessage());
                 } catch (Exception exception) {
                   e.printStackTrace();
                 }
@@ -369,7 +368,6 @@ public class MainActivity extends AppCompatActivity {
               public void onError(Throwable e) {
                 try {
                   HttpException error = (HttpException) e;
-                  Log.e("MainActivity", "onError: " + e.getMessage());
                 } catch (Exception exception) {
                   e.printStackTrace();
                 }
@@ -415,7 +413,7 @@ public class MainActivity extends AppCompatActivity {
 
               @Override
               public void onError(Throwable e) {
-                Log.e("MainActivity", "onError: " + e.getMessage());
+                e.printStackTrace();
               }
             })
 
