@@ -41,31 +41,36 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:padding="@dimen/spacing_large">
 
-                <com.google.android.material.button.MaterialButton
+                <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
                     android:id="@+id/english_button"
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/spacing_middle"
+                    android:gravity="center"
                     android:text="@string/english_label"
                     android:textAllCaps="false"
                     android:textColor="@android:color/black"
-                    app:iconTint="@color/green_success" />
+                    app:backgroundTint="@color/grey_10"
+                    app:iconTint="@android:color/black" />
 
                 <View
                     android:layout_width="@dimen/spacing_medium"
                     android:layout_height="0dp" />
 
-                <com.google.android.material.button.MaterialButton
+                <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
                     android:id="@+id/persian_button"
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/spacing_middle"
+                    android:gravity="center"
                     android:text="@string/persian_label"
                     android:textAllCaps="false"
                     android:textColor="@android:color/black"
-                    app:iconTint="@color/green_success" />
+                    app:backgroundTint="@color/grey_10"
+                    app:iconTint="@android:color/black" />
 
             </LinearLayout>
 
