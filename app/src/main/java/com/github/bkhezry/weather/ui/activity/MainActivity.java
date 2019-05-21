@@ -144,95 +144,6 @@ public class MainActivity extends AppCompatActivity {
     checkLastUpdate();
   }
 
-  private void checkLastUpdate() {
-    cityInfo = prefser.get(Constants.CITY_INFO, CityInfo.class, null);
-    if (cityInfo != null) {
-      cityNameTextView.setText(String.format("%s, %s", cityInfo.getName(), cityInfo.getCountry()));
-      if (prefser.contains(Constants.LAST_STORED_CURRENT)) {
-        long lastStored = prefser.get(Constants.LAST_STORED_CURRENT, Long.class, 0L);
-        if (AppUtil.isThirtyMinutePass(lastStored)) {
-          requestWeather(cityInfo.getName(), false);
-        }
-      } else {
-        requestWeather(cityInfo.getName(), false);
-      }
-    } else {
-      showEmptyLayout();
-    }
-
-  }
-
-  private void setupTextSwitchers() {
-    tempTextView.setFactory(new TextViewFactory(MainActivity.this, R.style.TempTextView, true, typeface));
-    tempTextView.setInAnimation(MainActivity.this, R.anim.slide_in_right);
-    tempTextView.setOutAnimation(MainActivity.this, R.anim.slide_out_left);
-    descriptionTextView.setFactory(new TextViewFactory(MainActivity.this, R.style.DescriptionTextView, true, typeface));
-    descriptionTextView.setInAnimation(MainActivity.this, R.anim.slide_in_right);
-    descriptionTextView.setOutAnimation(MainActivity.this, R.anim.slide_out_left);
-    humidityTextView.setFactory(new TextViewFactory(MainActivity.this, R.style.HumidityTextView, false, typeface));
-    humidityTextView.setInAnimation(MainActivity.this, R.anim.slide_in_bottom);
-    humidityTextView.setOutAnimation(MainActivity.this, R.anim.slide_out_top);
-    windTextView.setFactory(new TextViewFactory(MainActivity.this, R.style.WindSpeedTextView, false, typeface));
-    windTextView.setInAnimation(MainActivity.this, R.anim.slide_in_bottom);
-    windTextView.setOutAnimation(MainActivity.this, R.anim.slide_out_top);
-  }
-
-  private void showStoredCurrentWeather() {
-    Query<CurrentWeather> query = DbUtil.getCurrentWeatherQuery(currentWeatherBox);
-    query.subscribe(subscriptions).on(AndroidScheduler.mainThread())
-        .observer(new DataObserver<List<CurrentWeather>>() {
-          @Override
-          public void onData(@NonNull List<CurrentWeather> data) {
-            if (data.size() > 0) {
-              hideEmptyLayout();
-              CurrentWeather currentWeather = data.get(0);
-              if (isLoad) {
-                tempTextView.setText(String.format(Locale.getDefault(), "%.0f°", currentWeather.getTemp()));
-                descriptionTextView.setText(AppUtil.getWeatherStatus(currentWeather.getWeatherId(), AppUtil.isRTL(MainActivity.this)));
-                humidityTextView.setText(String.format(Locale.getDefault(), "%d%%", currentWeather.getHumidity()));
-                windTextView.setText(String.format(Locale.getDefault(), getResources().getString(R.string.wind_unit_label), currentWeather.getWindSpeed()));
-              } else {
-                tempTextView.setCurrentText(String.format(Locale.getDefault(), "%.0f°", currentWeather.getTemp()));
-                descriptionTextView.setCurrentText(AppUtil.getWeatherStatus(currentWeather.getWeatherId(), AppUtil.isRTL(MainActivity.this)));
-                humidityTextView.setCurrentText(String.format(Locale.getDefault(), "%d%%", currentWeather.getHumidity()));
-                windTextView.setCurrentText(String.format(Locale.getDefault(), getResources().getString(R.string.wind_unit_label), currentWeather.getWindSpeed()));
-              }
-              animationView.setAnimation(AppUtil.getWeatherAnimation(currentWeather.getWeatherId()));
-              animationView.playAnimation();
-            }
-          }
-        });
-  }
-
-  private void showStoredFiveDayWeather() {
-    Query<FiveDayWeather> query = DbUtil.getFiveDayWeatherQuery(fiveDayWeatherBox);
-    query.subscribe(subscriptions).on(AndroidScheduler.mainThread())
-        .observer(new DataObserver<List<FiveDayWeather>>() {
-          @Override
-          public void onData(@NonNull List<FiveDayWeather> data) {
-            if (data.size() > 0) {
-              todayFiveDayWeather = data.remove(0);
-              mItemAdapter.clear();
-              mItemAdapter.add(data);
-            }
-          }
-        });
-  }
-
-  private void requestWeather(String cityName, boolean isSearch) {
-    if (AppUtil.isNetworkConnected()) {
-      getCurrentWeather(cityName, isSearch);
-      getFiveDaysWeather(cityName);
-    } else {
-      SnackbarUtil
-          .with(swipeContainer)
-          .setMessage(getString(R.string.no_internet_message))
-          .setDuration(SnackbarUtil.LENGTH_LONG)
-          .showError();
-      swipeContainer.setRefreshing(false);
-    }
-  }
-
   private void initSearchView() {
     searchView.setVoiceSearch(false);
     searchView.setHint(getString(R.string.search_label));
@@ -288,6 +199,116 @@ public class MainActivity extends AppCompatActivity {
       }
     });
     typeface = Typeface.createFromAsset(getAssets(), "fonts/Vazir.ttf");
+  }
+
+  private void setupTextSwitchers() {
+    tempTextView.setFactory(new TextViewFactory(MainActivity.this, R.style.TempTextView, true, typeface));
+    tempTextView.setInAnimation(MainActivity.this, R.anim.slide_in_right);
+    tempTextView.setOutAnimation(MainActivity.this, R.anim.slide_out_left);
+    descriptionTextView.setFactory(new TextViewFactory(MainActivity.this, R.style.DescriptionTextView, true, typeface));
+    descriptionTextView.setInAnimation(MainActivity.this, R.anim.slide_in_right);
+    descriptionTextView.setOutAnimation(MainActivity.this, R.anim.slide_out_left);
+    humidityTextView.setFactory(new TextViewFactory(MainActivity.this, R.style.HumidityTextView, false, typeface));
+    humidityTextView.setInAnimation(MainActivity.this, R.anim.slide_in_bottom);
+    humidityTextView.setOutAnimation(MainActivity.this, R.anim.slide_out_top);
+    windTextView.setFactory(new TextViewFactory(MainActivity.this, R.style.WindSpeedTextView, false, typeface));
+    windTextView.setInAnimation(MainActivity.this, R.anim.slide_in_bottom);
+    windTextView.setOutAnimation(MainActivity.this, R.anim.slide_out_top);
+  }
+
+  private void initRecyclerView() {
+    LinearLayoutManager layoutManager
+        = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+    recyclerView.setLayoutManager(layoutManager);
+    mItemAdapter = new ItemAdapter<>();
+    mFastAdapter = FastAdapter.with(mItemAdapter);
+    recyclerView.setItemAnimator(new DefaultItemAnimator());
+    recyclerView.setAdapter(mFastAdapter);
+    recyclerView.setFocusable(false);
+    mFastAdapter.withOnClickListener(new OnClickListener<FiveDayWeather>() {
+      @Override
+      public boolean onClick(@Nullable View v, @NonNull IAdapter<FiveDayWeather> adapter, @NonNull FiveDayWeather item, int position) {
+        HourlyFragment hourlyFragment = new HourlyFragment();
+        hourlyFragment.setFiveDayWeather(item);
+        AppUtil.showFragment(hourlyFragment, getSupportFragmentManager(), true);
+        return true;
+      }
+    });
+  }
+
+  private void showStoredCurrentWeather() {
+    Query<CurrentWeather> query = DbUtil.getCurrentWeatherQuery(currentWeatherBox);
+    query.subscribe(subscriptions).on(AndroidScheduler.mainThread())
+        .observer(new DataObserver<List<CurrentWeather>>() {
+          @Override
+          public void onData(@NonNull List<CurrentWeather> data) {
+            if (data.size() > 0) {
+              hideEmptyLayout();
+              CurrentWeather currentWeather = data.get(0);
+              if (isLoad) {
+                tempTextView.setText(String.format(Locale.getDefault(), "%.0f°", currentWeather.getTemp()));
+                descriptionTextView.setText(AppUtil.getWeatherStatus(currentWeather.getWeatherId(), AppUtil.isRTL(MainActivity.this)));
+                humidityTextView.setText(String.format(Locale.getDefault(), "%d%%", currentWeather.getHumidity()));
+                windTextView.setText(String.format(Locale.getDefault(), getResources().getString(R.string.wind_unit_label), currentWeather.getWindSpeed()));
+              } else {
+                tempTextView.setCurrentText(String.format(Locale.getDefault(), "%.0f°", currentWeather.getTemp()));
+                descriptionTextView.setCurrentText(AppUtil.getWeatherStatus(currentWeather.getWeatherId(), AppUtil.isRTL(MainActivity.this)));
+                humidityTextView.setCurrentText(String.format(Locale.getDefault(), "%d%%", currentWeather.getHumidity()));
+                windTextView.setCurrentText(String.format(Locale.getDefault(), getResources().getString(R.string.wind_unit_label), currentWeather.getWindSpeed()));
+              }
+              animationView.setAnimation(AppUtil.getWeatherAnimation(currentWeather.getWeatherId()));
+              animationView.playAnimation();
+            }
+          }
+        });
+  }
+
+  private void showStoredFiveDayWeather() {
+    Query<FiveDayWeather> query = DbUtil.getFiveDayWeatherQuery(fiveDayWeatherBox);
+    query.subscribe(subscriptions).on(AndroidScheduler.mainThread())
+        .observer(new DataObserver<List<FiveDayWeather>>() {
+          @Override
+          public void onData(@NonNull List<FiveDayWeather> data) {
+            if (data.size() > 0) {
+              todayFiveDayWeather = data.remove(0);
+              mItemAdapter.clear();
+              mItemAdapter.add(data);
+            }
+          }
+        });
+  }
+
+  private void checkLastUpdate() {
+    cityInfo = prefser.get(Constants.CITY_INFO, CityInfo.class, null);
+    if (cityInfo != null) {
+      cityNameTextView.setText(String.format("%s, %s", cityInfo.getName(), cityInfo.getCountry()));
+      if (prefser.contains(Constants.LAST_STORED_CURRENT)) {
+        long lastStored = prefser.get(Constants.LAST_STORED_CURRENT, Long.class, 0L);
+        if (AppUtil.isThirtyMinutePass(lastStored)) {
+          requestWeather(cityInfo.getName(), false);
+        }
+      } else {
+        requestWeather(cityInfo.getName(), false);
+      }
+    } else {
+      showEmptyLayout();
+    }
+
+  }
+
+
+  private void requestWeather(String cityName, boolean isSearch) {
+    if (AppUtil.isNetworkConnected()) {
+      getCurrentWeather(cityName, isSearch);
+      getFiveDaysWeather(cityName);
+    } else {
+      SnackbarUtil
+          .with(swipeContainer)
+          .setMessage(getString(R.string.no_internet_message))
+          .setDuration(SnackbarUtil.LENGTH_LONG)
+          .showError();
+      swipeContainer.setRefreshing(false);
+    }
   }
 
   private void getCurrentWeather(String cityName, boolean isSearch) {
@@ -460,26 +481,6 @@ public class MainActivity extends AppCompatActivity {
     }
   }
 
-
-  private void initRecyclerView() {
-    LinearLayoutManager layoutManager
-        = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-    recyclerView.setLayoutManager(layoutManager);
-    mItemAdapter = new ItemAdapter<>();
-    mFastAdapter = FastAdapter.with(mItemAdapter);
-    recyclerView.setItemAnimator(new DefaultItemAnimator());
-    recyclerView.setAdapter(mFastAdapter);
-    recyclerView.setFocusable(false);
-    mFastAdapter.withOnClickListener(new OnClickListener<FiveDayWeather>() {
-      @Override
-      public boolean onClick(@Nullable View v, @NonNull IAdapter<FiveDayWeather> adapter, @NonNull FiveDayWeather item, int position) {
-        HourlyFragment hourlyFragment = new HourlyFragment();
-        hourlyFragment.setFiveDayWeather(item);
-        AppUtil.showFragment(hourlyFragment, getSupportFragmentManager(), true);
-        return true;
-      }
-    });
-  }
 
   @Override
   protected void onDestroy() {
