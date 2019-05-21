@@ -3,6 +3,7 @@ package com.github.bkhezry.weather.ui.fragment;
 import android.app.Activity;
 import android.app.Dialog;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -71,6 +72,7 @@ public class HourlyFragment extends DialogFragment {
   private FiveDayWeather fiveDayWeather;
   private Box<ItemHourlyDB> itemHourlyDBBox;
   private Activity activity;
+  private Typeface typeface;
 
 
   @Override
@@ -102,6 +104,7 @@ public class HourlyFragment extends DialogFragment {
     maxTempTextView.setText(String.format(Locale.getDefault(), "%.0f°", fiveDayWeather.getMaxTemp()));
     animationView.setAnimation(AppUtil.getWeatherAnimation(fiveDayWeather.getWeatherId()));
     animationView.playAnimation();
+    typeface = Typeface.createFromAsset(activity.getAssets(), "fonts/Vazir.ttf");
   }
 
   private void initRecyclerView() {
@@ -153,6 +156,7 @@ public class HourlyFragment extends DialogFragment {
     dataSet.setValueTextSize(12);
     dataSet.setValueTextColor(Color.WHITE);
     dataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
+    dataSet.setValueTypeface(typeface);
     dataSet.setValueFormatter(new ValueFormatter() {
       @Override
       public String getFormattedValue(float value) {
