@@ -73,13 +73,7 @@ public class MultipleDaysFragment extends DialogFragment {
     initSwipeView();
     initRecyclerView();
     showStoredMultipleDaysWeather();
-
-    apiKey = getResources().getString(R.string.open_weather_map_api);
-    if (prefser.contains(Constants.LAST_STORED_MULTIPLE_DAYS)) {
-      requestWeather();
-    } else {
-      checkCityInfoExist();
-    }
+    checkTimePass();
     return view;
   }
 
@@ -114,6 +108,16 @@ public class MultipleDaysFragment extends DialogFragment {
     }
   }
 
+  private void initRecyclerView() {
+    LinearLayoutManager layoutManager
+        = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+    recyclerView.setLayoutManager(layoutManager);
+    mItemAdapter = new ItemAdapter<>();
+    mFastAdapter = FastAdapter.with(mItemAdapter);
+    recyclerView.setItemAnimator(new DefaultItemAnimator());
+    recyclerView.setAdapter(mFastAdapter);
+  }
+
   private void showStoredMultipleDaysWeather() {
     Query<MultipleDaysWeather> query = DbUtil.getMultipleDaysWeatherQuery(multipleDaysWeatherBox);
     query.subscribe().on(AndroidScheduler.mainThread())
@@ -133,6 +137,15 @@ public class MultipleDaysFragment extends DialogFragment {
             }
           }
         });
+  }
+
+  private void checkTimePass() {
+    apiKey = getResources().getString(R.string.open_weather_map_api);
+    if (prefser.contains(Constants.LAST_STORED_MULTIPLE_DAYS)) {
+      requestWeather();
+    } else {
+      checkCityInfoExist();
+    }
   }
 
   private void checkCityInfoExist() {
@@ -168,16 +181,6 @@ public class MultipleDaysFragment extends DialogFragment {
               }
             })
     );
-  }
-
-  private void initRecyclerView() {
-    LinearLayoutManager layoutManager
-        = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
-    recyclerView.setLayoutManager(layoutManager);
-    mItemAdapter = new ItemAdapter<>();
-    mFastAdapter = FastAdapter.with(mItemAdapter);
-    recyclerView.setItemAnimator(new DefaultItemAnimator());
-    recyclerView.setAdapter(mFastAdapter);
   }
 
   private void handleMultipleDaysResponse(MultipleDaysWeatherResponse response) {

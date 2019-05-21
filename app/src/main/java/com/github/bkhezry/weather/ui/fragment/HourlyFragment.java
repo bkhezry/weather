@@ -79,32 +79,16 @@ public class HourlyFragment extends DialogFragment {
     View view = inflater.inflate(R.layout.fragment_hourly,
         container, false);
     ButterKnife.bind(this, view);
-    BoxStore boxStore = MyApplication.getBoxStore();
-    itemHourlyDBBox = boxStore.boxFor(ItemHourlyDB.class);
-    activity = getActivity();
     setVariables();
     initRecyclerView();
     showItemHourlyDB();
     return view;
   }
 
-  private void showItemHourlyDB() {
-    Query<ItemHourlyDB> query = DbUtil.getItemHourlyDBQuery(itemHourlyDBBox, fiveDayWeather.getId());
-    query.subscribe().on(AndroidScheduler.mainThread())
-        .observer(new DataObserver<List<ItemHourlyDB>>() {
-          @Override
-          public void onData(@NonNull List<ItemHourlyDB> data) {
-            if (data.size() > 0) {
-              mItemAdapter.clear();
-              mItemAdapter.add(data);
-              setChartValues(data);
-            }
-          }
-        });
-  }
-
-
   private void setVariables() {
+    BoxStore boxStore = MyApplication.getBoxStore();
+    itemHourlyDBBox = boxStore.boxFor(ItemHourlyDB.class);
+    activity = getActivity();
     cardView.setCardBackgroundColor(fiveDayWeather.getColor());
     Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
     calendar.setTimeInMillis(fiveDayWeather.getDt() * 1000L);
@@ -128,6 +112,21 @@ public class HourlyFragment extends DialogFragment {
     mFastAdapter = FastAdapter.with(mItemAdapter);
     recyclerView.setItemAnimator(new DefaultItemAnimator());
     recyclerView.setAdapter(mFastAdapter);
+  }
+
+  private void showItemHourlyDB() {
+    Query<ItemHourlyDB> query = DbUtil.getItemHourlyDBQuery(itemHourlyDBBox, fiveDayWeather.getId());
+    query.subscribe().on(AndroidScheduler.mainThread())
+        .observer(new DataObserver<List<ItemHourlyDB>>() {
+          @Override
+          public void onData(@NonNull List<ItemHourlyDB> data) {
+            if (data.size() > 0) {
+              mItemAdapter.clear();
+              mItemAdapter.add(data);
+              setChartValues(data);
+            }
+          }
+        });
   }
 
   private void setChartValues(List<ItemHourlyDB> itemHourlyDBList) {
