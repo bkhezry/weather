@@ -44,7 +44,7 @@ public class AboutFragment extends DialogFragment {
   @BindView(R.id.nested_scroll_view)
   NestedScrollView nestedScrollView;
   private Activity activity;
-  private String currentLangeuage;
+  private String currentLanguage;
 
   @Override
   public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -57,7 +57,7 @@ public class AboutFragment extends DialogFragment {
   }
 
   private void initVariables(View view) {
-    currentLangeuage = MyApplication.localeManager.getLanguage();
+    currentLanguage = MyApplication.localeManager.getLanguage();
     activity = getActivity();
     Drawable drawable = activity.getResources().getDrawable(R.drawable.ic_done_black_24dp);
     String versionName = "";
@@ -70,7 +70,7 @@ public class AboutFragment extends DialogFragment {
     setTextWithLinks(view.findViewById(R.id.text_developer_info), getString(R.string.developer_info_text));
     setTextWithLinks(view.findViewById(R.id.text_libraries), getString(R.string.libraries_text));
     setTextWithLinks(view.findViewById(R.id.text_license), getString(R.string.license_text));
-    if (currentLangeuage.equals(LocaleManager.LANGUAGE_ENGLISH)) {
+    if (currentLanguage.equals(LocaleManager.LANGUAGE_ENGLISH)) {
       englishButton.setIcon(drawable);
     } else {
       persianButton.setIcon(drawable);
@@ -109,13 +109,13 @@ public class AboutFragment extends DialogFragment {
   void handleChangeLanguage(View view) {
     switch (view.getId()) {
       case R.id.english_button:
-        if (currentLangeuage.equals(LocaleManager.LANGUAGE_PERSIAN)) {
+        if (currentLanguage.equals(LocaleManager.LANGUAGE_PERSIAN)) {
           MyApplication.localeManager.setNewLocale(activity, LocaleManager.LANGUAGE_ENGLISH);
           restartActivity();
         }
         break;
       case R.id.persian_button:
-        if (currentLangeuage.equals(LocaleManager.LANGUAGE_ENGLISH)) {
+        if (currentLanguage.equals(LocaleManager.LANGUAGE_ENGLISH)) {
           MyApplication.localeManager.setNewLocale(activity, LocaleManager.LANGUAGE_PERSIAN);
           restartActivity();
         }
