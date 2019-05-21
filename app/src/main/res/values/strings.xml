@@ -95,5 +95,5 @@
     <string name="invalid_api_key_message">API key is invalid. Wait for next update</string>
     <string name="network_exception_message">Network connection problem</string>
     <string name="retry_label">Retry</string>
-    <string name="ok_label">Ok</string>
+    <string name="ok_label">OK</string>
 </resources>
