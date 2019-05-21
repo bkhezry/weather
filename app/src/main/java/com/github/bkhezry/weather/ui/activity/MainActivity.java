@@ -548,4 +548,13 @@ public class MainActivity extends AppCompatActivity {
     Context newContext = MyApplication.localeManager.setLocale(base);
     super.attachBaseContext(ViewPumpContextWrapper.wrap(newContext));
   }
+
+  @Override
+  public void onBackPressed() {
+    if (searchView.isSearchOpen()) {
+      searchView.closeSearch();
+    } else {
+      super.onBackPressed();
+    }
+  }
 }
