@@ -101,7 +101,7 @@ public class MultipleDaysFragment extends DialogFragment {
 
   private void requestWeather() {
     long lastUpdate = prefser.get(Constants.LAST_STORED_MULTIPLE_DAYS, Long.class, 0L);
-    if (AppUtil.isThirtyMinutePass(lastUpdate)) {
+    if (AppUtil.isTimePass(lastUpdate)) {
       checkCityInfoExist();
     } else {
       swipeContainer.setRefreshing(false);

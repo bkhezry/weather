@@ -265,8 +265,8 @@ public class AppUtil {
    * @param lastStored timestamp
    * @return boolean value
    */
-  public static boolean isThirtyMinutePass(long lastStored) {
-    return System.currentTimeMillis() - lastStored > Constants.THIRTY_MINUTES;
+  public static boolean isTimePass(long lastStored) {
+    return System.currentTimeMillis() - lastStored > Constants.TIME_TO_PASS;
   }
 
   /**
