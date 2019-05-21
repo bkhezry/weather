@@ -1,7 +1,5 @@
 package com.github.bkhezry.weather.utils;
 
-import android.content.Context;
-
 import androidx.annotation.NonNull;
 
 import java.io.IOException;
@@ -21,10 +19,13 @@ public class ApiClient {
   private static int REQUEST_TIMEOUT = 60;
   private static OkHttpClient okHttpClient;
 
-  public static Retrofit getClient(Context context) {
+  /**
+   * @return retrofit instance {@link Retrofit}
+   */
+  public static Retrofit getClient() {
 
     if (okHttpClient == null)
-      initOkHttp(context);
+      initOkHttp();
 
     if (retrofit == null) {
       retrofit = new Retrofit.Builder()
@@ -37,7 +38,10 @@ public class ApiClient {
     return retrofit;
   }
 
-  private static void initOkHttp(final Context context) {
+  /**
+   * init instance of {@link OkHttpClient}
+   */
+  private static void initOkHttp() {
     OkHttpClient.Builder httpClient = new OkHttpClient().newBuilder()
         .connectTimeout(REQUEST_TIMEOUT, TimeUnit.SECONDS)
         .readTimeout(REQUEST_TIMEOUT, TimeUnit.SECONDS)

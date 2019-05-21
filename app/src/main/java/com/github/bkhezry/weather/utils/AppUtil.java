@@ -42,6 +42,12 @@ import static android.Manifest.permission.ACCESS_NETWORK_STATE;
 
 public class AppUtil {
 
+  /**
+   * Get timestamp of start of day 00:00:00
+   *
+   * @param calendar instance of {@link Calendar}
+   * @return timestamp
+   */
   public static long getStartOfDayTimestamp(Calendar calendar) {
     Calendar newCalendar = Calendar.getInstance(TimeZone.getDefault());
     newCalendar.setTimeInMillis(calendar.getTimeInMillis());
@@ -51,6 +57,13 @@ public class AppUtil {
     newCalendar.set(Calendar.MILLISECOND, 0);
     return newCalendar.getTimeInMillis();
   }
+
+  /**
+   * Get timestamp of end of day 23:59:59
+   *
+   * @param calendar instance of {@link Calendar}
+   * @return timestamp
+   */
 
   public static long getEndOfDayTimestamp(Calendar calendar) {
     Calendar newCalendar = Calendar.getInstance(TimeZone.getDefault());
@@ -62,6 +75,13 @@ public class AppUtil {
     return newCalendar.getTimeInMillis();
   }
 
+  /**
+   * Add days to calendar and return result
+   *
+   * @param cal  instance of {@link Calendar}
+   * @param days number of days
+   * @return instance of {@link Calendar}
+   */
   public static Calendar addDays(Calendar cal, int days) {
     Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
     calendar.setTimeInMillis(cal.getTimeInMillis());
@@ -69,6 +89,13 @@ public class AppUtil {
     return calendar;
   }
 
+  /**
+   * Set icon to imageView according to weather code status
+   *
+   * @param context     instance of {@link Context}
+   * @param imageView   instance of {@link android.widget.ImageView}
+   * @param weatherCode code of weather status
+   */
   public static void setWeatherIcon(Context context, AppCompatImageView imageView, int weatherCode) {
     if (weatherCode / 100 == 2) {
       Glide.with(context).load(R.drawable.ic_storm_weather).into(imageView);
@@ -91,6 +118,13 @@ public class AppUtil {
     }
   }
 
+  /**
+   * Show fragment with fragment manager with animation parameter
+   *
+   * @param fragment        instance of {@link Fragment}
+   * @param fragmentManager instance of {@link FragmentManager}
+   * @param withAnimation   boolean value
+   */
   public static void showFragment(Fragment fragment, FragmentManager fragmentManager, boolean withAnimation) {
     FragmentTransaction transaction = fragmentManager.beginTransaction();
     if (withAnimation) {
@@ -101,6 +135,13 @@ public class AppUtil {
     transaction.add(android.R.id.content, fragment).addToBackStack(null).commit();
   }
 
+  /**
+   * Get time of calendar as 00:00 format
+   *
+   * @param calendar instance of {@link Calendar}
+   * @param context  instance of {@link Context}
+   * @return string value
+   */
   public static String getTime(Calendar calendar, Context context) {
     int hour = calendar.get(Calendar.HOUR_OF_DAY);
     int minute = calendar.get(Calendar.MINUTE);
@@ -119,6 +160,12 @@ public class AppUtil {
     return hourString + ":" + minuteString;
   }
 
+  /**
+   * Get animation file according to weather status code
+   *
+   * @param weatherCode int weather status code
+   * @return id of animation json file
+   */
   public static int getWeatherAnimation(int weatherCode) {
     if (weatherCode / 100 == 2) {
       return R.raw.storm_weather;
@@ -142,6 +189,13 @@ public class AppUtil {
     return R.raw.unknown;
   }
 
+  /**
+   * Get weather status string according to weather status code
+   *
+   * @param weatherCode weather status code
+   * @param isRTL       boolean value
+   * @return String weather status
+   */
   public static String getWeatherStatus(int weatherCode, boolean isRTL) {
     if (weatherCode / 100 == 2) {
       if (isRTL) {
@@ -205,10 +259,23 @@ public class AppUtil {
     }
   }
 
+  /**
+   * If thirty minutes is pass from parameter return true otherwise return false
+   *
+   * @param lastStored timestamp
+   * @return boolean value
+   */
   public static boolean isThirtyMinutePass(long lastStored) {
     return System.currentTimeMillis() - lastStored > Constants.THIRTY_MINUTES;
   }
 
+  /**
+   * Showing dialog for set api key value
+   *
+   * @param context  instance of {@link Context}
+   * @param prefser  instance of {@link Prefser}
+   * @param listener instance of {@link OnSetApiKeyEventListener}
+   */
   public static void showSetAppIdDialog(Context context, Prefser prefser, OnSetApiKeyEventListener listener) {
     final Dialog dialog = new Dialog(context);
     dialog.requestWindowFeature(Window.FEATURE_NO_TITLE); // before
@@ -243,6 +310,12 @@ public class AppUtil {
     dialog.show();
   }
 
+  /**
+   * Set text of textView with html format of html parameter
+   *
+   * @param textView instance {@link TextView}
+   * @param html     String
+   */
   @SuppressLint("ClickableViewAccessibility")
   public static void setTextWithLinks(TextView textView, CharSequence html) {
     textView.setText(html);
@@ -282,6 +355,12 @@ public class AppUtil {
     });
   }
 
+  /**
+   * Change string to html format
+   *
+   * @param htmlText String text
+   * @return String text
+   */
   public static CharSequence fromHtml(String htmlText) {
     if (TextUtils.isEmpty(htmlText)) {
       return null;
@@ -295,6 +374,13 @@ public class AppUtil {
     return trim(spanned);
   }
 
+  /**
+   * Trim string text
+   *
+   * @param charSequence String text
+   * @return String text
+   */
+
   private static CharSequence trim(CharSequence charSequence) {
     if (TextUtils.isEmpty(charSequence)) {
       return charSequence;
@@ -306,10 +392,22 @@ public class AppUtil {
     return charSequence.subSequence(0, end + 1);
   }
 
+  /**
+   * Check version of SDK
+   *
+   * @param version int SDK version
+   * @return boolean value
+   */
   static boolean isAtLeastVersion(int version) {
     return Build.VERSION.SDK_INT >= version;
   }
 
+  /**
+   * Check current direction of application. if is RTL return true
+   *
+   * @param context instance of {@link Context}
+   * @return boolean value
+   */
   public static boolean isRTL(Context context) {
     Locale locale = ConfigurationCompat.getLocales(context.getResources().getConfiguration()).get(0);
     final int directionality = Character.getDirectionality(locale.getDisplayName().charAt(0));
@@ -368,12 +466,22 @@ public class AppUtil {
     throw new NullPointerException("u should init first");
   }
 
+  /**
+   * If network connection is connect, return true
+   *
+   * @return boolean value
+   */
   @RequiresPermission(ACCESS_NETWORK_STATE)
   public static boolean isNetworkConnected() {
     NetworkInfo info = getActiveNetworkInfo();
     return info != null && info.isConnected();
   }
 
+  /**
+   * Get activity network info instace
+   *
+   * @return instance of {@link NetworkInfo}
+   */
 
   @RequiresPermission(ACCESS_NETWORK_STATE)
   private static NetworkInfo getActiveNetworkInfo() {
