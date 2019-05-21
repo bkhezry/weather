@@ -80,4 +80,9 @@
     <string name="persian_label" translatable="false">فارسی</string>
     <string name="search_label">Search</string>
     <string name="no_internet_message">Please check internet connection</string>
+    <string name="no_city_found_message">No city found with this name</string>
+    <string name="invalid_api_key_message">API key is invalid. Wait for next update</string>
+    <string name="network_exception_message">Network connection problem</string>
+    <string name="retry_label">Retry</string>
+    <string name="ok_label">Ok</string>
 </resources>

@@ -30,4 +30,9 @@
     <string name="api_key_label">API Key</string>
     <string name="search_label">جستجو</string>
     <string name="no_internet_message">لطفا دسترسی به اینترنت را چک کنید</string>
+    <string name="no_city_found_message">شهری با این نام یافت نشد</string>
+    <string name="invalid_api_key_message">کلید API نامعبتر است. منتظر آپدیت بعدی باشید</string>
+    <string name="network_exception_message">خطا در ارتباط با اینترنت</string>
+    <string name="retry_label">تلاش مجدد</string>
+    <string name="ok_label">باشه</string>
 </resources>
