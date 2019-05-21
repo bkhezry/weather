@@ -254,7 +254,7 @@ public class MainActivity extends AppCompatActivity {
 
   private void initValues() {
     prefser = new Prefser(this);
-    apiService = ApiClient.getClient(getApplicationContext()).create(ApiService.class);
+    apiService = ApiClient.getClient().create(ApiService.class);
     BoxStore boxStore = MyApplication.getBoxStore();
     currentWeatherBox = boxStore.boxFor(CurrentWeather.class);
     fiveDayWeatherBox = boxStore.boxFor(FiveDayWeather.class);

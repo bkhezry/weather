@@ -148,7 +148,7 @@ public class MultipleDaysFragment extends DialogFragment {
   }
 
   private void requestWeathers(String cityName) {
-    ApiService apiService = ApiClient.getClient(getActivity()).create(ApiService.class);
+    ApiService apiService = ApiClient.getClient().create(ApiService.class);
     disposable.add(
         apiService.getMultipleDaysWeather(
             cityName, Constants.UNITS, defaultLang, 16, apiKey)
