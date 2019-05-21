@@ -6,6 +6,7 @@
     android:visibility="gone">
 
     <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/search_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"

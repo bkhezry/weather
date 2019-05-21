@@ -557,4 +557,9 @@ public class MainActivity extends AppCompatActivity {
       super.onBackPressed();
     }
   }
+
+  @OnClick(R.id.search_text_view)
+  public void handleSearchTextClick() {
+    searchView.showSearch();
+  }
 }
