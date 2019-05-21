@@ -151,10 +151,10 @@ public class MainActivity extends AppCompatActivity {
       if (prefser.contains(Constants.LAST_STORED_CURRENT)) {
         long lastStored = prefser.get(Constants.LAST_STORED_CURRENT, Long.class, 0L);
         if (AppUtil.isThirtyMinutePass(lastStored)) {
-          requestWeather(cityInfo.getName());
+          requestWeather(cityInfo.getName(), false);
         }
       } else {
-        requestWeather(cityInfo.getName());
+        requestWeather(cityInfo.getName(), false);
       }
     } else {
       showEmptyLayout();
@@ -219,9 +219,9 @@ public class MainActivity extends AppCompatActivity {
         });
   }
 
-  private void requestWeather(String cityName) {
+  private void requestWeather(String cityName, boolean isSearch) {
     if (AppUtil.isNetworkConnected()) {
-      getCurrentWeather(cityName);
+      getCurrentWeather(cityName, isSearch);
       getFiveDaysWeather(cityName);
     } else {
       SnackbarUtil
@@ -241,7 +241,7 @@ public class MainActivity extends AppCompatActivity {
     searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
       @Override
       public boolean onQueryTextSubmit(String query) {
-        requestWeather(query);
+        requestWeather(query, true);
         return false;
       }
 
@@ -271,7 +271,7 @@ public class MainActivity extends AppCompatActivity {
         if (cityInfo != null) {
           long lastStored = prefser.get(Constants.LAST_STORED_CURRENT, Long.class, 0L);
           if (AppUtil.isThirtyMinutePass(lastStored)) {
-            requestWeather(cityInfo.getName());
+            requestWeather(cityInfo.getName(), false);
           } else {
             swipeContainer.setRefreshing(false);
           }
@@ -290,7 +290,7 @@ public class MainActivity extends AppCompatActivity {
     typeface = Typeface.createFromAsset(getAssets(), "fonts/Vazir.ttf");
   }
 
-  private void getCurrentWeather(String cityName) {
+  private void getCurrentWeather(String cityName, boolean isSearch) {
     apiKey = getResources().getString(R.string.open_weather_map_api);
     disposable.add(
         apiService.getCurrentWeather(
@@ -304,6 +304,9 @@ public class MainActivity extends AppCompatActivity {
                 storeCurrentWeather(currentWeatherResponse);
                 storeCityInfo(currentWeatherResponse);
                 swipeContainer.setRefreshing(false);
+                if (isSearch) {
+                  prefser.remove(Constants.LAST_STORED_MULTIPLE_DAYS);
+                }
               }
 
               @Override

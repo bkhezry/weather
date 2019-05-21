@@ -62,12 +62,11 @@ public class MultipleDaysFragment extends DialogFragment {
   private Box<MultipleDaysWeather> multipleDaysWeatherBox;
   private Prefser prefser;
   private String apiKey;
-  private View view;
 
   @Override
   public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                            Bundle savedInstanceState) {
-    view = inflater.inflate(R.layout.fragment_multiple_days,
+    View view = inflater.inflate(R.layout.fragment_multiple_days,
         container, false);
     ButterKnife.bind(this, view);
     initVariables();
