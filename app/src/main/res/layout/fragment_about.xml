@@ -142,6 +142,15 @@
 
                         <TextView
                             style="@style/HeadlineTextStyle"
+                            android:text="@string/design_api_title" />
+
+                        <TextView
+                            android:id="@+id/text_design_api"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+
+                        <TextView
+                            style="@style/HeadlineTextStyle"
                             android:text="@string/libraries_title" />
 
                         <TextView

@@ -5,21 +5,30 @@
     <string name="license_title">License</string>
     <string name="libraries_title">Libraries &amp; Resources</string>
     <string name="developer_info_title">Developer Info</string>
+    <string name="design_api_title">Design &amp; API</string>
     <string name="application_info_title">Application Info</string>
     <string name="application_info_text">
         <![CDATA[
-            <p>Version: %1$s
-            <br/>
+            <p>
             <b>Weather application</b>
-            </p>
-            <p>This application is open source at <a href="https://github.com/bkhezry/weather">https://github.com/bkhezry/weather</a></p>
+            <br/>
+            Version: %1$s
+            <br/>
+            This application is open source at <br/><a href="https://github.com/bkhezry/weather">https://github.com/bkhezry/weather</a></p>
         ]]>
     </string>
     <string name="developer_info_text" translatable="false">
         <![CDATA[
-            <p>Behrouz Khezry
+            <p>Behrouz Khezry <a href="https://twitter.com/bkhezry">@bkhezry</a></p>
+        ]]>
+    </string>
+    <string name="design_api_text" translatable="false">
+        <![CDATA[
+            <p>
+            <a href="https://www.uplabs.com/posts/weather-app-freebie">Weather App Freebie</a> by Raman Yv
             <br/>
-            <a href="https://twitter.com/bkhezry">@bkhezry</a></p>
+            <a href="http://openweathermap.org/">OpenWeatherMap</a> Weather API
+            </p>
         ]]>
     </string>
     <string name="license_text" translatable="false">
