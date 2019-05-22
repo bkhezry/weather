@@ -9,12 +9,13 @@
     <string name="application_info_title">اطلاعات برنامه</string>
     <string name="application_info_text">
         <![CDATA[
-            <p>نسخه برنامه: %1$s</p>
-            <p>برنامه هواشناسی</p>
             <p>
-            سورس این برنامه در گیت‌هاب به این نشانی در دسترس است
+            <b>برنامه هواشناسی</b>
             <br/>
-            <a href="https://github.com/bkhezry/weather">https://github.com/bkhezry/weather</a></p>
+            نسخه برنامه: %1$s
+            <br/>
+            سورس برنامه در گیت‌هاب به این نشانسی در دسترس است
+            <br/><a href="https://github.com/bkhezry/weather">https://github.com/bkhezry/weather</a></p>
         ]]>
     </string>
     <string name="current_label">هم‌اکنون</string>
