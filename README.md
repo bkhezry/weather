@@ -36,7 +36,7 @@
 
 **Credit**
 
-### Base on [Weather App Freebie] Designed by [Raman Yv] 
+### This app inspired from [Weather App Freebie] concept Designed by [Raman Yv] 
 
 # License
 
