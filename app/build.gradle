@@ -9,7 +9,7 @@ if (googleServicesFile.exists()) {
 
 
 def versionMajor = 1
-def versionMinor = 7
+def versionMinor = 8
 def versionPatch = 0
 android {
     compileSdkVersion 28
@@ -26,7 +26,8 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
