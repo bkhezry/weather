@@ -1,5 +1,7 @@
 # Weather app
 
+<p align="center"><img src="assets/screenshot-1.png" /></p>
+
 **Requirements**
 - Android Studio 3.5 beta 2
 - JDK 8
@@ -12,6 +14,10 @@
 - Use Material Design 2
 - Support two language. English & Persian
 - Use locale Database
+
+**Screenshot**
+
+<p align="center"><img src="assets/screenshot-2.png" /></p>
 
 **Libraries & Dependencies**
 - [Support libraries]: appcompat / recyclerview / constraintlayout
@@ -28,6 +34,9 @@
 - [Firebase Core] / Crashlytics
 - [ButterKnife]: Bind Android views and callbacks to fields and methods.
 
+**Credit**
+
+### Base on [Weather App Freebie] Designed by [Raman Yv] 
 
 # License
 
@@ -45,6 +54,8 @@
     See the License for the specific language governing permissions and
     limitations under the License.
     
+[Weather App Freebie]: https://www.uplabs.com/posts/weather-app-freebie    
+[Raman Yv]: https://www.uplabs.com/ramandesigns9    
 [OpenWeatherMap]: https://openweathermap.org/
 [Support libraries]: https://developer.android.com/jetpack/androidx/
 [Material Design 2]: https://material.io/develop/android/
