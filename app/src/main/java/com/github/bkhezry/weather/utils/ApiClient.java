@@ -50,7 +50,7 @@ public class ApiClient {
     HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
     interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
 
-    httpClient.addInterceptor(interceptor);
+    //httpClient.addInterceptor(interceptor);
 
     httpClient.addInterceptor(new Interceptor() {
       @Override
