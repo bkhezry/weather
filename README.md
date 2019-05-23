@@ -1,5 +1,7 @@
 # Weather app
 
+[![Build Status](https://travis-ci.org/bkhezry/weather.svg?branch=master)](https://travis-ci.org/bkhezry/weather)
+
 <p align="center"><img src="assets/screenshot-1.png" /></p>
 
 **Requirements**
