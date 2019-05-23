@@ -17,6 +17,8 @@
 - Support two language. English & Persian
 - Use locale Database
 
+**Demo** application is available in [Release]
+
 **Screenshot**
 
 <p align="center"><img src="assets/screenshot-2.png" /></p>
@@ -74,3 +76,4 @@
 [MPAndroidChart]: https://github.com/PhilJay/MPAndroidChart
 [Firebase Core]: https://firebase.google.com/
 [ButterKnife]: https://github.com/JakeWharton/butterknife
+[Release]: https://github.com/bkhezry/weather/releases
