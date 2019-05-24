@@ -147,7 +147,7 @@ public class MainActivity extends AppCompatActivity {
   private void initSearchView() {
     searchView.setVoiceSearch(false);
     searchView.setHint(getString(R.string.search_label));
-    searchView.setCursorDrawable(R.drawable.ic_action_action_search);
+    searchView.setCursorDrawable(R.drawable.custom_curosr);
     searchView.setEllipsize(true);
     searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
       @Override
@@ -380,7 +380,11 @@ public class MainActivity extends AppCompatActivity {
           .setAction(getResources().getString(R.string.retry_label), new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              getCurrentWeather(cityInfo.getName(), false);
+              if (cityInfo != null) {
+                requestWeather(cityInfo.getName(), false);
+              } else {
+                searchView.showSearch();
+              }
             }
           })
           .showWarning();
