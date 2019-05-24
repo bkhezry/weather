@@ -147,7 +147,7 @@ public class MainActivity extends AppCompatActivity {
   private void initSearchView() {
     searchView.setVoiceSearch(false);
     searchView.setHint(getString(R.string.search_label));
-    searchView.setCursorDrawable(R.drawable.ic_action_action_search);
+    searchView.setCursorDrawable(R.drawable.custom_curosr);
     searchView.setEllipsize(true);
     searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
       @Override
