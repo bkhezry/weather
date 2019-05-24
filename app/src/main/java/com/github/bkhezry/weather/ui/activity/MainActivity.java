@@ -380,7 +380,11 @@ public class MainActivity extends AppCompatActivity {
           .setAction(getResources().getString(R.string.retry_label), new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              getCurrentWeather(cityInfo.getName(), false);
+              if (cityInfo != null) {
+                requestWeather(cityInfo.getName(), false);
+              } else {
+                searchView.showSearch();
+              }
             }
           })
           .showWarning();
