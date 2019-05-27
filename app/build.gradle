@@ -5,6 +5,7 @@ apply plugin: 'com.getkeepsafe.dexcount'
 File googleServicesFile = rootProject.file("app/google-services.json")
 if (googleServicesFile.exists()) {
     apply plugin: 'io.fabric'
+    apply plugin: 'com.google.firebase.firebase-perf'
 }
 
 
@@ -76,6 +77,7 @@ dependencies {
 
     implementation 'com.google.firebase:firebase-core:16.0.9'
     implementation 'com.crashlytics.sdk.android:crashlytics:2.10.1'
+    implementation 'com.google.firebase:firebase-perf:17.0.0'
 
     implementation 'com.android.support:multidex:1.0.3'
 
