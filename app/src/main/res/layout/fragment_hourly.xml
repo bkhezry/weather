@@ -16,7 +16,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:tint="@color/colorAccent"
+        app:tint="@color/colorAccent"
         app:backgroundTint="@android:color/white"
         app:fabSize="mini"
         app:srcCompat="@drawable/ic_close_black_24dp" />
