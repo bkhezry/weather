@@ -66,7 +66,7 @@ dependencies {
 
     implementation 'com.github.bumptech.glide:glide:4.9.0'
 
-    implementation 'com.airbnb.android:lottie:3.0.1'
+    implementation 'com.airbnb.android:lottie:3.0.3'
     implementation 'com.github.bkhezry:MaterialSearchView:1.6.0'
     implementation 'com.github.bkhezry:prefser:v2.2.1-rx2'
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
@@ -75,7 +75,7 @@ dependencies {
     implementation 'io.github.inflationx:calligraphy3:3.1.0'
 
     implementation 'com.google.firebase:firebase-core:16.0.9'
-    implementation 'com.crashlytics.sdk.android:crashlytics:2.10.0'
+    implementation 'com.crashlytics.sdk.android:crashlytics:2.10.1'
 
     implementation 'com.android.support:multidex:1.0.3'
 
