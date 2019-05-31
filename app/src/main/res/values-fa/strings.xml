@@ -37,4 +37,5 @@
     <string name="network_exception_message">خطا در ارتباط با اینترنت</string>
     <string name="retry_label">تلاش مجدد</string>
     <string name="ok_label">باشه</string>
+    <string name="night_mode_label">حالت شب</string>
 </resources>

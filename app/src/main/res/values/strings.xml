@@ -98,4 +98,5 @@
     <string name="network_exception_message">Network connection problem</string>
     <string name="retry_label">Retry</string>
     <string name="ok_label">OK</string>
+    <string name="night_mode_label">Night Mode</string>
 </resources>

@@ -70,7 +70,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:text="Night Mode" />
+                android:text="@string/night_mode_label" />
 
             <androidx.core.widget.NestedScrollView
                 android:id="@+id/nested_scroll_view"
