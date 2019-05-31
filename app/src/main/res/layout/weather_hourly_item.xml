@@ -31,7 +31,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:textColor="@android:color/black"
                 android:textStyle="bold" />
 
             <View
@@ -52,8 +51,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:textAppearance="@style/TextAppearance.AppCompat.Title"
-                android:textColor="@android:color/black" />
+                android:textAppearance="@style/TextAppearance.AppCompat.Title" />
 
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>

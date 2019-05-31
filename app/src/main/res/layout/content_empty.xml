@@ -13,7 +13,6 @@
         android:layout_marginTop="@dimen/spacing_xxlarge"
         android:text="@string/search_for_a_city_label"
         android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-        android:textColor="@android:color/black"
         android:textStyle="bold|italic" />
 
     <androidx.appcompat.widget.AppCompatImageView

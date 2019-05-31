@@ -36,6 +36,10 @@ public class MyApplication extends MultiDexApplication {
                 .build()))
         .build());
     createBoxStore();
+    if (SharedPreferencesUtil.getInstance(this).isDarkThemeEnabled())
+      AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+    else
+      AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
   }
 
   private void createBoxStore() {

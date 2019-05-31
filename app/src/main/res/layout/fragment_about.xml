@@ -16,8 +16,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        app:tint="@color/colorAccent"
-        app:backgroundTint="@android:color/white"
         app:fabSize="mini"
         app:srcCompat="@drawable/ic_close_black_24dp" />
 
@@ -50,10 +48,7 @@
                     android:layout_marginBottom="@dimen/spacing_middle"
                     android:gravity="center"
                     android:text="@string/english_label"
-                    android:textAllCaps="false"
-                    android:textColor="@android:color/black"
-                    app:backgroundTint="@color/grey_10"
-                    app:iconTint="@android:color/black" />
+                    android:textAllCaps="false" />
 
                 <View
                     android:layout_width="@dimen/spacing_medium"
@@ -66,12 +61,16 @@
                     android:layout_marginBottom="@dimen/spacing_middle"
                     android:gravity="center"
                     android:text="@string/persian_label"
-                    android:textAllCaps="false"
-                    android:textColor="@android:color/black"
-                    app:backgroundTint="@color/grey_10"
-                    app:iconTint="@android:color/black" />
+                    android:textAllCaps="false" />
 
             </LinearLayout>
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/night_mode_switch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="Night Mode" />
 
             <androidx.core.widget.NestedScrollView
                 android:id="@+id/nested_scroll_view"
@@ -90,7 +89,6 @@
                         android:id="@+id/toggle_info_layout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@android:color/white"
                         android:gravity="center_vertical"
                         android:minHeight="?attr/actionBarSize"
                         android:orientation="horizontal">
@@ -101,7 +99,6 @@
                             android:layout_weight="1"
                             android:text="@string/application_info_title"
                             android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-                            android:textColor="@android:color/black"
                             android:textStyle="bold" />
 
                         <View
@@ -113,7 +110,6 @@
                             android:layout_width="?attr/actionBarSize"
                             android:layout_height="?attr/actionBarSize"
                             android:background="?attr/selectableItemBackgroundBorderless"
-                            android:tint="@android:color/black"
                             app:srcCompat="@drawable/ic_keyboard_arrow_down_black_24dp" />
 
                     </LinearLayout>

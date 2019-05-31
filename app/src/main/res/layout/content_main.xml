@@ -71,12 +71,11 @@
                             android:padding="@dimen/spacing_middle">
 
                             <androidx.appcompat.widget.AppCompatTextView
+                                style="@style/TextViewInColoredCard"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
                                 android:text="@string/humidity_label"
-                                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                                android:textColor="@android:color/white"
                                 android:textStyle="bold" />
 
                             <View
@@ -97,12 +96,11 @@
                             android:padding="@dimen/spacing_middle">
 
                             <androidx.appcompat.widget.AppCompatTextView
+                                style="@style/TextViewInColoredCard"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
                                 android:text="@string/wind_label"
-                                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                                android:textColor="@android:color/white"
                                 android:textStyle="bold" />
 
                             <View
@@ -144,8 +142,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/next_4_days_hourly"
-                android:textAppearance="@style/TextAppearance.AppCompat.Title"
-                android:textColor="@android:color/black" />
+                android:textAppearance="@style/TextAppearance.AppCompat.Title" />
 
             <View
                 android:layout_width="0dp"

@@ -11,11 +11,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.appcompat.widget.SwitchCompat;
 import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.DialogFragment;
 
@@ -24,6 +27,7 @@ import com.github.bkhezry.weather.ui.activity.MainActivity;
 import com.github.bkhezry.weather.utils.AppUtil;
 import com.github.bkhezry.weather.utils.LocaleManager;
 import com.github.bkhezry.weather.utils.MyApplication;
+import com.github.bkhezry.weather.utils.SharedPreferencesUtil;
 import com.github.bkhezry.weather.utils.ViewAnimation;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 
@@ -43,6 +47,8 @@ public class AboutFragment extends DialogFragment {
   LinearLayout expandLayout;
   @BindView(R.id.nested_scroll_view)
   NestedScrollView nestedScrollView;
+  @BindView(R.id.night_mode_switch)
+  SwitchCompat nightModeSwitch;
   private Activity activity;
   private String currentLanguage;
 
@@ -78,6 +84,21 @@ public class AboutFragment extends DialogFragment {
         persianButton.setIcon(drawable);
       }
     }
+    nightModeSwitch.setChecked(SharedPreferencesUtil.getInstance(activity).isDarkThemeEnabled());
+    nightModeSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+      @Override
+      public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        SharedPreferencesUtil.getInstance(activity).setDarkThemeEnabled(isChecked);
+        if (isChecked) {
+          AppCompatDelegate.setDefaultNightMode(
+              AppCompatDelegate.MODE_NIGHT_YES);
+        } else {
+          AppCompatDelegate.setDefaultNightMode(
+              AppCompatDelegate.MODE_NIGHT_NO);
+        }
+        activity.recreate();
+      }
+    });
   }
 
   private void setTextWithLinks(TextView textView, String htmlText) {
