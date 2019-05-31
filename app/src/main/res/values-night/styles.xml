@@ -7,4 +7,15 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDarkNight</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
+
+    <style name="MaterialSearchViewStyle">
+        <!-- Background for the search bar -->
+        <item name="searchBackground">?attr/colorPrimary</item>
+
+        <!-- Change text color for edit text. This will also be the color of the cursor -->
+        <item name="android:textColor">@android:color/white</item>
+
+        <!-- Change hint text color for edit text -->
+        <item name="android:textColorHint">@android:color/white</item>
+    </style>
 </resources>
