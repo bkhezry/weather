@@ -18,8 +18,8 @@
         android:layout_gravity="center_horizontal"
         app:backgroundTint="?attr/colorPrimary"
         app:fabSize="mini"
-        app:tint="?attr/colorControlNormal"
-        app:srcCompat="@drawable/ic_close_black_24dp" />
+        app:srcCompat="@drawable/ic_close_black_24dp"
+        app:tint="?attr/colorControlNormal" />
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/card_view"
@@ -50,7 +50,8 @@
                     android:layout_marginBottom="@dimen/spacing_middle"
                     android:gravity="center"
                     android:text="@string/english_label"
-                    android:textAllCaps="false" />
+                    android:textAllCaps="false"
+                    app:backgroundTint="@color/grey_10" />
 
                 <View
                     android:layout_width="@dimen/spacing_medium"
@@ -63,7 +64,8 @@
                     android:layout_marginBottom="@dimen/spacing_middle"
                     android:gravity="center"
                     android:text="@string/persian_label"
-                    android:textAllCaps="false" />
+                    android:textAllCaps="false"
+                    app:backgroundTint="@color/grey_10" />
 
             </LinearLayout>
 
