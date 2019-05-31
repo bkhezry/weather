@@ -21,8 +21,10 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="@dimen/spacing_xxxlarge"
+            app:backgroundTint="?attr/colorPrimary"
             app:fabSize="mini"
-            app:srcCompat="@drawable/ic_close_black_24dp" />
+            app:srcCompat="@drawable/ic_close_black_24dp"
+            app:tint="?attr/colorControlNormal" />
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/card_view"
