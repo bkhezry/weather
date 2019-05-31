@@ -33,15 +33,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:textColor="@android:color/black"
                     android:textStyle="bold" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/date_text_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:textColor="@android:color/black" />
+                    android:gravity="center" />
             </LinearLayout>
 
             <androidx.appcompat.widget.AppCompatImageView
@@ -60,15 +58,13 @@
                     android:id="@+id/max_temp_text_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:textColor="@android:color/black" />
+                    android:gravity="center" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/min_temp_text_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:textColor="@android:color/black" />
+                    android:gravity="center" />
             </LinearLayout>
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>

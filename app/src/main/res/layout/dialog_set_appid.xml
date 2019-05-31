@@ -38,7 +38,6 @@
             android:layout_marginStart="@dimen/spacing_medium"
             android:text="@string/api_key_description"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
-            android:textColor="@android:color/black"
             android:textStyle="bold|italic" />
 
         <View
@@ -63,8 +62,7 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/api_key_label"
-            android:textColor="@android:color/black" />
+            android:hint="@string/api_key_label" />
 
         <View
             android:layout_width="0dp"

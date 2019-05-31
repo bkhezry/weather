@@ -16,8 +16,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        app:tint="@color/colorAccent"
-        app:backgroundTint="@android:color/white"
         app:fabSize="mini"
         app:srcCompat="@drawable/ic_close_black_24dp" />
 
@@ -53,10 +51,10 @@
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/day_name_text_view"
+                        style="@style/TextViewInColoredCard"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:textColor="@android:color/white"
                         android:textSize="40sp"
                         android:textStyle="bold" />
 
@@ -80,29 +78,29 @@
                             android:orientation="vertical">
 
                             <androidx.appcompat.widget.AppCompatImageView
+                                style="@style/IconInColoredCard"
                                 android:layout_width="36dp"
                                 android:layout_height="36dp"
                                 android:gravity="center"
-                                app:srcCompat="@drawable/ic_keyboard_arrow_down_black_24dp"
-                                app:tint="@android:color/white" />
+                                app:srcCompat="@drawable/ic_keyboard_arrow_down_black_24dp" />
 
                             <androidx.appcompat.widget.AppCompatTextView
                                 android:id="@+id/min_temp_text_view"
+                                style="@style/SubTextViewInColoredCard"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
-                                android:textColor="@color/grey_10"
                                 android:textSize="30sp" />
                         </LinearLayout>
 
                         <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/temp_text_view"
+                            style="@style/TextViewInColoredCard"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:gravity="center"
                             android:textAppearance="@style/TextAppearance.AppCompat.Title"
-                            android:textColor="@android:color/white"
                             android:textSize="60sp" />
 
                         <LinearLayout
@@ -113,18 +111,18 @@
                             android:orientation="vertical">
 
                             <androidx.appcompat.widget.AppCompatImageView
+                                style="@style/IconInColoredCard"
                                 android:layout_width="36dp"
                                 android:layout_height="36dp"
                                 android:gravity="center"
-                                app:srcCompat="@drawable/ic_keyboard_arrow_up_black_24dp"
-                                app:tint="@android:color/white" />
+                                app:srcCompat="@drawable/ic_keyboard_arrow_up_black_24dp" />
 
                             <androidx.appcompat.widget.AppCompatTextView
                                 android:id="@+id/max_temp_text_view"
+                                style="@style/TextViewInColoredCard"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
-                                android:textColor="@android:color/white"
                                 android:textSize="30sp" />
                         </LinearLayout>
                     </LinearLayout>
@@ -145,7 +143,6 @@
                     android:layout_marginStart="@dimen/spacing_large"
                     android:layout_marginEnd="@dimen/spacing_large"
                     android:layout_marginBottom="@dimen/spacing_medium"
-                    app:cardBackgroundColor="@android:color/white"
                     app:cardCornerRadius="30dp"
                     app:cardElevation="2dp">
 
