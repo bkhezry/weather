@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layoutDirection="locale">
@@ -29,7 +28,5 @@
         android:id="@+id/search_view"
         style="@style/MaterialSearchViewStyle"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:searchBackIcon="@drawable/ic_arrow_back_black_24dp"
-        app:searchCloseIcon="@drawable/ic_close_black_24dp" />
+        android:layout_height="wrap_content" />
 </FrameLayout>
