@@ -6,15 +6,16 @@
 <p align="center"><img src="assets/screenshot-1.png" /></p>
 
 **Requirements**
-- Android Studio 3.5 beta 2
+- Android Studio 3.5 beta 3
 - JDK 8
 - Android SDK 28
 - Supports API Level +17
-- Material Components 1.1.0-alpha05
+- Material Components 1.1.0-alpha04
 
 **Highlights**
 - Use [OpenWeatherMap] API
 - Use Material Design 2
+- Dark Mode
 - Support two language. English & Persian
 - Use locale Database
 
