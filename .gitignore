@@ -80,7 +80,7 @@ vcs.xml
 # lint
 lint/intermediates/
 lint/generated/
-lint/outputs/
+lint/outputs
 lint/tmp/
 # lint/reports/
 
@@ -91,5 +91,5 @@ output.json
 /app/src/main/res/values/open_weather_map_api.xml
 /app/google-services.json
 
-
+/.idea/
 # End of https://www.gitignore.io/api/android
