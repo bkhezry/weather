@@ -88,4 +88,5 @@ public class Constants {
   public static final String API_KEY = "api-key";
   public static final String LANGUAGE = "language";
   public static final String DARK_THEME = "dark-theme";
+  public static final String FIVE_DAY_WEATHER_ITEM = "five-day-weather-item";
 }

@@ -1,6 +1,7 @@
 package com.github.bkhezry.weather.ui.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.Menu;
@@ -36,7 +37,6 @@ import com.github.bkhezry.weather.model.fivedayweather.FiveDayResponse;
 import com.github.bkhezry.weather.model.fivedayweather.ItemHourly;
 import com.github.bkhezry.weather.service.ApiService;
 import com.github.bkhezry.weather.ui.fragment.AboutFragment;
-import com.github.bkhezry.weather.ui.fragment.HourlyFragment;
 import com.github.bkhezry.weather.ui.fragment.MultipleDaysFragment;
 import com.github.bkhezry.weather.utils.ApiClient;
 import com.github.bkhezry.weather.utils.AppUtil;
@@ -228,9 +228,9 @@ public class MainActivity extends AppCompatActivity {
     mFastAdapter.withOnClickListener(new OnClickListener<FiveDayWeather>() {
       @Override
       public boolean onClick(@Nullable View v, @NonNull IAdapter<FiveDayWeather> adapter, @NonNull FiveDayWeather item, int position) {
-        HourlyFragment hourlyFragment = new HourlyFragment();
-        hourlyFragment.setFiveDayWeather(item);
-        AppUtil.showFragment(hourlyFragment, getSupportFragmentManager(), true);
+        Intent intent = new Intent(MainActivity.this, HourlyActivity.class);
+        intent.putExtra(Constants.FIVE_DAY_WEATHER_ITEM, item);
+        startActivity(intent);
         return true;
       }
     });
