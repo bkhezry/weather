@@ -465,13 +465,8 @@ public class AppUtil {
         throw new NullPointerException("u should init first");
       }
       return (Application) app;
-    } catch (NoSuchMethodException e) {
-      e.printStackTrace();
-    } catch (IllegalAccessException e) {
-      e.printStackTrace();
-    } catch (InvocationTargetException e) {
-      e.printStackTrace();
-    } catch (ClassNotFoundException e) {
+    } catch (NoSuchMethodException | IllegalAccessException |
+        InvocationTargetException | ClassNotFoundException e) {
       e.printStackTrace();
     }
     throw new NullPointerException("u should init first");
@@ -506,7 +501,7 @@ public class AppUtil {
    * Determine if the navigation bar will be on the bottom of the screen, based on logic in
    * PhoneWindowManager.
    */
-  public static boolean isNavBarOnBottom(@NonNull Context context) {
+  static boolean isNavBarOnBottom(@NonNull Context context) {
     final Resources res = context.getResources();
     final Configuration cfg = context.getResources().getConfiguration();
     final DisplayMetrics dm = res.getDisplayMetrics();
@@ -515,7 +510,7 @@ public class AppUtil {
     return (!canMove || dm.widthPixels < dm.heightPixels);
   }
 
-  public static Interpolator getFastOutSlowInInterpolator(Context context) {
+  static Interpolator getFastOutSlowInInterpolator(Context context) {
     if (fastOutSlowIn == null) {
       fastOutSlowIn = AnimationUtils.loadInterpolator(context,
           android.R.interpolator.fast_out_slow_in);
@@ -526,7 +521,7 @@ public class AppUtil {
   /**
    * Set the alpha component of {@code color} to be {@code alpha}.
    */
-  public static @CheckResult
+  static @CheckResult
   @ColorInt
   int modifyAlpha(@ColorInt int color,
                   @IntRange(from = 0, to = 255) int alpha) {
