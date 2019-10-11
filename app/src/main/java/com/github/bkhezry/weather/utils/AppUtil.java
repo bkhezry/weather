@@ -5,6 +5,8 @@ import android.app.Application;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -14,12 +16,20 @@ import android.text.Layout;
 import android.text.Spannable;
 import android.text.TextUtils;
 import android.text.style.ClickableSpan;
+import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.AnimationUtils;
+import android.view.animation.Interpolator;
 import android.widget.TextView;
 
+import androidx.annotation.CheckResult;
+import androidx.annotation.ColorInt;
+import androidx.annotation.FloatRange;
+import androidx.annotation.IntRange;
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresPermission;
 import androidx.appcompat.widget.AppCompatEditText;
 import androidx.appcompat.widget.AppCompatImageView;
@@ -41,6 +51,7 @@ import java.util.TimeZone;
 import static android.Manifest.permission.ACCESS_NETWORK_STATE;
 
 public class AppUtil {
+  private static Interpolator fastOutSlowIn;
 
   /**
    * Get timestamp of start of day 00:00:00
@@ -489,5 +500,46 @@ public class AppUtil {
         (ConnectivityManager) getApp().getSystemService(Context.CONNECTIVITY_SERVICE);
     if (cm == null) return null;
     return cm.getActiveNetworkInfo();
+  }
+
+  /**
+   * Determine if the navigation bar will be on the bottom of the screen, based on logic in
+   * PhoneWindowManager.
+   */
+  public static boolean isNavBarOnBottom(@NonNull Context context) {
+    final Resources res = context.getResources();
+    final Configuration cfg = context.getResources().getConfiguration();
+    final DisplayMetrics dm = res.getDisplayMetrics();
+    boolean canMove = (dm.widthPixels != dm.heightPixels &&
+        cfg.smallestScreenWidthDp < 600);
+    return (!canMove || dm.widthPixels < dm.heightPixels);
+  }
+
+  public static Interpolator getFastOutSlowInInterpolator(Context context) {
+    if (fastOutSlowIn == null) {
+      fastOutSlowIn = AnimationUtils.loadInterpolator(context,
+          android.R.interpolator.fast_out_slow_in);
+    }
+    return fastOutSlowIn;
+  }
+
+  /**
+   * Set the alpha component of {@code color} to be {@code alpha}.
+   */
+  public static @CheckResult
+  @ColorInt
+  int modifyAlpha(@ColorInt int color,
+                  @IntRange(from = 0, to = 255) int alpha) {
+    return (color & 0x00ffffff) | (alpha << 24);
+  }
+
+  /**
+   * Set the alpha component of {@code color} to be {@code alpha}.
+   */
+  public static @CheckResult
+  @ColorInt
+  int modifyAlpha(@ColorInt int color,
+                  @FloatRange(from = 0f, to = 1f) float alpha) {
+    return modifyAlpha(color, (int) (255f * alpha));
   }
 }
