@@ -3,6 +3,7 @@
     package="com.github.bkhezry.weather">
 
     <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".utils.MyApplication"
         android:allowBackup="true"
@@ -10,6 +11,9 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity
+            android:name=".ui.activity.HourlyActivity"
+            android:theme="@style/TransitionTheme"></activity>
         <activity
             android:name=".ui.activity.MainActivity"
             android:screenOrientation="portrait">
@@ -19,6 +23,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <meta-data
             android:name="firebase_performance_logcat_enabled"
             android:value="true" />
