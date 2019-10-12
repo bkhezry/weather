@@ -1,19 +1,14 @@
-package com.github.bkhezry.weather.ui.fragment;
+package com.github.bkhezry.weather.ui.activity;
 
-import android.app.Activity;
-import android.app.Dialog;
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatTextView;
-import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -25,6 +20,7 @@ import com.github.bkhezry.weather.model.db.ItemHourlyDB;
 import com.github.bkhezry.weather.utils.AppUtil;
 import com.github.bkhezry.weather.utils.Constants;
 import com.github.bkhezry.weather.utils.DbUtil;
+import com.github.bkhezry.weather.utils.ElasticDragDismissFrameLayout;
 import com.github.bkhezry.weather.utils.MyApplication;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.data.Entry;
@@ -43,14 +39,14 @@ import java.util.TimeZone;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
+import io.github.inflationx.viewpump.ViewPumpContextWrapper;
 import io.objectbox.Box;
 import io.objectbox.BoxStore;
 import io.objectbox.android.AndroidScheduler;
 import io.objectbox.query.Query;
 import io.objectbox.reactive.DataObserver;
 
-public class HourlyFragment extends DialogFragment {
+public class HourlyActivity extends AppCompatActivity {
   @BindView(R.id.card_view)
   MaterialCardView cardView;
   @BindView(R.id.day_name_text_view)
@@ -67,34 +63,44 @@ public class HourlyFragment extends DialogFragment {
   LottieAnimationView animationView;
   @BindView(R.id.chart)
   LineChart chart;
+  @BindView(R.id.draggable_frame)
+  ElasticDragDismissFrameLayout dismissFrameLayout;
   private FastAdapter<ItemHourlyDB> mFastAdapter;
   private ItemAdapter<ItemHourlyDB> mItemAdapter;
   private FiveDayWeather fiveDayWeather;
   private Box<ItemHourlyDB> itemHourlyDBBox;
-  private Activity activity;
   private Typeface typeface;
 
-
   @Override
-  public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
-                           Bundle savedInstanceState) {
-    View view = inflater.inflate(R.layout.fragment_hourly,
-        container, false);
-    ButterKnife.bind(this, view);
+  protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_hourly);
+    ButterKnife.bind(this);
     setVariables();
     initRecyclerView();
     showItemHourlyDB();
-    return view;
+    setupDismissFrameLayout();
+  }
+
+  private void setupDismissFrameLayout() {
+    dismissFrameLayout.addListener(new ElasticDragDismissFrameLayout.SystemChromeFader(this) {
+      @Override
+      public void onDragDismissed() {
+        super.onDragDismissed();
+        finishAfterTransition();
+      }
+    });
   }
 
   private void setVariables() {
+    Intent intent = getIntent();
+    fiveDayWeather = intent.getParcelableExtra(Constants.FIVE_DAY_WEATHER_ITEM);
     BoxStore boxStore = MyApplication.getBoxStore();
     itemHourlyDBBox = boxStore.boxFor(ItemHourlyDB.class);
-    activity = getActivity();
     cardView.setCardBackgroundColor(fiveDayWeather.getColor());
     Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
     calendar.setTimeInMillis(fiveDayWeather.getDt() * 1000L);
-    if (AppUtil.isRTL(activity)) {
+    if (AppUtil.isRTL(this)) {
       dayNameTextView.setText(Constants.DAYS_OF_WEEK_PERSIAN[calendar.get(Calendar.DAY_OF_WEEK) - 1]);
     } else {
       dayNameTextView.setText(Constants.DAYS_OF_WEEK[calendar.get(Calendar.DAY_OF_WEEK) - 1]);
@@ -104,12 +110,12 @@ public class HourlyFragment extends DialogFragment {
     maxTempTextView.setText(String.format(Locale.getDefault(), "%.0f°", fiveDayWeather.getMaxTemp()));
     animationView.setAnimation(AppUtil.getWeatherAnimation(fiveDayWeather.getWeatherId()));
     animationView.playAnimation();
-    typeface = Typeface.createFromAsset(activity.getAssets(), "fonts/Vazir.ttf");
+    typeface = Typeface.createFromAsset(getAssets(), "fonts/Vazir.ttf");
   }
 
   private void initRecyclerView() {
     LinearLayoutManager layoutManager
-        = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
+        = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
     recyclerView.setLayoutManager(layoutManager);
     mItemAdapter = new ItemAdapter<>();
     mFastAdapter = FastAdapter.with(mItemAdapter);
@@ -135,7 +141,7 @@ public class HourlyFragment extends DialogFragment {
   private void setChartValues(List<ItemHourlyDB> itemHourlyDBList) {
     List<Entry> entries = new ArrayList<>();
     int i = 0;
-    if (AppUtil.isRTL(activity)) {
+    if (AppUtil.isRTL(this)) {
       int j = itemHourlyDBList.size() - 1;
       while (j >= 0) {
         entries.add(new Entry(i, (float) itemHourlyDBList.get(j).getTemp()));
@@ -181,29 +187,9 @@ public class HourlyFragment extends DialogFragment {
     chart.animateY(1000);
   }
 
-  @NonNull
   @Override
-  public Dialog onCreateDialog(Bundle savedInstanceState) {
-    Dialog dialog = super.onCreateDialog(savedInstanceState);
-    dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-    dialog.setCancelable(true);
-    WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-    lp.copyFrom(dialog.getWindow().getAttributes());
-    lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-    lp.height = WindowManager.LayoutParams.MATCH_PARENT;
-    dialog.getWindow().setAttributes(lp);
-    return dialog;
-  }
-
-  public void setFiveDayWeather(FiveDayWeather fiveDayWeather) {
-    this.fiveDayWeather = fiveDayWeather;
-  }
-
-  @OnClick(R.id.close_button)
-  void close() {
-    dismiss();
-    if (getFragmentManager() != null) {
-      getFragmentManager().popBackStack();
-    }
+  protected void attachBaseContext(Context base) {
+    Context newContext = MyApplication.localeManager.setLocale(base);
+    super.attachBaseContext(ViewPumpContextWrapper.wrap(newContext));
   }
 }

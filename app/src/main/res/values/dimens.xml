@@ -6,4 +6,5 @@
     <dimen name="spacing_xlarge">35dp</dimen>
     <dimen name="spacing_xxlarge">50dp</dimen>
     <dimen name="spacing_xxxlarge">60dp</dimen>
+    <dimen name="drag_dismiss_distance">112dp</dimen> <!-- 2 * ?android:actionBarSize -->
 </resources>

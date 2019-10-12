@@ -3,6 +3,8 @@ package com.github.bkhezry.weather.model.db;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.view.View;
 
 import androidx.annotation.ColorInt;
@@ -28,7 +30,7 @@ import io.objectbox.annotation.Entity;
 import io.objectbox.annotation.Id;
 
 @Entity
-public class FiveDayWeather extends AbstractItem<FiveDayWeather, FiveDayWeather.MyViewHolder> {
+public class FiveDayWeather extends AbstractItem<FiveDayWeather, FiveDayWeather.MyViewHolder> implements Parcelable {
   @Id
   private long id;
   private int dt;
@@ -193,5 +195,52 @@ public class FiveDayWeather extends AbstractItem<FiveDayWeather, FiveDayWeather.
 
     }
 
+  }
+
+  public static final Parcelable.Creator<FiveDayWeather> CREATOR = new Parcelable.Creator<FiveDayWeather>() {
+    @Override
+    public FiveDayWeather createFromParcel(Parcel source) {
+      return new FiveDayWeather(source);
+    }
+
+    @Override
+    public FiveDayWeather[] newArray(int size) {
+      return new FiveDayWeather[size];
+    }
+  };
+
+  public FiveDayWeather() {
+  }
+
+  protected FiveDayWeather(Parcel in) {
+    this.id = in.readLong();
+    this.dt = in.readInt();
+    this.temp = in.readDouble();
+    this.minTemp = in.readDouble();
+    this.maxTemp = in.readDouble();
+    this.weatherId = in.readInt();
+    this.timestampStart = in.readLong();
+    this.timestampEnd = in.readLong();
+    this.color = in.readInt();
+    this.colorAlpha = in.readInt();
+  }
+
+  @Override
+  public int describeContents() {
+    return 0;
+  }
+
+  @Override
+  public void writeToParcel(Parcel dest, int flags) {
+    dest.writeLong(this.id);
+    dest.writeInt(this.dt);
+    dest.writeDouble(this.temp);
+    dest.writeDouble(this.minTemp);
+    dest.writeDouble(this.maxTemp);
+    dest.writeInt(this.weatherId);
+    dest.writeLong(this.timestampStart);
+    dest.writeLong(this.timestampEnd);
+    dest.writeInt(this.color);
+    dest.writeInt(this.colorAlpha);
   }
 }
