@@ -6,10 +6,10 @@
 <p align="center"><img src="assets/screenshot-1.png" /></p>
 
 **Requirements**
-- Android Studio 3.5 beta 3
+- Android Studio 3.5.1
 - JDK 8
 - Android SDK 28
-- Supports API Level +17
+- Supports API Level +21
 - Material Components 1.1.0-alpha04
 
 **Highlights**
