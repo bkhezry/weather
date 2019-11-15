@@ -1,6 +1,5 @@
 apply plugin: 'com.android.application'
 apply plugin: 'io.objectbox'
-//apply plugin: 'com.getkeepsafe.dexcount'
 
 File googleServicesFile = rootProject.file("app/google-services.json")
 if (googleServicesFile.exists()) {
