@@ -1,6 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'io.objectbox'
-apply plugin: 'com.getkeepsafe.dexcount'
+//apply plugin: 'com.getkeepsafe.dexcount'
 
 File googleServicesFile = rootProject.file("app/google-services.json")
 if (googleServicesFile.exists()) {
@@ -22,7 +22,6 @@ android {
         versionName "${versionMajor}.${versionMinor}.${versionPatch}"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
-        multiDexEnabled true
 
     }
     buildTypes {
@@ -52,34 +51,34 @@ dependencies {
     implementation 'com.jakewharton:butterknife:10.2.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.0'
 
-    implementation 'com.squareup.retrofit2:retrofit:2.4.0'
-    implementation "com.squareup.retrofit2:converter-gson:2.4.0"
+    implementation 'com.squareup.retrofit2:retrofit:2.6.2'
+    implementation "com.squareup.retrofit2:converter-gson:2.6.2"
     //use in development
-    implementation 'com.squareup.okhttp3:logging-interceptor:3.12.1'
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.2.2'
 
     // RxJava
     implementation 'io.reactivex.rxjava2:rxjava:2.2.8'
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
 
-    implementation "com.squareup.retrofit2:adapter-rxjava2:2.5.0"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:2.6.2"
 
     implementation 'com.mikepenz:fastadapter:3.3.1'
 
-    implementation 'com.github.bumptech.glide:glide:4.9.0'
+    implementation 'com.github.bumptech.glide:glide:4.10.0'
 
     implementation 'com.airbnb.android:lottie:3.0.5'
     implementation 'com.github.bkhezry:MaterialSearchView:1.6.0'
     implementation 'com.github.bkhezry:prefser:v2.2.1-rx2'
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 
-    implementation 'io.github.inflationx:viewpump:1.0.0'
-    implementation 'io.github.inflationx:calligraphy3:3.1.0'
+    implementation 'io.github.inflationx:viewpump:2.0.3'
+    implementation 'io.github.inflationx:calligraphy3:3.1.1'
 
-    implementation 'com.google.firebase:firebase-core:17.2.0'
+    implementation 'com.google.firebase:firebase-core:17.2.1'
     implementation 'com.crashlytics.sdk.android:crashlytics:2.10.1'
-    implementation 'com.google.firebase:firebase-perf:19.0.0'
+    implementation 'com.google.firebase:firebase-perf:19.0.2'
 
-    implementation 'com.android.support:multidex:1.0.3'
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.0.0'
 
 }
 android.applicationVariants.all { variant ->

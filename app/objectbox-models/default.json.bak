@@ -122,9 +122,37 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "5:5646624514427571955",
+      "lastPropertyId": "5:843869931961107550",
+      "name": "MultipleDaysWeather",
+      "properties": [
+        {
+          "id": "1:8063748537774722508",
+          "name": "id"
+        },
+        {
+          "id": "2:7033127904872771859",
+          "name": "dt"
+        },
+        {
+          "id": "3:5834158008002683022",
+          "name": "weatherId"
+        },
+        {
+          "id": "4:6382553822344712806",
+          "name": "minTemp"
+        },
+        {
+          "id": "5:843869931961107550",
+          "name": "maxTemp"
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "4:403425344771221250",
+  "lastEntityId": "5:5646624514427571955",
   "lastIndexId": "0:0",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
