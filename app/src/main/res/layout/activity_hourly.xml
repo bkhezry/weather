@@ -92,6 +92,7 @@
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:gravity="center"
+                                        android:layoutDirection="ltr"
                                         android:textSize="30sp" />
                                 </LinearLayout>
 
@@ -102,6 +103,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
                                     android:gravity="center"
+                                    android:layoutDirection="ltr"
                                     android:textAppearance="@style/TextAppearance.AppCompat.Title"
                                     android:textSize="60sp" />
 
@@ -125,6 +127,7 @@
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:gravity="center"
+                                        android:layoutDirection="ltr"
                                         android:textSize="30sp" />
                                 </LinearLayout>
                             </LinearLayout>
