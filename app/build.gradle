@@ -78,8 +78,6 @@ dependencies {
     implementation 'com.crashlytics.sdk.android:crashlytics:2.10.1'
     implementation 'com.google.firebase:firebase-perf:19.0.2'
 
-    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.0.0'
-
 }
 android.applicationVariants.all { variant ->
     def appName = "Weather"
