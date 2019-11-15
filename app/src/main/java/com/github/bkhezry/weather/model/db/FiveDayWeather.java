@@ -181,6 +181,15 @@ public class FiveDayWeather extends AbstractItem<FiveDayWeather, FiveDayWeather.
       } else {
         dayNameTextView.setText(Constants.DAYS_OF_WEEK[calendar.get(Calendar.DAY_OF_WEEK) - 1]);
       }
+      if (item.maxTemp < 0 && item.maxTemp > -0.5) {
+        item.maxTemp = 0;
+      }
+      if (item.minTemp < 0 && item.minTemp > -0.5) {
+        item.minTemp = 0;
+      }
+      if (item.temp < 0 && item.temp > -0.5) {
+        item.temp = 0;
+      }
       tempTextView.setText(String.format(Locale.getDefault(), "%.0f°", item.getTemp()));
       minTempTextView.setText(String.format(Locale.getDefault(), "%.0f°", item.getMinTemp()));
       maxTempTextView.setText(String.format(Locale.getDefault(), "%.0f°", item.getMaxTemp()));

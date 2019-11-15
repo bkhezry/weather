@@ -127,6 +127,12 @@ public class MultipleDaysWeather extends AbstractItem<MultipleDaysWeather, Multi
         dateTextView.setText(String.format(Locale.getDefault(), "%s %d",
             Constants.MONTH_NAME[calendar.get(Calendar.MONTH)], calendar.get(Calendar.DAY_OF_MONTH)));
       }
+      if (item.maxTemp < 0 && item.maxTemp > -0.5) {
+        item.maxTemp = 0;
+      }
+      if (item.minTemp < 0 && item.minTemp > -0.5) {
+        item.minTemp = 0;
+      }
       minTempTextView.setText(String.format(Locale.getDefault(), "%.0f°", item.getMinTemp()));
       maxTempTextView.setText(String.format(Locale.getDefault(), "%.0f°", item.getMaxTemp()));
       AppUtil.setWeatherIcon(context, weatherImageView, item.getWeatherId());
