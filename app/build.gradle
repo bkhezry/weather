@@ -13,11 +13,11 @@ def versionMajor = 2
 def versionMinor = 0
 def versionPatch = 0
 android {
-    compileSdkVersion 28
+    compileSdkVersion 29
     defaultConfig {
         applicationId "com.github.bkhezry.weather"
         minSdkVersion 21
-        targetSdkVersion 28
+        targetSdkVersion 29
         versionCode versionMajor * 10000 + versionMinor * 100 + versionPatch
         versionName "${versionMajor}.${versionMinor}.${versionPatch}"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
