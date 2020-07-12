@@ -6,11 +6,11 @@
 <p align="center"><img src="assets/screenshot-1.png" /></p>
 
 **Requirements**
-- Android Studio 3.5.1
+- Android Studio 4.0.0
 - JDK 8
-- Android SDK 28
+- Android SDK 29
 - Supports API Level +21
-- Material Components 1.1.0-alpha04
+- Material Components 1.3.0-alpha01
 
 **Highlights**
 - Use [OpenWeatherMap] API
