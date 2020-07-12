@@ -25,6 +25,9 @@
             android:textStyle="bold" />
 
         <com.google.android.material.card.MaterialCardView
+            android:id="@+id/todayMaterialCard"
+            android:clickable="true"
+            android:focusable="true"
             style="@style/Widget.MaterialComponents.CardView"
             android:layout_width="match_parent"
             android:layout_height="@dimen/card_view_height"

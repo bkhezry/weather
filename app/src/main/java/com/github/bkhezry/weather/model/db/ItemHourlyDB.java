@@ -4,10 +4,9 @@ import android.content.Context;
 import android.view.View;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.widget.AppCompatImageView;
-import androidx.appcompat.widget.AppCompatTextView;
 
 import com.github.bkhezry.weather.R;
+import com.github.bkhezry.weather.databinding.WeatherHourlyItemBinding;
 import com.github.bkhezry.weather.utils.AppUtil;
 import com.mikepenz.fastadapter.FastAdapter;
 import com.mikepenz.fastadapter.items.AbstractItem;
@@ -17,8 +16,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import io.objectbox.annotation.Entity;
 import io.objectbox.annotation.Id;
 
@@ -90,16 +87,11 @@ public class ItemHourlyDB extends AbstractItem<ItemHourlyDB, ItemHourlyDB.MyView
   protected static class MyViewHolder extends FastAdapter.ViewHolder<ItemHourlyDB> {
     View view;
     Context context;
-    @BindView(R.id.time_text_view)
-    AppCompatTextView timeTextView;
-    @BindView(R.id.weather_image_view)
-    AppCompatImageView weatherImageView;
-    @BindView(R.id.temp_text_view)
-    AppCompatTextView tempTextView;
+    WeatherHourlyItemBinding binding;
 
     MyViewHolder(View view) {
       super(view);
-      ButterKnife.bind(this, view);
+      binding = WeatherHourlyItemBinding.bind(view);
       this.view = view;
       this.context = view.getContext();
     }
@@ -111,9 +103,9 @@ public class ItemHourlyDB extends AbstractItem<ItemHourlyDB, ItemHourlyDB.MyView
       if (item.getTemp() < 0 && item.getTemp() > -0.5) {
         item.setTemp(0);
       }
-      timeTextView.setText(AppUtil.getTime(calendar, context));
-      tempTextView.setText(String.format(Locale.getDefault(), "%.0f°", item.getTemp()));
-      AppUtil.setWeatherIcon(context, weatherImageView, item.weatherCode);
+      binding.timeTextView.setText(AppUtil.getTime(calendar, context));
+      binding.tempTextView.setText(String.format(Locale.getDefault(), "%.0f°", item.getTemp()));
+      AppUtil.setWeatherIcon(context, binding.weatherImageView, item.weatherCode);
     }
 
     @Override

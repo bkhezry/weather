@@ -4,10 +4,9 @@ import android.content.Context;
 import android.view.View;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.widget.AppCompatImageView;
-import androidx.appcompat.widget.AppCompatTextView;
 
 import com.github.bkhezry.weather.R;
+import com.github.bkhezry.weather.databinding.MultipleDaysItemBinding;
 import com.github.bkhezry.weather.utils.AppUtil;
 import com.github.bkhezry.weather.utils.Constants;
 import com.github.bkhezry.weather.utils.DateConverter;
@@ -19,8 +18,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import io.objectbox.annotation.Entity;
 import io.objectbox.annotation.Id;
 
@@ -92,20 +89,11 @@ public class MultipleDaysWeather extends AbstractItem<MultipleDaysWeather, Multi
   protected static class MyViewHolder extends FastAdapter.ViewHolder<MultipleDaysWeather> {
     Context context;
     View view;
-    @BindView(R.id.day_name_text_view)
-    AppCompatTextView dayNameTextView;
-    @BindView(R.id.date_text_view)
-    AppCompatTextView dateTextView;
-    @BindView(R.id.weather_image_view)
-    AppCompatImageView weatherImageView;
-    @BindView(R.id.max_temp_text_view)
-    AppCompatTextView maxTempTextView;
-    @BindView(R.id.min_temp_text_view)
-    AppCompatTextView minTempTextView;
+    MultipleDaysItemBinding binding;
 
     MyViewHolder(View view) {
       super(view);
-      ButterKnife.bind(this, view);
+      binding = MultipleDaysItemBinding.bind(view);
       this.view = view;
       this.context = view.getContext();
     }
@@ -119,12 +107,12 @@ public class MultipleDaysWeather extends AbstractItem<MultipleDaysWeather, Multi
             calendar.get(Calendar.YEAR),
             calendar.get(Calendar.MONTH) + 1,
             calendar.get(Calendar.DAY_OF_MONTH));
-        dayNameTextView.setText(Constants.DAYS_OF_WEEK_PERSIAN[calendar.get(Calendar.DAY_OF_WEEK) - 1]);
-        dateTextView.setText(String.format(Locale.getDefault(), "%d %s", converter.getIranianDay()
+        binding.dayNameTextView.setText(Constants.DAYS_OF_WEEK_PERSIAN[calendar.get(Calendar.DAY_OF_WEEK) - 1]);
+        binding.dateTextView.setText(String.format(Locale.getDefault(), "%d %s", converter.getIranianDay()
             , Constants.MONTH_NAME_PERSIAN[converter.getIranianMonth() - 1]));
       } else {
-        dayNameTextView.setText(Constants.DAYS_OF_WEEK[calendar.get(Calendar.DAY_OF_WEEK) - 1]);
-        dateTextView.setText(String.format(Locale.getDefault(), "%s %d",
+        binding.dayNameTextView.setText(Constants.DAYS_OF_WEEK[calendar.get(Calendar.DAY_OF_WEEK) - 1]);
+        binding.dateTextView.setText(String.format(Locale.getDefault(), "%s %d",
             Constants.MONTH_NAME[calendar.get(Calendar.MONTH)], calendar.get(Calendar.DAY_OF_MONTH)));
       }
       if (item.maxTemp < 0 && item.maxTemp > -0.5) {
@@ -133,9 +121,9 @@ public class MultipleDaysWeather extends AbstractItem<MultipleDaysWeather, Multi
       if (item.minTemp < 0 && item.minTemp > -0.5) {
         item.minTemp = 0;
       }
-      minTempTextView.setText(String.format(Locale.getDefault(), "%.0f°", item.getMinTemp()));
-      maxTempTextView.setText(String.format(Locale.getDefault(), "%.0f°", item.getMaxTemp()));
-      AppUtil.setWeatherIcon(context, weatherImageView, item.getWeatherId());
+      binding.minTempTextView.setText(String.format(Locale.getDefault(), "%.0f°", item.getMinTemp()));
+      binding.maxTempTextView.setText(String.format(Locale.getDefault(), "%.0f°", item.getMaxTemp()));
+      AppUtil.setWeatherIcon(context, binding.weatherImageView, item.getWeatherId());
     }
 
     @Override

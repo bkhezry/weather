@@ -16,10 +16,10 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.github.bkhezry.weather.R;
+import com.github.bkhezry.weather.databinding.FragmentMultipleDaysBinding;
 import com.github.bkhezry.weather.model.CityInfo;
 import com.github.bkhezry.weather.model.daysweather.ListItem;
 import com.github.bkhezry.weather.model.daysweather.MultipleDaysWeatherResponse;
@@ -36,9 +36,6 @@ import com.mikepenz.fastadapter.adapters.ItemAdapter;
 
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 import io.objectbox.Box;
 import io.objectbox.BoxStore;
 import io.objectbox.android.AndroidScheduler;
@@ -50,10 +47,6 @@ import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 
 public class MultipleDaysFragment extends DialogFragment {
-  @BindView(R.id.recycler_view)
-  RecyclerView recyclerView;
-  @BindView(R.id.swipe_container)
-  SwipeRefreshLayout swipeContainer;
   private String defaultLang = "en";
   private CompositeDisposable disposable = new CompositeDisposable();
   private FastAdapter<MultipleDaysWeather> mFastAdapter;
@@ -62,13 +55,13 @@ public class MultipleDaysFragment extends DialogFragment {
   private Box<MultipleDaysWeather> multipleDaysWeatherBox;
   private Prefser prefser;
   private String apiKey;
+  private FragmentMultipleDaysBinding binding;
 
   @Override
   public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                            Bundle savedInstanceState) {
-    View view = inflater.inflate(R.layout.fragment_multiple_days,
-        container, false);
-    ButterKnife.bind(this, view);
+    binding = FragmentMultipleDaysBinding.inflate(inflater, container, false);
+    View view = binding.getRoot();
     initVariables();
     initSwipeView();
     initRecyclerView();
@@ -82,14 +75,23 @@ public class MultipleDaysFragment extends DialogFragment {
     prefser = new Prefser(activity);
     BoxStore boxStore = MyApplication.getBoxStore();
     multipleDaysWeatherBox = boxStore.boxFor(MultipleDaysWeather.class);
+    binding.closeButton.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        dismiss();
+        if (getFragmentManager() != null) {
+          getFragmentManager().popBackStack();
+        }
+      }
+    });
   }
 
   private void initSwipeView() {
-    swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
+    binding.swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
         android.R.color.holo_green_light,
         android.R.color.holo_orange_light,
         android.R.color.holo_red_light);
-    swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+    binding.swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
 
       @Override
       public void onRefresh() {
@@ -104,18 +106,18 @@ public class MultipleDaysFragment extends DialogFragment {
     if (AppUtil.isTimePass(lastUpdate)) {
       checkCityInfoExist();
     } else {
-      swipeContainer.setRefreshing(false);
+      binding.swipeContainer.setRefreshing(false);
     }
   }
 
   private void initRecyclerView() {
     LinearLayoutManager layoutManager
         = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
-    recyclerView.setLayoutManager(layoutManager);
+    binding.recyclerView.setLayoutManager(layoutManager);
     mItemAdapter = new ItemAdapter<>();
     mFastAdapter = FastAdapter.with(mItemAdapter);
-    recyclerView.setItemAnimator(new DefaultItemAnimator());
-    recyclerView.setAdapter(mFastAdapter);
+    binding.recyclerView.setItemAnimator(new DefaultItemAnimator());
+    binding.recyclerView.setAdapter(mFastAdapter);
   }
 
   private void showStoredMultipleDaysWeather() {
@@ -155,7 +157,7 @@ public class MultipleDaysFragment extends DialogFragment {
         requestWeathers(cityInfo.getName());
       } else {
         Toast.makeText(activity, getResources().getString(R.string.no_internet_message), Toast.LENGTH_SHORT).show();
-        swipeContainer.setRefreshing(false);
+        binding.swipeContainer.setRefreshing(false);
       }
     }
   }
@@ -171,12 +173,12 @@ public class MultipleDaysFragment extends DialogFragment {
               @Override
               public void onSuccess(MultipleDaysWeatherResponse response) {
                 handleMultipleDaysResponse(response);
-                swipeContainer.setRefreshing(false);
+                binding.swipeContainer.setRefreshing(false);
               }
 
               @Override
               public void onError(Throwable e) {
-                swipeContainer.setRefreshing(false);
+                binding.swipeContainer.setRefreshing(false);
                 Log.e("MainActivity", "onError: " + e.getMessage());
               }
             })
@@ -209,15 +211,6 @@ public class MultipleDaysFragment extends DialogFragment {
     lp.height = WindowManager.LayoutParams.MATCH_PARENT;
     dialog.getWindow().setAttributes(lp);
     return dialog;
-  }
-
-
-  @OnClick(R.id.close_button)
-  void close() {
-    dismiss();
-    if (getFragmentManager() != null) {
-      getFragmentManager().popBackStack();
-    }
   }
 
   @Override

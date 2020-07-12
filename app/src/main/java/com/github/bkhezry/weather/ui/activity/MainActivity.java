@@ -1,31 +1,21 @@
 package com.github.bkhezry.weather.ui.activity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.RelativeLayout;
-import android.widget.TextSwitcher;
 
-import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatImageView;
-import androidx.appcompat.widget.AppCompatTextView;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.airbnb.lottie.LottieAnimationView;
 import com.bumptech.glide.Glide;
 import com.github.bkhezry.weather.R;
+import com.github.bkhezry.weather.databinding.ActivityMainBinding;
 import com.github.bkhezry.weather.model.CityInfo;
 import com.github.bkhezry.weather.model.currentweather.CurrentWeatherResponse;
 import com.github.bkhezry.weather.model.daysweather.ListItem;
@@ -46,7 +36,6 @@ import com.github.bkhezry.weather.utils.MyApplication;
 import com.github.bkhezry.weather.utils.SnackbarUtil;
 import com.github.bkhezry.weather.utils.TextViewFactory;
 import com.github.pwittchen.prefser.library.rx2.Prefser;
-import com.google.android.material.bottomappbar.BottomAppBar;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 import com.mikepenz.fastadapter.FastAdapter;
 import com.mikepenz.fastadapter.IAdapter;
@@ -59,11 +48,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
-import butterknife.BindArray;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import io.github.inflationx.viewpump.ViewPumpContextWrapper;
 import io.objectbox.Box;
 import io.objectbox.BoxStore;
 import io.objectbox.android.AndroidScheduler;
@@ -76,42 +60,8 @@ import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.HttpException;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
-  @BindView(R.id.recycler_view)
-  RecyclerView recyclerView;
-  @BindView(R.id.temp_text_view)
-  TextSwitcher tempTextView;
-  @BindView(R.id.description_text_view)
-  TextSwitcher descriptionTextView;
-  @BindView(R.id.humidity_text_view)
-  TextSwitcher humidityTextView;
-  @BindArray(R.array.mdcolor_500)
-  @ColorInt
-  int[] colors;
-  @BindArray(R.array.mdcolor_500_alpha)
-  @ColorInt
-  int[] colorsAlpha;
-  @BindView(R.id.animation_view)
-  LottieAnimationView animationView;
-  @BindView(R.id.toolbar)
-  Toolbar toolbar;
-  @BindView(R.id.search_view)
-  MaterialSearchView searchView;
-  @BindView(R.id.city_name_text_view)
-  AppCompatTextView cityNameTextView;
-  @BindView(R.id.wind_text_view)
-  TextSwitcher windTextView;
-  @BindView(R.id.swipe_container)
-  SwipeRefreshLayout swipeContainer;
-  @BindView(R.id.no_city_image_view)
-  AppCompatImageView noCityImageView;
-  @BindView(R.id.empty_layout)
-  RelativeLayout emptyLayout;
-  @BindView(R.id.nested_scroll_view)
-  NestedScrollView nestedScrollView;
-  @BindView(R.id.bar)
-  BottomAppBar bar;
   private FastAdapter<FiveDayWeather> mFastAdapter;
   private ItemAdapter<FiveDayWeather> mItemAdapter;
   private CompositeDisposable disposable = new CompositeDisposable();
@@ -128,13 +78,16 @@ public class MainActivity extends AppCompatActivity {
   private CityInfo cityInfo;
   private String apiKey;
   private Typeface typeface;
+  private ActivityMainBinding binding;
+  private int[] colors;
+  private int[] colorsAlpha;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_main);
-    ButterKnife.bind(this);
-    setSupportActionBar(toolbar);
+    binding = ActivityMainBinding.inflate(getLayoutInflater());
+    setContentView(binding.getRoot());
+    setSupportActionBar(binding.toolbarLayout.toolbar);
     initSearchView();
     initValues();
     setupTextSwitchers();
@@ -145,11 +98,11 @@ public class MainActivity extends AppCompatActivity {
   }
 
   private void initSearchView() {
-    searchView.setVoiceSearch(false);
-    searchView.setHint(getString(R.string.search_label));
-    searchView.setCursorDrawable(R.drawable.custom_curosr);
-    searchView.setEllipsize(true);
-    searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
+    binding.toolbarLayout.searchView.setVoiceSearch(false);
+    binding.toolbarLayout.searchView.setHint(getString(R.string.search_label));
+    binding.toolbarLayout.searchView.setCursorDrawable(R.drawable.custom_curosr);
+    binding.toolbarLayout.searchView.setEllipsize(true);
+    binding.toolbarLayout.searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
       @Override
       public boolean onQueryTextSubmit(String query) {
         requestWeather(query, true);
@@ -161,20 +114,29 @@ public class MainActivity extends AppCompatActivity {
         return false;
       }
     });
+    binding.toolbarLayout.searchView.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        binding.toolbarLayout.searchView.showSearch();
+      }
+    });
+
   }
 
   private void initValues() {
+    colors = getResources().getIntArray(R.array.mdcolor_500);
+    colorsAlpha = getResources().getIntArray(R.array.mdcolor_500_alpha);
     prefser = new Prefser(this);
     apiService = ApiClient.getClient().create(ApiService.class);
     BoxStore boxStore = MyApplication.getBoxStore();
     currentWeatherBox = boxStore.boxFor(CurrentWeather.class);
     fiveDayWeatherBox = boxStore.boxFor(FiveDayWeather.class);
     itemHourlyDBBox = boxStore.boxFor(ItemHourlyDB.class);
-    swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
+    binding.swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
         android.R.color.holo_green_light,
         android.R.color.holo_orange_light,
         android.R.color.holo_red_light);
-    swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+    binding.swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
 
       @Override
       public void onRefresh() {
@@ -184,47 +146,63 @@ public class MainActivity extends AppCompatActivity {
           if (AppUtil.isTimePass(lastStored)) {
             requestWeather(cityInfo.getName(), false);
           } else {
-            swipeContainer.setRefreshing(false);
+            binding.swipeContainer.setRefreshing(false);
           }
         } else {
-          swipeContainer.setRefreshing(false);
+          binding.swipeContainer.setRefreshing(false);
         }
       }
 
     });
-    bar.setNavigationOnClickListener(new View.OnClickListener() {
+    binding.bar.setNavigationOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
         showAboutFragment();
       }
     });
     typeface = Typeface.createFromAsset(getAssets(), "fonts/Vazir.ttf");
+    binding.nextDaysButton.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        AppUtil.showFragment(new MultipleDaysFragment(), getSupportFragmentManager(), true);
+      }
+    });
+    binding.contentMainLayout.todayMaterialCard.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        if (todayFiveDayWeather != null) {
+          Intent intent = new Intent(MainActivity.this, HourlyActivity.class);
+          intent.putExtra(Constants.FIVE_DAY_WEATHER_ITEM, todayFiveDayWeather);
+          startActivity(intent);
+        }
+      }
+    });
   }
 
   private void setupTextSwitchers() {
-    tempTextView.setFactory(new TextViewFactory(MainActivity.this, R.style.TempTextView, true, typeface));
-    tempTextView.setInAnimation(MainActivity.this, R.anim.slide_in_right);
-    tempTextView.setOutAnimation(MainActivity.this, R.anim.slide_out_left);
-    descriptionTextView.setFactory(new TextViewFactory(MainActivity.this, R.style.DescriptionTextView, true, typeface));
-    descriptionTextView.setInAnimation(MainActivity.this, R.anim.slide_in_right);
-    descriptionTextView.setOutAnimation(MainActivity.this, R.anim.slide_out_left);
-    humidityTextView.setFactory(new TextViewFactory(MainActivity.this, R.style.HumidityTextView, false, typeface));
-    humidityTextView.setInAnimation(MainActivity.this, R.anim.slide_in_bottom);
-    humidityTextView.setOutAnimation(MainActivity.this, R.anim.slide_out_top);
-    windTextView.setFactory(new TextViewFactory(MainActivity.this, R.style.WindSpeedTextView, false, typeface));
-    windTextView.setInAnimation(MainActivity.this, R.anim.slide_in_bottom);
-    windTextView.setOutAnimation(MainActivity.this, R.anim.slide_out_top);
+    binding.contentMainLayout.tempTextView.setFactory(new TextViewFactory(MainActivity.this, R.style.TempTextView, true, typeface));
+    binding.contentMainLayout.tempTextView.setInAnimation(MainActivity.this, R.anim.slide_in_right);
+    binding.contentMainLayout.tempTextView.setOutAnimation(MainActivity.this, R.anim.slide_out_left);
+    binding.contentMainLayout.descriptionTextView.setFactory(new TextViewFactory(MainActivity.this, R.style.DescriptionTextView, true, typeface));
+    binding.contentMainLayout.descriptionTextView.setInAnimation(MainActivity.this, R.anim.slide_in_right);
+    binding.contentMainLayout.descriptionTextView.setOutAnimation(MainActivity.this, R.anim.slide_out_left);
+    binding.contentMainLayout.humidityTextView.setFactory(new TextViewFactory(MainActivity.this, R.style.HumidityTextView, false, typeface));
+    binding.contentMainLayout.humidityTextView.setInAnimation(MainActivity.this, R.anim.slide_in_bottom);
+    binding.contentMainLayout.humidityTextView.setOutAnimation(MainActivity.this, R.anim.slide_out_top);
+    binding.contentMainLayout.windTextView.setFactory(new TextViewFactory(MainActivity.this, R.style.WindSpeedTextView, false, typeface));
+    binding.contentMainLayout.windTextView.setInAnimation(MainActivity.this, R.anim.slide_in_bottom);
+    binding.contentMainLayout.windTextView.setOutAnimation(MainActivity.this, R.anim.slide_out_top);
   }
 
   private void initRecyclerView() {
     LinearLayoutManager layoutManager
         = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-    recyclerView.setLayoutManager(layoutManager);
+    binding.contentMainLayout.recyclerView.setLayoutManager(layoutManager);
     mItemAdapter = new ItemAdapter<>();
     mFastAdapter = FastAdapter.with(mItemAdapter);
-    recyclerView.setItemAnimator(new DefaultItemAnimator());
-    recyclerView.setAdapter(mFastAdapter);
-    recyclerView.setFocusable(false);
+    binding.contentMainLayout.recyclerView.setItemAnimator(new DefaultItemAnimator());
+    binding.contentMainLayout.recyclerView.setAdapter(mFastAdapter);
+    binding.contentMainLayout.recyclerView.setFocusable(false);
     mFastAdapter.withOnClickListener(new OnClickListener<FiveDayWeather>() {
       @Override
       public boolean onClick(@Nullable View v, @NonNull IAdapter<FiveDayWeather> adapter, @NonNull FiveDayWeather item, int position) {
@@ -246,18 +224,18 @@ public class MainActivity extends AppCompatActivity {
               hideEmptyLayout();
               CurrentWeather currentWeather = data.get(0);
               if (isLoad) {
-                tempTextView.setText(String.format(Locale.getDefault(), "%.0f°", currentWeather.getTemp()));
-                descriptionTextView.setText(AppUtil.getWeatherStatus(currentWeather.getWeatherId(), AppUtil.isRTL(MainActivity.this)));
-                humidityTextView.setText(String.format(Locale.getDefault(), "%d%%", currentWeather.getHumidity()));
-                windTextView.setText(String.format(Locale.getDefault(), getResources().getString(R.string.wind_unit_label), currentWeather.getWindSpeed()));
+                binding.contentMainLayout.tempTextView.setText(String.format(Locale.getDefault(), "%.0f°", currentWeather.getTemp()));
+                binding.contentMainLayout.descriptionTextView.setText(AppUtil.getWeatherStatus(currentWeather.getWeatherId(), AppUtil.isRTL(MainActivity.this)));
+                binding.contentMainLayout.humidityTextView.setText(String.format(Locale.getDefault(), "%d%%", currentWeather.getHumidity()));
+                binding.contentMainLayout.windTextView.setText(String.format(Locale.getDefault(), getResources().getString(R.string.wind_unit_label), currentWeather.getWindSpeed()));
               } else {
-                tempTextView.setCurrentText(String.format(Locale.getDefault(), "%.0f°", currentWeather.getTemp()));
-                descriptionTextView.setCurrentText(AppUtil.getWeatherStatus(currentWeather.getWeatherId(), AppUtil.isRTL(MainActivity.this)));
-                humidityTextView.setCurrentText(String.format(Locale.getDefault(), "%d%%", currentWeather.getHumidity()));
-                windTextView.setCurrentText(String.format(Locale.getDefault(), getResources().getString(R.string.wind_unit_label), currentWeather.getWindSpeed()));
+                binding.contentMainLayout.tempTextView.setCurrentText(String.format(Locale.getDefault(), "%.0f°", currentWeather.getTemp()));
+                binding.contentMainLayout.descriptionTextView.setCurrentText(AppUtil.getWeatherStatus(currentWeather.getWeatherId(), AppUtil.isRTL(MainActivity.this)));
+                binding.contentMainLayout.humidityTextView.setCurrentText(String.format(Locale.getDefault(), "%d%%", currentWeather.getHumidity()));
+                binding.contentMainLayout.windTextView.setCurrentText(String.format(Locale.getDefault(), getResources().getString(R.string.wind_unit_label), currentWeather.getWindSpeed()));
               }
-              animationView.setAnimation(AppUtil.getWeatherAnimation(currentWeather.getWeatherId()));
-              animationView.playAnimation();
+              binding.contentMainLayout.animationView.setAnimation(AppUtil.getWeatherAnimation(currentWeather.getWeatherId()));
+              binding.contentMainLayout.animationView.playAnimation();
             }
           }
         });
@@ -281,7 +259,7 @@ public class MainActivity extends AppCompatActivity {
   private void checkLastUpdate() {
     cityInfo = prefser.get(Constants.CITY_INFO, CityInfo.class, null);
     if (cityInfo != null) {
-      cityNameTextView.setText(String.format("%s, %s", cityInfo.getName(), cityInfo.getCountry()));
+      binding.toolbarLayout.cityNameTextView.setText(String.format("%s, %s", cityInfo.getName(), cityInfo.getCountry()));
       if (prefser.contains(Constants.LAST_STORED_CURRENT)) {
         long lastStored = prefser.get(Constants.LAST_STORED_CURRENT, Long.class, 0L);
         if (AppUtil.isTimePass(lastStored)) {
@@ -303,11 +281,11 @@ public class MainActivity extends AppCompatActivity {
       getFiveDaysWeather(cityName);
     } else {
       SnackbarUtil
-          .with(swipeContainer)
+          .with(binding.swipeContainer)
           .setMessage(getString(R.string.no_internet_message))
           .setDuration(SnackbarUtil.LENGTH_LONG)
           .showError();
-      swipeContainer.setRefreshing(false);
+      binding.swipeContainer.setRefreshing(false);
     }
   }
 
@@ -324,7 +302,7 @@ public class MainActivity extends AppCompatActivity {
                 isLoad = true;
                 storeCurrentWeather(currentWeatherResponse);
                 storeCityInfo(currentWeatherResponse);
-                swipeContainer.setRefreshing(false);
+                binding.swipeContainer.setRefreshing(false);
                 if (isSearch) {
                   prefser.remove(Constants.LAST_STORED_MULTIPLE_DAYS);
                 }
@@ -332,7 +310,7 @@ public class MainActivity extends AppCompatActivity {
 
               @Override
               public void onError(Throwable e) {
-                swipeContainer.setRefreshing(false);
+                binding.swipeContainer.setRefreshing(false);
                 try {
                   HttpException error = (HttpException) e;
                   handleErrorCode(error);
@@ -348,20 +326,20 @@ public class MainActivity extends AppCompatActivity {
   private void handleErrorCode(HttpException error) {
     if (error.code() == 404) {
       SnackbarUtil
-          .with(swipeContainer)
+          .with(binding.swipeContainer)
           .setMessage(getString(R.string.no_city_found_message))
           .setDuration(SnackbarUtil.LENGTH_INDEFINITE)
           .setAction(getResources().getString(R.string.search_label), new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              searchView.showSearch();
+              binding.toolbarLayout.searchView.showSearch();
             }
           })
           .showWarning();
 
     } else if (error.code() == 401) {
       SnackbarUtil
-          .with(swipeContainer)
+          .with(binding.swipeContainer)
           .setMessage(getString(R.string.invalid_api_key_message))
           .setDuration(SnackbarUtil.LENGTH_INDEFINITE)
           .setAction(getString(R.string.ok_label), new View.OnClickListener() {
@@ -374,7 +352,7 @@ public class MainActivity extends AppCompatActivity {
 
     } else {
       SnackbarUtil
-          .with(swipeContainer)
+          .with(binding.swipeContainer)
           .setMessage(getString(R.string.network_exception_message))
           .setDuration(SnackbarUtil.LENGTH_LONG)
           .setAction(getResources().getString(R.string.retry_label), new View.OnClickListener() {
@@ -383,7 +361,7 @@ public class MainActivity extends AppCompatActivity {
               if (cityInfo != null) {
                 requestWeather(cityInfo.getName(), false);
               } else {
-                searchView.showSearch();
+                binding.toolbarLayout.searchView.showSearch();
               }
             }
           })
@@ -392,14 +370,14 @@ public class MainActivity extends AppCompatActivity {
   }
 
   private void showEmptyLayout() {
-    Glide.with(MainActivity.this).load(R.drawable.no_city).into(noCityImageView);
-    emptyLayout.setVisibility(View.VISIBLE);
-    nestedScrollView.setVisibility(View.GONE);
+    Glide.with(MainActivity.this).load(R.drawable.no_city).into(binding.contentEmptyLayout.noCityImageView);
+    binding.contentEmptyLayout.emptyLayout.setVisibility(View.VISIBLE);
+    binding.contentMainLayout.nestedScrollView.setVisibility(View.GONE);
   }
 
   private void hideEmptyLayout() {
-    emptyLayout.setVisibility(View.GONE);
-    nestedScrollView.setVisibility(View.VISIBLE);
+    binding.contentEmptyLayout.emptyLayout.setVisibility(View.GONE);
+    binding.contentMainLayout.nestedScrollView.setVisibility(View.VISIBLE);
   }
 
 
@@ -428,7 +406,7 @@ public class MainActivity extends AppCompatActivity {
     cityInfo.setId(response.getId());
     cityInfo.setName(response.getName());
     prefser.put(Constants.CITY_INFO, cityInfo);
-    cityNameTextView.setText(String.format("%s, %s", cityInfo.getName(), cityInfo.getCountry()));
+    binding.toolbarLayout.cityNameTextView.setText(String.format("%s, %s", cityInfo.getName(), cityInfo.getCountry()));
   }
 
   private void getFiveDaysWeather(String cityName) {
@@ -456,6 +434,8 @@ public class MainActivity extends AppCompatActivity {
     List<ListItem> list = response.getList();
     int day = 0;
     for (ListItem item : list) {
+      int color = colors[day];
+      int colorAlpha = colorsAlpha[day];
       Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
       Calendar newCalendar = AppUtil.addDays(calendar, day);
       FiveDayWeather fiveDayWeather = new FiveDayWeather();
@@ -464,8 +444,8 @@ public class MainActivity extends AppCompatActivity {
       fiveDayWeather.setMaxTemp(item.getTemp().getMax());
       fiveDayWeather.setMinTemp(item.getTemp().getMin());
       fiveDayWeather.setTemp(item.getTemp().getDay());
-      fiveDayWeather.setColor(colors[day]);
-      fiveDayWeather.setColorAlpha(colorsAlpha[day]);
+      fiveDayWeather.setColor(color);
+      fiveDayWeather.setColorAlpha(colorAlpha);
       fiveDayWeather.setTimestampStart(AppUtil.getStartOfDayTimestamp(newCalendar));
       fiveDayWeather.setTimestampEnd(AppUtil.getEndOfDayTimestamp(newCalendar));
       fiveDayWeathers.add(fiveDayWeather);
@@ -530,16 +510,11 @@ public class MainActivity extends AppCompatActivity {
     disposable.dispose();
   }
 
-  @OnClick(R.id.next_days_button)
-  public void multipleDays() {
-    AppUtil.showFragment(new MultipleDaysFragment(), getSupportFragmentManager(), true);
-  }
-
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
     getMenuInflater().inflate(R.menu.menu_main, menu);
     MenuItem item = menu.findItem(R.id.action_search);
-    searchView.setMenuItem(item);
+    binding.toolbarLayout.searchView.setMenuItem(item);
     return true;
   }
 
@@ -548,22 +523,11 @@ public class MainActivity extends AppCompatActivity {
   }
 
   @Override
-  protected void attachBaseContext(Context base) {
-    Context newContext = MyApplication.localeManager.setLocale(base);
-    super.attachBaseContext(ViewPumpContextWrapper.wrap(newContext));
-  }
-
-  @Override
   public void onBackPressed() {
-    if (searchView.isSearchOpen()) {
-      searchView.closeSearch();
+    if (binding.toolbarLayout.searchView.isSearchOpen()) {
+      binding.toolbarLayout.searchView.closeSearch();
     } else {
       super.onBackPressed();
     }
-  }
-
-  @OnClick(R.id.search_text_view)
-  public void handleSearchTextClick() {
-    searchView.showSearch();
   }
 }

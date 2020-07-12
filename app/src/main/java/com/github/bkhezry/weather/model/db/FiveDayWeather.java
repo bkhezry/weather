@@ -9,13 +9,11 @@ import android.view.View;
 
 import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
-import androidx.appcompat.widget.AppCompatImageView;
-import androidx.appcompat.widget.AppCompatTextView;
 
 import com.github.bkhezry.weather.R;
+import com.github.bkhezry.weather.databinding.WeatherDayItemBinding;
 import com.github.bkhezry.weather.utils.AppUtil;
 import com.github.bkhezry.weather.utils.Constants;
-import com.google.android.material.card.MaterialCardView;
 import com.mikepenz.fastadapter.FastAdapter;
 import com.mikepenz.fastadapter.items.AbstractItem;
 
@@ -24,8 +22,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import io.objectbox.annotation.Entity;
 import io.objectbox.annotation.Id;
 
@@ -143,32 +139,17 @@ public class FiveDayWeather extends AbstractItem<FiveDayWeather, FiveDayWeather.
 
   protected static class MyViewHolder extends FastAdapter.ViewHolder<FiveDayWeather> {
     Context context;
-    View view;
-    @BindView(R.id.day_name_text_view)
-    AppCompatTextView dayNameTextView;
-    @BindView(R.id.temp_text_view)
-    AppCompatTextView tempTextView;
-    @BindView(R.id.min_temp_text_view)
-    AppCompatTextView minTempTextView;
-    @BindView(R.id.max_temp_text_view)
-    AppCompatTextView maxTempTextView;
-    @BindView(R.id.weather_image_view)
-    AppCompatImageView weatherImageView;
-    @BindView(R.id.card_view)
-    MaterialCardView cardView;
-    @BindView(R.id.shadow_view)
-    View shadowView;
+    WeatherDayItemBinding binding;
 
     MyViewHolder(View view) {
       super(view);
-      ButterKnife.bind(this, view);
-      this.view = view;
-      this.context = view.getContext();
+      binding = WeatherDayItemBinding.bind(view);
+      context = view.getContext();
     }
 
     @Override
     public void bindView(@NonNull FiveDayWeather item, @NonNull List<Object> payloads) {
-      cardView.setCardBackgroundColor(item.getColor());
+      binding.cardView.setCardBackgroundColor(item.getColor());
       int[] colors = {
           Color.TRANSPARENT,
           item.getColorAlpha(),
@@ -177,9 +158,9 @@ public class FiveDayWeather extends AbstractItem<FiveDayWeather, FiveDayWeather.
       Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
       calendar.setTimeInMillis(item.getDt() * 1000L);
       if (AppUtil.isRTL(context)) {
-        dayNameTextView.setText(Constants.DAYS_OF_WEEK_PERSIAN[calendar.get(Calendar.DAY_OF_WEEK) - 1]);
+        binding.dayNameTextView.setText(Constants.DAYS_OF_WEEK_PERSIAN[calendar.get(Calendar.DAY_OF_WEEK) - 1]);
       } else {
-        dayNameTextView.setText(Constants.DAYS_OF_WEEK[calendar.get(Calendar.DAY_OF_WEEK) - 1]);
+        binding.dayNameTextView.setText(Constants.DAYS_OF_WEEK[calendar.get(Calendar.DAY_OF_WEEK) - 1]);
       }
       if (item.maxTemp < 0 && item.maxTemp > -0.5) {
         item.maxTemp = 0;
@@ -190,13 +171,13 @@ public class FiveDayWeather extends AbstractItem<FiveDayWeather, FiveDayWeather.
       if (item.temp < 0 && item.temp > -0.5) {
         item.temp = 0;
       }
-      tempTextView.setText(String.format(Locale.getDefault(), "%.0f°", item.getTemp()));
-      minTempTextView.setText(String.format(Locale.getDefault(), "%.0f°", item.getMinTemp()));
-      maxTempTextView.setText(String.format(Locale.getDefault(), "%.0f°", item.getMaxTemp()));
-      AppUtil.setWeatherIcon(context, weatherImageView, item.weatherId);
+      binding.tempTextView.setText(String.format(Locale.getDefault(), "%.0f°", item.getTemp()));
+      binding.minTempTextView.setText(String.format(Locale.getDefault(), "%.0f°", item.getMinTemp()));
+      binding.maxTempTextView.setText(String.format(Locale.getDefault(), "%.0f°", item.getMaxTemp()));
+      AppUtil.setWeatherIcon(context, binding.weatherImageView, item.weatherId);
       GradientDrawable shape = new GradientDrawable(GradientDrawable.Orientation.RIGHT_LEFT, colors);
       shape.setShape(GradientDrawable.OVAL);
-      shadowView.setBackground(shape);
+      binding.shadowView.setBackground(shape);
     }
 
     @Override
