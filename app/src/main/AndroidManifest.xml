@@ -13,7 +13,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".ui.activity.HourlyActivity"
-            android:theme="@style/TransitionTheme"></activity>
+            android:theme="@style/TransitionTheme" />
         <activity
             android:name=".ui.activity.MainActivity"
             android:screenOrientation="portrait">
@@ -23,10 +23,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <meta-data
-            android:name="firebase_performance_logcat_enabled"
-            android:value="true" />
+        <activity android:name=".ui.activity.BaseActivity" />
     </application>
 
 </manifest>

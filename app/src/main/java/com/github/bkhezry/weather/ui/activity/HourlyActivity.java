@@ -1,13 +1,11 @@
 package com.github.bkhezry.weather.ui.activity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -39,14 +37,13 @@ import java.util.TimeZone;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.github.inflationx.viewpump.ViewPumpContextWrapper;
 import io.objectbox.Box;
 import io.objectbox.BoxStore;
 import io.objectbox.android.AndroidScheduler;
 import io.objectbox.query.Query;
 import io.objectbox.reactive.DataObserver;
 
-public class HourlyActivity extends AppCompatActivity {
+public class HourlyActivity extends BaseActivity {
   @BindView(R.id.card_view)
   MaterialCardView cardView;
   @BindView(R.id.day_name_text_view)
@@ -194,11 +191,5 @@ public class HourlyActivity extends AppCompatActivity {
     chart.setScaleEnabled(false);
     chart.setData(lineData);
     chart.animateY(1000);
-  }
-
-  @Override
-  protected void attachBaseContext(Context base) {
-    Context newContext = MyApplication.localeManager.setLocale(base);
-    super.attachBaseContext(ViewPumpContextWrapper.wrap(newContext));
   }
 }

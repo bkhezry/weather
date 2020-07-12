@@ -1,6 +1,5 @@
 package com.github.bkhezry.weather.ui.activity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -13,7 +12,6 @@ import android.widget.TextSwitcher;
 import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
@@ -63,7 +61,6 @@ import butterknife.BindArray;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import io.github.inflationx.viewpump.ViewPumpContextWrapper;
 import io.objectbox.Box;
 import io.objectbox.BoxStore;
 import io.objectbox.android.AndroidScheduler;
@@ -76,7 +73,7 @@ import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.HttpException;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
   @BindView(R.id.recycler_view)
   RecyclerView recyclerView;
@@ -545,12 +542,6 @@ public class MainActivity extends AppCompatActivity {
 
   public void showAboutFragment() {
     AppUtil.showFragment(new AboutFragment(), getSupportFragmentManager(), true);
-  }
-
-  @Override
-  protected void attachBaseContext(Context base) {
-    Context newContext = MyApplication.localeManager.setLocale(base);
-    super.attachBaseContext(ViewPumpContextWrapper.wrap(newContext));
   }
 
   @Override
