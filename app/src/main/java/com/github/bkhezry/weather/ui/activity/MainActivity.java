@@ -557,4 +557,13 @@ public class MainActivity extends BaseActivity {
   public void handleSearchTextClick() {
     searchView.showSearch();
   }
+
+  @OnClick(R.id.todayMaterialCard)
+  public void showTodayData() {
+    if (todayFiveDayWeather != null) {
+      Intent intent = new Intent(MainActivity.this, HourlyActivity.class);
+      intent.putExtra(Constants.FIVE_DAY_WEATHER_ITEM, todayFiveDayWeather);
+      startActivity(intent);
+    }
+  }
 }
