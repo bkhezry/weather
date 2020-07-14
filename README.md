@@ -38,7 +38,6 @@
 - [MaterialSearchView]: Cute library to implement SearchView in a Material Design Approach
 - [MPAndroidChart]: A powerful & easy to use chart library for Android
 - [Firebase Core] / Crashlytics
-- [ButterKnife]: Bind Android views and callbacks to fields and methods.
 
 **Credit**
 
