@@ -15,6 +15,7 @@
             android:name=".ui.activity.HourlyActivity"
             android:theme="@style/TransitionTheme" />
         <activity
+            android:windowSoftInputMode="stateHidden"
             android:name=".ui.activity.MainActivity"
             android:screenOrientation="portrait">
             <intent-filter>
