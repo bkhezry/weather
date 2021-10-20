@@ -3,15 +3,15 @@
 buildscript {
     repositories {
         google()
-        jcenter()
-        
+        mavenCentral()
+
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.0.0'
-        classpath 'io.objectbox:objectbox-gradle-plugin:2.6.0'
-        classpath 'com.google.gms:google-services:4.3.3'
+        classpath 'com.android.tools.build:gradle:7.0.3'
+        classpath 'io.objectbox:objectbox-gradle-plugin:3.0.1'
+        classpath 'com.google.gms:google-services:4.3.10'
         // Add the Firebase Crashlytics Gradle plugin.
-        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.2.0'
+        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.7.1'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
@@ -21,7 +21,7 @@ allprojects {
     repositories {
         google()
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
-        jcenter()
+        mavenCentral()
         maven { url 'https://jitpack.io' }
     }
 }
