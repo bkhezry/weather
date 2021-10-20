@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1045292292228",
+    "firebase_url": "https://weather-e2001.firebaseio.com",
+    "project_id": "weather-e2001",
+    "storage_bucket": "weather-e2001.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1045292292228:android:f302f03692874e09",
+        "android_client_info": {
+          "package_name": "com.github.bkhezry.weather"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1045292292228-2u212i7j1q30rchb19t25tf9f2g33ise.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAKLQH8si7vbvG_-z47Xido5PGnTJPa_F4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1045292292228-2u212i7j1q30rchb19t25tf9f2g33ise.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
