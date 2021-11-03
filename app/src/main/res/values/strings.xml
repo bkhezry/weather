@@ -91,6 +91,7 @@
     <string name="api_key_label">API Key</string>
     <string name="english_label" translatable="false">English</string>
     <string name="persian_label" translatable="false">فارسی</string>
+    <string name="italian_label" translatable="false">Italiano</string>
     <string name="search_label">Search</string>
     <string name="no_internet_message">Please check internet connection</string>
     <string name="no_city_found_message">No city found with this name</string>
