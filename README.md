@@ -6,10 +6,10 @@
 
 **Requirements**
 - Android studio last version
-- JDK 8
-- Android SDK 31
+- JDK 17
+- Android SDK 34
 - Supports API Level +21
-- Material Components 1.5.0-alpha04
+- Material Components 1.10.0
 
 **Highlights**
 - Use [OpenWeatherMap] API
