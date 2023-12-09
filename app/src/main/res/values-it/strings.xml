@@ -1,0 +1,40 @@
+<resources>
+    <string name="app_name">Meteo</string>
+    <string name="cancel_label">Annulla</string>
+    <string name="store_label">Store</string>
+    <string name="license_title">Licenza</string>
+    <string name="libraries_title">Librerie &amp; Risorse</string>
+    <string name="developer_info_title">Info Sviluppatore</string>
+    <string name="design_api_title">Design &amp; API</string>
+    <string name="application_info_title">Info Applicazione</string>
+    <string name="application_info_text">
+        <![CDATA[
+            <p>
+            <b>Applicazione meteo</b>
+            <br/>
+            Versione: %1$s
+            <br/>
+            Quest/'applicazione è open source a <br/><a href="https://github.com/bkhezry/weather">https://github.com/bkhezry/weather</a></p>
+        ]]>
+    </string>
+    <string name="current_label">Corrente</string>
+    <string name="humidity_label">Umidità</string>
+    <string name="wind_label">Vento</string>
+    <string name="next_4_days_hourly">Prossimi 4 giorni/Orario</string>
+    <string name="next_15_days_label">Prossimi 15 Giorni</string>
+    <string name="search_for_a_city_label">Cerca una città</string>
+    <string name="zero_label">0%d</string>
+    <string name="wind_unit_label">%.0f km/hr</string>
+    <string name="openweathermap_api_key_label">API Key OpenWeatherMap</string>
+    <string name="api_key_description">Per usare l/'applicazione dovresti fornire l/'API Key. È gratis. Per favore altri il link sottostante e crea un account. Dopo di quello puoi ottenere l/'API key.</string>
+    <string name="get_api_key_label">Ottieni API Key</string>
+    <string name="api_key_label">API Key</string>
+    <string name="search_label">Search</string>
+    <string name="no_internet_message">Per favore controlla la connessione internet</string>
+    <string name="no_city_found_message">Nessuna città trovata con questo nome</string>
+    <string name="invalid_api_key_message">API key non valida. Aspetta per il prossimo aggiornamento</string>
+    <string name="network_exception_message">Problema connessione internet</string>
+    <string name="retry_label">Riprova</string>
+    <string name="ok_label">OK</string>
+    <string name="night_mode_label">Modalità Notte</string>
+</resources>
