@@ -8,11 +8,11 @@ buildscript {
 
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:8.2.0'
+        classpath 'com.android.tools.build:gradle:8.6.1'
         classpath("io.objectbox:objectbox-gradle-plugin:$objectboxVersion")
-        classpath 'com.google.gms:google-services:4.4.0'
+        classpath 'com.google.gms:google-services:4.4.2'
         // Add the Firebase Crashlytics Gradle plugin.
-        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.9.9'
+        classpath 'com.google.firebase:firebase-crashlytics-gradle:3.0.2'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
@@ -27,6 +27,6 @@ allprojects {
     }
 }
 
-task clean(type: Delete) {
+tasks.register('clean', Delete) {
     delete rootProject.buildDir
 }
