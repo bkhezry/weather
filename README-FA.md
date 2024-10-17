@@ -3,15 +3,17 @@
 <p align="center"><img src="assets/screenshot-1-fa.png" /></p>
 
 **نیازمندی‌ها**
-- Android Studio 3.5 beta 2
-- JDK 8
-- Android SDK 28
+
+- Android Studio last version
+- JDK 17
+- Android SDK 34
 - Supports API Level +17
-- Material Components 1.1.0-alpha05
+- Material Components 1.12.0
 
 **ویژگی‌ها**
 - Use [OpenWeatherMap] API
 - Use Material Design 2
+- Dark Mode
 - Support two language. English & Persian
 - Use locale Database
 
@@ -32,7 +34,6 @@
 - [MaterialSearchView]: Cute library to implement SearchView in a Material Design Approach
 - [MPAndroidChart]: A powerful & easy to use chart library for Android
 - [Firebase Core] / Crashlytics
-- [ButterKnife]: Bind Android views and callbacks to fields and methods.
 
 **Credit**
 

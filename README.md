@@ -9,7 +9,7 @@
 - JDK 17
 - Android SDK 34
 - Supports API Level +21
-- Material Components 1.10.0
+- Material Components 1.12.0
 
 **Highlights**
 - Use [OpenWeatherMap] API
@@ -75,5 +75,4 @@
 [MaterialSearchView]: https://github.com/MiguelCatalan/MaterialSearchView
 [MPAndroidChart]: https://github.com/PhilJay/MPAndroidChart
 [Firebase Core]: https://firebase.google.com/
-[ButterKnife]: https://github.com/JakeWharton/butterknife
 [Release]: https://github.com/bkhezry/weather/releases
